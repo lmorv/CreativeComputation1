@@ -28,11 +28,13 @@ function setup(){
 
   point(250, 250);
 
-  rect(0, 0, 250, 250);
+  rectMode(CENTER);
+  rect(250, 250, 250, 250);
 
   line(0, 0, 500, 500);
   line(500, 0, 0, 500);
 
+  ellipseMode(CORNER);
   ellipse(250, 250, 100, 100);
 }
 
