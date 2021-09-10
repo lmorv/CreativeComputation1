@@ -1,9 +1,8 @@
 /**
-Title of Project
-Author Name
+Alien Drawing
+Leo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+A very good picture of an alien
 */
 
 "use strict";
@@ -21,7 +20,21 @@ function preload() {
 Description of setup
 */
 function setup() {
+  createCanvas(640,480);
 
+  background(255, 100, 100);
+  noStroke();
+
+  //Draw the body
+
+  //Draw the head
+
+  //Draw the eyes
+
+  //Draw the nostrils
+
+  //Draw the mouth
+  
 }
 
 

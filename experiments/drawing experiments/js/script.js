@@ -1,9 +1,8 @@
 /**
-Title of Project
-Author Name
+Drawing experiments
+Leo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+experimention with shapes and colors
 */
 
 "use strict";
