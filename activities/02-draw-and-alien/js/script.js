@@ -44,7 +44,10 @@ function setup() {
   ellipse(340,350,10,10);
 
   //Draw the mouth
-
+  stroke(50,50,200);
+  strokeWeight(5);
+  rectMode(CENTER);
+  rect(320,390,100,25);
 }
 
 
