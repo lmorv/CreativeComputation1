@@ -7,7 +7,10 @@ Experimenting with variables
 "use strict";
 
 // Variable declarations
-let circleSize;
+let backgroundShade = 0;
+let circleX = 250;
+let circleY = 250;
+let circleSize = 150;
 
 /**
 Description of preload
@@ -21,15 +24,15 @@ Description of setup
 */
 function setup() {
   createCanvas(500, 500);
-  circleSize = 100;
+
 }
 
 /**
 Description of draw()
 */
 function draw() {
-  background(0);
-  ellipse(250, 250, circleSize);
+  background(backgroundShade);
+  ellipse(circleX, circleY, circleSize);
 
 
 }
