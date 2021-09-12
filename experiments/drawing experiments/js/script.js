@@ -9,7 +9,7 @@ experimention with shapes and colors
 
 
 /**
-Description of preload
+preload
 */
 function preload() {
 
