@@ -1,11 +1,13 @@
-/**
+/**************************
 Variables Exploration
 Leonardo Morales
 
 Experimenting with variables
-*/
-
+**************************/
 "use strict";
+
+// Variable declarations
+let circleSize;
 
 /**
 Description of preload
@@ -18,15 +20,16 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(800, 500);
+  createCanvas(500, 500);
+  circleSize = 100;
 }
 
 /**
 Description of draw()
 */
 function draw() {
-  background(255, 0, 0);
-  rectMode(CENTER);
-  rect(width / 2, height / 2, 100, 100);
-  rect(mouseX, mouseY, 90, 90);
+  background(0);
+  ellipse(250, 250, circleSize);
+
+
 }
