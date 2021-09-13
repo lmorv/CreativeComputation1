@@ -8,12 +8,13 @@ Experimenting with variables
 
 // Variable declarations
 let backgroundShade = 0;
-let circleX = 0;
-let circleY = 250;
-let circleSize = 150;
-let circleSpeed = 2;
-let circleAcceleration = 0.5;
 
+let circle = {
+  x: 0,
+  y: 250,
+  size: 150,
+  speed: 2
+};
 /**
 Description of preload
 */
@@ -25,8 +26,7 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(800, 500);
-
+  createCanvas(500, 500);
 }
 
 /**
@@ -34,8 +34,6 @@ Description of draw()
 */
 function draw() {
   background(backgroundShade);
-  circleX += circleSpeed;
-  circleSpeed += circleAcceleration;
-  ellipse(circleX, circleY, circleSize);
-
+  circle.x += circle.speed;
+  ellipse(circle.x, circle.y, circle.size);
 }
