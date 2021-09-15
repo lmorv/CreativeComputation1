@@ -44,7 +44,7 @@ function draw() {
 
   background(backgroundShade);
 
-  circle.count = circle.count + 0.25;
+  circle.count = circle.count + .0025;
   circle.speed = random(-5, 5);
   circle.x = random(125, height-125);
   circle.y = random(125, height-125);
