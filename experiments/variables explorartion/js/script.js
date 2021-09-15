@@ -15,10 +15,12 @@ let backgroundShade = 0;
 // let circleSpeed = 2;
 
 let circle = {
-  x: 0,
+  x: 250,
   y: 250,
   size: 150,
-  speed: 2
+  speed: 2,
+  fill: 0,
+  count: 0
 };
 
 /********
@@ -39,12 +41,20 @@ function setup() {
 Description of draw()
 **********/
 function draw() {
+
   background(backgroundShade);
-  circle.x += circle.speed;
+
+  circle.count = circle.count + 0.25;
+  circle.speed = random(-5, 5);
+  circle.x = random(125, height-125);
+  circle.y = random(125, height-125);
+  circle.size = sin(circle.count) * 160;
+
+  circle.fill = random(0, 255);
+  fill(circle.fill);
   ellipse(circle.x, circle.y, circle.size);
 
-  // circleX += circleSpeed;
-  // ellipse(circleX, circleY, circleSize);
+  let randomNumber = random();
 
-  console.log(`circleY: ${circle.y}, circleX: ${circle.x}, circleSize: ${circle.size}, circleSpeed: ${circle.speed}`);
+console.log(`randomNumber: ${randomNumber}`);
 }
