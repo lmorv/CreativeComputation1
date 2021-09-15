@@ -1,9 +1,9 @@
 /************************************
-Title of Project
-Author Name
+Moving Pictures
+Leonardo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+Activity 3, applying variables to move two circles across the screen,
+while controling the background color acording to their sizes.
 ************************************/
 
 "use strict";
