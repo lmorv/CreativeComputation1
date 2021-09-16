@@ -70,7 +70,7 @@ circle2.size = map(mouseY, height, 0, 100, 500) // mapped circle size to mouse Y
 
 circle2.fill = map(circle2.x, 125, width, 0, 255) // maped shade to circle's X possition
 
-noStroke();
+stroke(255);
 fill(circle2.fill);
 ellipse(circle2.x, circle2.y, circle2.size);
 pop();
