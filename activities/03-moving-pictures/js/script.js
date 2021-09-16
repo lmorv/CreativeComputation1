@@ -48,16 +48,16 @@ createCanvas(500, 500);
 noStroke();
 }
 
-
 /**
 Description of draw()
 */
 function draw() {
   // background
+  let blueCapValue = width*0.75;
   background(bg.r, bg.g, bg.b);
   bg.r = bg.r + 1;
   bg.r = map(circle1.size, 100, width, 0, 255);
-  bg.b = map(circle2.size, 75, width*0.75, 255, 0); // cant use operations on object propertieties inside map? ex: map(circle2.size, 75, circle1.size*0.75, 255, 0)
+  bg.b = map(circle2.size, 75, blueCapValue, 255, 0); // Q: cant use operations on object propertieties inside map? ex: map(circle2.size, 75, circle1.size*0.75, 255, 0)  A: circle1.size is a static value, this function is pulling it's value at the start of the prigram (100), not the dinamically changed value after the calculations below.
 
   // left circle
   circle1.x += + circle1.speed;
