@@ -25,7 +25,8 @@ let circle2 = {
   y: 250,
   size: 150,
   speed: 0.5,
-  fill: 255
+  fill: 255,
+  stroke: 255,
 };
 
 /********
@@ -68,8 +69,9 @@ function draw() {
   circle2.size = map(mouseY, height, 0, 100, 500) // mapped circle size to mouse Y position
 
   circle2.fill = map(circle2.x, 125, width, 0, 255) // maped shade to circle's X possition
+  circle2.stroke = map(circle2.x, 125, width, 255, 0)
 
-  stroke(255);
+  stroke(circle2.stroke);
   fill(circle2.fill);
   ellipse(circle2.x, circle2.y, circle2.size);
   pop();
