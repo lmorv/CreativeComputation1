@@ -1,9 +1,8 @@
 /**
-Title of Project
-Author Name
+Mona Lisa
+Leonardo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+A program to reproduce the magesty of the Mona Lisa.
 */
 
 "use strict";
