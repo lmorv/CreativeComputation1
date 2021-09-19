@@ -28,11 +28,19 @@ function setup() {
 }
 
 function draw() {
-  background(bg.r, bg.g, bg.b);
 
+  background(bg.r, bg.g, bg.b);
+  push();
+  line(mouseX, 0, mouseX, height);
+  line(0, mouseY, width, mouseY)
+  pop();
+
+  push();
   noStroke();
   ellipse(circle.x, circle.y, circle.size);
+  pop();
 }
+
 
 function mouseWheel() {
   bg.r = random(0, 255);
