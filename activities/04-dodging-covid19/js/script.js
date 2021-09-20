@@ -1,9 +1,8 @@
 /**
-Title of Project
-Author Name
+Dodging Covid 19
+Leonardo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+A  game about avoiding the virus civid 19 (represented by a red circle), with an interesting background animation.
 */
 
 "use strict";
@@ -13,14 +12,28 @@ let rect1 = {
   y: 0,
   angle: 0,
   speed: 0.01,
-}
+};
 
 let rect2 = {
   x: 0,
   y: 0,
   angle: 0,
   speed: 0.01,
-}
+};
+
+let covid19 = {
+  x: 0,
+  y: 255,
+  size: 100,
+  vx: 0,
+  vy: 0,
+  speed: 0,
+  fill: {
+    r: 255,
+    g: 0,
+    b: 0
+  }
+};
 
 /**
 Description of preload
@@ -32,7 +45,10 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(windowWidth, windowHeight);
+
+  covid19.y = random(0, height);
+  covid19.vx = covid19.speed;
 }
 /**
 Description of draw()
@@ -40,6 +56,16 @@ Description of draw()
 function draw() {
   background(127);
 
+  // covid 19 movement
+  covid19.x += covid19.vx;
+  covid19.y += covid19.vy;
+
+  // covid 19 style
+  push();
+  noStroke();
+  fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
+  ellipse(covid19.x, covid19.y, covid19.size);
+  pop();
 
 
   // back ground FX
