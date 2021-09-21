@@ -7,13 +7,7 @@ These are explorations on the subect of function creation. I will not go into fu
 
 "use strict";
 
-let circle = {
-  x: 0,
-  y: 220,
-  size: 100,
-  vx: 1,
-  vy: 0
-}
+
 
 /**
 Description of preload
@@ -35,34 +29,19 @@ Description of draw()
 */
 function draw() {
   background(0);
-  move();
-  wrap();
-  displayShape();
+
+  parallels(100, 300, 6, 3, 70, 5);
+  parallels(70, 250, 20, 2, 400, 15);
+  parallels(200, 200, 70, 6, 50, 8);
+  parallels(350, 400, 8, 0.5, 200, 10);
 }
 
-function mousePressed() {
-  reset();
-}
-
-function move() {
-  circle.x += circle.vx;
-  circle.y += circle.vy;
-}
-
-function wrap() {
-  if (circle.x > width) {
-    reset();
+function parallels(x, y, numLines, lineWidth, lineHeight, lineSpacing) {
+  for (let i = 0; i < numLines; i++) {
+    noStroke();
+    fill(255);
+    rectMode(CENTER);
+    rect(x, y, lineWidth, lineHeight);
+    x = x + lineSpacing;
   }
-}
-
-function displayShape() {
-  fill(255, 0, 0);
-  ellipse(circle.x, circle.y, circle.size);
-}
-
-function reset() {
-  circle.x = 0;
-  circle.vx = circle.vx + 1;
-  circle.vy = circle.vy + 0.25;
-  circle.size = circle.size + 5;
 }
