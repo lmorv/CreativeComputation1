@@ -2,7 +2,7 @@
 Dodging Covid 19
 Leonardo Morales
 
-A  game about avoiding the virus civid 19 (represented by a red circle), with an interesting background animation. Covid gets faster every time it spawns!
+A  game about avoiding the virus covid 19 (represented by a red circle), with an interesting background animation. Covid gets faster every time it spawns!
 */
 
 "use strict";
