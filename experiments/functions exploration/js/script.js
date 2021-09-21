@@ -45,17 +45,11 @@ function draw() {
   background(0);
 
   move();
+  checkOffscreen();
+  display();
 
-  if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) {
-    reset();
-  }
+  parallels(70, 250, 27, 2, 400, 15); // parallels(x, y, numLines, lineWidth, lineHeight, lineSpacing) << takes these args
 
-  ellipse(circle.x, circle.y, circle.size);
-
-  // parallels(100, 300, 6, 3, 70, 5);
-  parallels(70, 250, 27, 2, 400, 15);
-  // parallels(200, 200, 70, 6, 50, 8);
-  // parallels(350, 400, 8, 0.5, 200, 10);
 }
 
 function move() {
@@ -68,6 +62,24 @@ function reset() {
   circle.y = 250;
   circle.vx = random(-10, 10);
   circle.vy = random(-10, 10);
+}
+
+function checkOffscreen() {
+  if (circleIsOffscreen()) {
+    reset();
+  }
+}
+
+function circleIsOffscreen() {
+  if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function display() {
+  ellipse(circle.x, circle.y, circle.size);
 }
 
 function parallels(x, y, numLines, lineWidth, lineHeight, lineSpacing) {
