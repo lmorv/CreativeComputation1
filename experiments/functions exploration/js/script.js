@@ -22,6 +22,8 @@ let hello = {
   vx: 5,
   vy: 5,
 }
+
+let bg = 0;
 /**
 Description of preload
 */
@@ -49,7 +51,7 @@ function setup() {
 Description of draw()
 */
 function draw() {
-  background(0);
+  background(bg);
 
   // display & move text (check typography in p5 guide)
 
