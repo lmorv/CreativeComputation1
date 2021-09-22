@@ -1,9 +1,8 @@
 /**
-Title of Project
-Author Name
+More fun with functions
+Leonardo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+This is a program about life. It features game states, a player controlled circle and an npc circle. Press any key to start.
 */
 
 "use strict";
@@ -17,7 +16,16 @@ let circle = {
   speed: 5,
 };
 
-let state = `title`; // Possible states are: title, animation, ending
+let circle2 = {
+  x: 250,
+  y: 250,
+  size: 100,
+  vx: 0,
+  vy: 0,
+  speed: 5,
+};
+
+let state = `title`; // Possible states are: title, gameplay, ending
 
 /**
 Description of preload
@@ -45,7 +53,7 @@ function draw() {
 
   if (state === `title`) {
     title();
-  } else if (state === `animation`) {
+  } else if (state === `gameplay`) {
     gameplay();
   } else if (state === `ending`) {
     ending();
@@ -59,20 +67,16 @@ function title() {
 }
 
 function gameplay() {
-  //Gameplay
 
-  // arrow key movement
-  handleInput();
+  handleInput(); // arrow key movement. playerCircleMove is inside this function
 
-  //move the circle
-  circle.x += +circle.vx;
-  circle.y += +circle.vy;
+  npcCircle_random();
 
-  if (circle.x > width) {
-    state = `ending`;
-  }
+  endCondition();
 
-  ellipse(circle.x, circle.y, circle.size);
+  gameplay
+  ellipse(circle.x, circle.y, circle.size); // display player circle
+  ellipse(circle2.x, circle2.y, circle2.size); // display npc circle
 }
 
 function handleInput() {
@@ -91,6 +95,30 @@ function handleInput() {
   } else {
     circle.vy = 0;
   }
+  playerCircleMove();
+}
+
+function npcCircle_random() {
+  let change = random();
+  if (change < 0.1) {
+    circle2.vx = random(-circle2.speed, circle2.speed);
+    circle2.vy = random(-circle2.speed, circle2.speed);
+  }
+
+  //move npc circle
+  circle2.x += +circle2.vx;
+  circle2.y += +circle2.vy;
+}
+
+function playerCircleMove() {
+  circle.x += +circle.vx;
+  circle.y += +circle.vy;
+}
+
+function endCondition() {
+  if (circle.x > width) {
+    state = `ending`;
+  }
 }
 
 function ending() {
@@ -101,6 +129,6 @@ function ending() {
 
 function keyPressed() {
   if (state === `title`) {
-    state = `animation`;
+    state = `gameplay`;
   }
 }
