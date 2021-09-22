@@ -70,12 +70,39 @@ function draw() {
   text(hello.string, hello.x, hello.y);
   pop();
 
+
+  // key text experiments
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(70);
+  fill(255);
+  text(keyCode, width / 2, height / 2);
+  pop();
+
+
+  // move circle
   move();
   checkOffscreen();
   display();
 
+  // press the "a" key to diplay extra parallels
+  if (keyIsDown(65)) {
+    parallels(18, 350, 27, 2, 400, 15);
+    parallels(197, 25, 27, 2, 400, 15);
+  }
+
   parallels(70, 250, 27, 2, 400, 15); // parallels(x, y, numLines, lineWidth, lineHeight, lineSpacing) << takes these args
 
+}
+
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+    bg += +10;
+    bg = constrain(bg, 0, 255);
+  } else if (keyCode === DOWN_ARROW) {
+    bg = bg - 10;
+    bg = constrain(bg, 0, 255);
+  }
 }
 
 function move() {

@@ -14,7 +14,7 @@ let circle = {
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 3,
+  speed: 5,
 };
 
 let state = `title`; // Possible states are: title, animation, ending
@@ -46,7 +46,7 @@ function draw() {
   if (state === `title`) {
     title();
   } else if (state === `animation`) {
-    animation();
+    gameplay();
   } else if (state === `ending`) {
     ending();
   }
@@ -58,8 +58,13 @@ function title() {
   text(`Life.`, width / 2, height / 2);
 }
 
-function animation() {
-  //Animation
+function gameplay() {
+  //Gameplay
+
+  // arrow key movement
+  handleInput();
+
+  //move the circle
   circle.x += +circle.vx;
   circle.y += +circle.vy;
 
@@ -68,6 +73,24 @@ function animation() {
   }
 
   ellipse(circle.x, circle.y, circle.size);
+}
+
+function handleInput() {
+  if (keyIsDown(LEFT_ARROW)) {
+    circle.vx = -circle.speed;
+  } else if (keyIsDown(RIGHT_ARROW)) {
+    circle.vx = circle.speed;
+  } else {
+    circle.vx = 0;
+  }
+
+  if (keyIsDown(UP_ARROW)) {
+    circle.vy = -circle.speed;
+  } else if (keyIsDown(DOWN_ARROW)) {
+    circle.vy = circle.speed;
+  } else {
+    circle.vy = 0;
+  }
 }
 
 function ending() {
