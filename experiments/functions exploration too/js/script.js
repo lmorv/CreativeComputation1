@@ -25,6 +25,15 @@ let circle2 = {
   speed: 5,
 };
 
+let circle3 = {
+  x: 250,
+  y: 250,
+  size: 50,
+  vx: 0,
+  vy: 0,
+  speed: 1,
+};
+
 let state = `title`; // Possible states are: title, gameplay, ending
 
 /**
@@ -41,6 +50,7 @@ function setup() {
   createCanvas(500, 500);
   circle.vx = circle.speed;
 
+  noStroke();
   textSize(32);
   textAlign(CENTER, CENTER);
 }
@@ -74,9 +84,18 @@ function gameplay() {
 
   endCondition();
 
-  gameplay
+  enemyCircle_chase();
+
+  displayObjects();
+}
+
+function displayObjects() {
   ellipse(circle.x, circle.y, circle.size); // display player circle
   ellipse(circle2.x, circle2.y, circle2.size); // display npc circle
+  push();
+  fill(255, 0, 0);
+  ellipse(circle3.x, circle3.y, circle3.size); // display enemy circle
+  pop();
 }
 
 function handleInput() {
@@ -98,13 +117,32 @@ function handleInput() {
   playerCircleMove();
 }
 
+function enemyCircle_chase() {
+  let dx = circle3.x - circle.x;
+  let dy = circle3.y - circle.y;
+
+  if (dx < 0) {
+    circle3.vx = circle3.speed;
+  } else if (dx > 0) {
+    circle3.vx = -circle3.speed;
+  }
+
+  if (dy < 0) {
+    circle3.vy = circle3.speed;
+  } else if (dy > 0) {
+    circle3.vy = -circle3.speed;
+  }
+  // enemy circle movement
+  circle3.x += +circle3.vx;
+  circle3.y += +circle3.vy;
+}
+
 function npcCircle_random() {
   let change = random();
   if (change < 0.1) {
     circle2.vx = random(-circle2.speed, circle2.speed);
     circle2.vy = random(-circle2.speed, circle2.speed);
   }
-
   //move npc circle
   circle2.x += +circle2.vx;
   circle2.y += +circle2.vy;
