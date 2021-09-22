@@ -15,6 +15,13 @@ let circle = {
   vy: 0
 }
 
+let hello = {
+  string: `Hello, world!`,
+  x: 0,
+  y: 0,
+  vx: 5,
+  vy: 5,
+}
 /**
 Description of preload
 */
@@ -43,6 +50,23 @@ Description of draw()
 */
 function draw() {
   background(0);
+
+  // display & move text (check typography in p5 guide)
+
+  hello.x += +hello.vx;
+  hello.y += +hello.vy;
+
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(70);
+  textStyle(BOLD);
+
+  fill(200, 20, 200);
+  stroke(50, 200, 50);
+  strokeWeight(4);
+
+  text(hello.string, hello.x, hello.y);
+  pop();
 
   move();
   checkOffscreen();
