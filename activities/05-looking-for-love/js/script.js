@@ -2,8 +2,7 @@
 Looking for love
 Leonardo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+A simulation of how love (or the lack of it) works in real life.
 */
 
 "use strict";
@@ -26,7 +25,7 @@ let circle2 = {
   speed: 5,
 }
 
-let state = title; // states: title, simulation, love, sadness
+let state = `title`; // states: title, simulation, love, sadness
 
 /**
 Description of preload
@@ -61,7 +60,22 @@ Description of draw()
 function draw() {
   background(0);
 
-  simulation();
+  if (state === 'title') {
+    title();
+  } else if (state === `simulation`) {
+    simulation();
+  } else if (state === `love`) {
+
+  } else if (state === `sadness`) {
+
+  }
+}
+
+function title() {
+  textSize(65);
+  fill(200, 100, 100);
+  textAlign(CENTER, CENTER);
+  text(`LOVE?`, width / 2, height / 2);
 }
 
 function simulation() {
