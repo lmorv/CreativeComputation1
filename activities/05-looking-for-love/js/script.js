@@ -65,17 +65,20 @@ function draw() {
   } else if (state === `simulation`) {
     simulation();
   } else if (state === `love`) {
-
+    love();
   } else if (state === `sadness`) {
-
+    sadness();
   }
 }
 
+
 function title() {
+  push();
   textSize(65);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
   text(`LOVE?`, width / 2, height / 2);
+  pop();
 }
 
 function simulation() {
@@ -83,6 +86,24 @@ function simulation() {
   checkSadness(); // offscreen condition
   checkLove(); // overlap condition
   displayLovers();
+}
+
+function love() {
+  push();
+  textSize(65);
+  fill(250, 100, 120);
+  textAlign(CENTER, CENTER);
+  text(`LOVE!`, width / 2, height / 2);
+  pop();
+}
+
+function sadness() {
+  push();
+  textSize(65);
+  fill(100, 100, 250);
+  textAlign(CENTER, CENTER);
+  text(`SADNESS :'(`, width / 2, height / 2);
+  pop();
 }
 
 function moveLovers() {
@@ -95,16 +116,18 @@ function moveLovers() {
 }
 
 function checkSadness() {
-  if (loversOffscreen()) {
+  if (loverOffscreen(circle1) || loverOffscreen(circle2)) {
     // sad ending
+    state = `sadness`;
   }
 }
 
 function checkLove() {
   // check for lovers overlapping
-  let d = dist(circle1.x, circle1.y, circle2.x, circle2.y, );
+  let d = dist(circle1.x, circle1.y, circle2.x, circle2.y);
   if (d < circle1.size / 2 + circle2.size / 2) {
     // love ending
+    state = `love`;
   }
 }
 
@@ -114,10 +137,21 @@ function displayLovers() {
   ellipse(circle2.x, circle2.y, circle2.size);
 }
 
-function loversOffscreen() {
-  if (circle1.x < 0 || circle1.x > width || circle1.y < 0 || circle1.y > height || circle2.x < 0 || circle2.x > width || circle2.y < 0 || circle2.y > height) {
+function loverOffscreen(circle) {
+  if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) {
     return true;
   } else {
     return false;
   }
+}
+
+function mousePressed() {
+  if (state = `title`) {
+    state = `simulation`;
+  }
+  // else if (state = `sadness`) {
+  //   state = `title`;
+  // } else if (state = `love`) {
+  //   state = `title`;
+  // }
 }
