@@ -30,6 +30,13 @@ let food2 = {
   eaten: false
 };
 
+
+let food3 = {
+  x: 450,
+  y: 300,
+  size: 50,
+  eaten: false
+};
 /**
 preload does nothing.
 */
@@ -57,11 +64,13 @@ function draw() {
   // Check whether the user has eaten either food
   checkFood1();
   checkFood2();
+  checkFood3();
 
   // Display the user and foods
   displayUser();
   displayFood1();
   displayFood2();
+  displayFood3();
 }
 
 // Sets the user position to the mouse position
@@ -91,12 +100,31 @@ function checkFood2() {
   }
 }
 
+function checkFood3() {
+  if (!food3.eaten) {
+    let d = dist(user.x, user.y, food3.x, food3.y);
+    if (d < user.size / 2 + food3.size / 2) {
+      food3.eaten = true;
+    }
+  }
+}
+
 // Draw the user as a circle
 function displayUser() {
   push();
   fill(255);
   ellipse(user.x, user.y, user.size);
   pop();
+}
+
+function displayFood(food) {
+  if (!food.eaten) {
+    push();
+    fill(255, 100, 100);
+    ellipse(food.x, food.y, food.size);
+    pop();
+  }
+
 }
 
 // Draw food1 as a circle
@@ -116,6 +144,15 @@ function displayFood2() {
     push();
     fill(255, 100, 100);
     ellipse(food2.x, food2.y, food2.size);
+    pop();
+  }
+}
+
+function displayFood3() {
+  if (!food3.eaten) {
+    push();
+    fill(255, 100, 100);
+    ellipse(food3.x, food3.y, food3.size);
     pop();
   }
 }
