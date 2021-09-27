@@ -10,6 +10,7 @@ A  game about avoiding the virus covid 19 (represented by a red circle), with an
 let rect1 = {
   x: 0,
   y: 0,
+  z: 0,
   angle: 0,
   speed: 0.01,
 };
@@ -17,6 +18,7 @@ let rect1 = {
 let rect2 = {
   x: 0,
   y: 0,
+  z: 0,
   angle: 0,
   speed: 0.01,
 };
@@ -24,6 +26,7 @@ let rect2 = {
 let covid19 = {
   x: 0,
   y: 255,
+  z: 0,
   size: 100,
   vx: 0,
   vy: 0,
@@ -38,6 +41,7 @@ let covid19 = {
 let player = {
   x: 250,
   y: 250,
+  z: 0,
   size: 100,
   fill: 255
 }
@@ -54,7 +58,7 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(500, 500, WEBGL);
+  createCanvas(500, 500, );
   noCursor();
   covid19.y = random(0, height);
 
