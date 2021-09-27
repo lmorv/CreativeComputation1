@@ -7,6 +7,15 @@ This is a series of  more experiments on the subject of arrays.
 
 "use strict";
 
+let school = [];
+let schoolSize = 1;
+
+// Our fish
+let fish1;
+let fish2;
+let fish3;
+let fish4;
+
 
 /**
 Description of preload
@@ -22,11 +31,11 @@ Description of setup
 function setup() {
   createCanvas(600, 600);
 
-  // Create four fish, positioned randomly
-  fish1 = createFish(random(0, width), random(0, height));
-  fish2 = createFish(random(0, width), random(0, height));
-  fish3 = createFish(random(0, width), random(0, height));
-  fish4 = createFish(random(0, width), random(0, height));
+  for (let i = 0; i < schoolSize; i++) {
+
+    let fish = createFish(random(0, width), random(0, height));
+    school.push(fish);
+  }
 }
 
 // createFish(x,y)
@@ -48,15 +57,11 @@ function createFish(x, y) {
 function draw() {
   background(0);
 
-  moveFish(fish1);
-  moveFish(fish2);
-  moveFish(fish3);
-  moveFish(fish4);
+  for (let i = 0; i < school.length; i++) {
+    moveFish(school[i]);
+    displayFish(school[i]);
+  }
 
-  displayFish(fish1);
-  displayFish(fish2);
-  displayFish(fish3);
-  displayFish(fish4);
 }
 
 // moveFish(fish)
@@ -86,4 +91,9 @@ function displayFish(fish) {
   noStroke();
   ellipse(fish.x, fish.y, fish.size);
   pop();
+}
+
+function mousePressed() {
+  let fish = createFish(mouseX, mouseY);
+  school.push(fish);
 }
