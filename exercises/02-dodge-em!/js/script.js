@@ -1,5 +1,5 @@
 /**
-Dodging Covid 19
+Dodge em!
 Leonardo Morales
 
 A  game about avoiding the virus covid 19 (represented by a red circle), with an interesting background animation. Covid gets faster every time it spawns!
@@ -54,7 +54,7 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(500, 500, WEBGL);
   noCursor();
   covid19.y = random(0, height);
 
