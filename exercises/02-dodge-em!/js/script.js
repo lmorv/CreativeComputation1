@@ -28,6 +28,12 @@ let covid19 = {
   vx: 0,
   vy: 0,
   speed: 5,
+
+  ax: 0,
+  ay: 0,
+  maxSpeed: 10,
+  acceleration: 1,
+
   fill: {
     r: 255,
     g: 0,
@@ -90,21 +96,11 @@ function covid19Movement() {
 
 function covidOffscreen() {
 
-
   if (covid19.x > width) {
     covid19.x = 0;
     covid19.y = random(0, height);
     covid19.speed += 1; // Increase covid's speed every time it respawns
     covid19.speed = constrain(covid19.speed, 0, 66); // constrain the speed to 30
-
-    // // vear covid thowards player acording to it's Y position
-    // if (player.y > height / 3) { // bottomost quadrant
-    //   covid19.vy += +0.1;
-    // } else if (player.y > 2 * height / 3) { // middle quadrant
-    //   covid19.vy = covid19.speed;
-    // } else { // top quadrant
-    //   covid19.vy += -1;
-    // }
   }
 }
 
