@@ -46,6 +46,8 @@ function setupCircles() {
   // Display circles some distance from each other
   circle1.x = width / 3;
   circle2.x = 2 * width / 3;
+  circle1.y = height / 2;
+  circle2.y = height / 2;
 
   // move circles in a random direction
   circle1.vx = random(-circle1.speed, circle1.speed);
@@ -146,12 +148,12 @@ function loverOffscreen(circle) {
 }
 
 function mousePressed() {
-  if (state = `title`) {
+  if (state === `title`) {
     state = `simulation`;
+    setupCircles();
+  } else if (state === `sadness`) {
+    state = `title`;
+  } else if (state === `love`) {
+    state = `title`;
   }
-  // else if (state = `sadness`) {
-  //   state = `title`;
-  // } else if (state = `love`) {
-  //   state = `title`;
-  // }
 }
