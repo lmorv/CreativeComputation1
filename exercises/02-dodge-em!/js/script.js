@@ -149,6 +149,10 @@ function backgroundFX() {
   pop();
 
   // static VFX
+  // bgStaticFX();
+}
+
+function bgStaticFX() {
   for (let i = 0; i < numStatic; i++) {
     let x = random(0, width);
     let y = random(0, height);
