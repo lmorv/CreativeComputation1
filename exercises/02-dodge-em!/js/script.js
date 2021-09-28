@@ -1,8 +1,8 @@
 /**
-Dodge em!
+Dodgy bug!
 Leonardo Morales
 
-A  game about avoiding the virus covid 19 (represented by a red circle), with an interesting background animation. Covid gets faster every time it spawns!
+A  game about avoiding a big ol bug from ruining your beautifull bug program. The bug veers thowards your program, which you move around by directing it with the target, and it gets faster every time it respawns.
 */
 
 "use strict";
@@ -23,7 +23,7 @@ let rect2 = {
   size: 120,
 };
 
-let covid19 = {
+let bug = {
   x: 0,
   y: 255,
   size: 100,
@@ -47,7 +47,7 @@ let player = {
   vy: 0,
   ax: 0, // a stands for acceleration
   ay: 0,
-  maxSpeed: 10,
+  maxSpeed: 15,
   acceleration: 2,
   image: undefined,
 };
@@ -55,7 +55,7 @@ let player = {
 let target = {
   x: 250,
   y: 250,
-  size: 100,
+  size: 90,
   vx: 0,
   vy: 0,
   image: undefined,
@@ -67,7 +67,7 @@ let numStatic = 100;
 Description of preload
 */
 function preload() {
-  covid19.image = loadImage('assets/images/bug.png');
+  bug.image = loadImage('assets/images/bug.png');
   player.image = loadImage('assets/images/sphere.png');
   target.image = loadImage('assets/images/target.png');
 }
@@ -76,9 +76,10 @@ Description of setup
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  // noCursor();
-  covid19.y = random(0, height);
+  noCursor();
+  bug.y = random(0, height);
   noStroke();
+  imageMode(CENTER);
 }
 /**
 Description of draw()
@@ -97,37 +98,40 @@ function draw() {
   drawPlayer(); // draw player
 
   // drawTarget();
+  image(target.image, target.x, target.y, target.size + 20, target.size);
   // targetMovement();
+  target.x = mouseX;
+  target.y = mouseY;
 }
 
 function covid19Movement() {
   // covid base movement:
-  covid19.x += covid19.vx;
-  covid19.y += covid19.vy;
-  covid19.vx = covid19.speed;
+  bug.x += bug.vx;
+  bug.y += bug.vy;
+  bug.vx = bug.speed;
 
   // handle conditional movement based on player's y position
-  let currentSpeed = covid19.speed;
-  if (player.y > covid19.y) {
-    covid19.vy = currentSpeed + 0.1;
-  } else if (player.y < covid19.y) {
-    covid19.vy = -currentSpeed - 0.1;
+  let currentSpeed = bug.speed;
+  if (player.y > bug.y) {
+    bug.vy = currentSpeed + 0.1;
+  } else if (player.y < bug.y) {
+    bug.vy = -currentSpeed - 0.1;
   }
 }
 
 function covidOffscreen() {
 
-  if (covid19.x > width) {
-    covid19.x = 0;
-    covid19.y = random(0, height);
-    covid19.speed += 1; // Increase covid's speed every time it respawns
-    covid19.speed = constrain(covid19.speed, 0, 66); // constrain the speed to 30
+  if (bug.x > width) {
+    bug.x = 0;
+    bug.y = random(0, height);
+    bug.speed += 1; // Increase covid's speed every time it respawns
+    bug.speed = constrain(bug.speed, 0, 66); // constrain the speed to 30
   }
 }
 
 function checkFailState() {
-  let d = dist(player.x, player.y, covid19.x, covid19.y)
-  if (d < player.size / 2 + covid19.size / 2) {
+  let d = dist(player.x, player.y, bug.x, bug.y)
+  if (d < player.size / 2 + bug.size / 2) {
     noLoop();
   }
 }
@@ -135,8 +139,9 @@ function checkFailState() {
 function drawCovid() {
   push();
   noStroke();
-  fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
-  ellipse(covid19.x, covid19.y, covid19.size);
+  fill(bug.fill.r, bug.fill.g, bug.fill.b, 100);
+  ellipse(bug.x, bug.y, bug.size);
+  image(bug.image, bug.x, bug.y, bug.size + 50, bug.size + 30)
   pop();
 }
 
@@ -169,13 +174,12 @@ function playerMovement() {
   player.y += +player.vy;
 
   // draw the ellipse again
-
   ellipse(player.x, player.y, player.size);
 }
 
 function drawPlayer() {
   push();
-  imageMode(CENTER);
+
   fill(player.fill);
   image(player.image, player.x, player.y, player.size + 20, player.size + 20)
   pop();
@@ -192,7 +196,7 @@ function rectsVFX() {
   // move rects in oposite directions
   rect1.angle += rect1.speed;
   rect2.angle += -rect2.speed;
-  fill(25, 110, 100, 200);
+  fill(10, 90, 80, 200);
 
   // draw rectangle 1
   push();
