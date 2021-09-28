@@ -30,12 +30,7 @@ let covid19 = {
   vx: 0,
   vy: 0,
   speed: 5,
-
-  ax: 0,
-  ay: 0,
-  maxSpeed: 10,
-  acceleration: 1,
-
+  image: undefined,
   fill: {
     r: 255,
     g: 0,
@@ -47,14 +42,24 @@ let player = {
   x: 250,
   y: 250,
   size: 100,
-  fill: 255,
+  fill: 0,
   vx: 0, // v stands for velocity
   vy: 0,
   ax: 0, // a stands for acceleration
   ay: 0,
   maxSpeed: 10,
-  acceleration: 2
-}
+  acceleration: 2,
+  image: undefined,
+};
+
+let target = {
+  x: 250,
+  y: 250,
+  size: 100,
+  vx: 0,
+  vy: 0,
+  image: undefined,
+};
 
 let numStatic = 100;
 
@@ -62,7 +67,9 @@ let numStatic = 100;
 Description of preload
 */
 function preload() {
-
+  covid19.image = loadImage('assets/images/bug.png');
+  player.image = loadImage('assets/images/sphere.png');
+  target.image = loadImage('assets/images/target.png');
 }
 /**
 Description of setup
@@ -71,12 +78,13 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   // noCursor();
   covid19.y = random(0, height);
+  noStroke();
 }
 /**
 Description of draw()
 */
 function draw() {
-  background(0);
+  background(0, 0, 15);
   backgroundFX(); // background FX
 
   covid19Movement(); // covid 19 movement
@@ -85,8 +93,11 @@ function draw() {
 
   checkFailState(); // check for covid and player overlap
 
-  drawPlayer(); // draw player
   playerMovement(); // Player movement with acceletation
+  drawPlayer(); // draw player
+
+  // drawTarget();
+  // targetMovement();
 }
 
 function covid19Movement() {
@@ -158,14 +169,16 @@ function playerMovement() {
   player.y += +player.vy;
 
   // draw the ellipse again
+
   ellipse(player.x, player.y, player.size);
 }
 
 function drawPlayer() {
   push();
-  noStroke();
+  imageMode(CENTER);
   fill(player.fill);
-  // ellipse(player.x, player.y, player.size)
+  image(player.image, player.x, player.y, player.size + 20, player.size + 20)
+  pop();
 }
 
 function backgroundFX() {
@@ -207,7 +220,7 @@ function bgStaticFX() {
     let xSize = random(10, 40);
     let ySize = random(10, 200);
     push();
-    fill(50, 200, 150);
+    fill(50, 200, 150, 100);
     rect(x, y, xSize, ySize);
     pop();
   }
