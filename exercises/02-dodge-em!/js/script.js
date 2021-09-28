@@ -40,9 +40,12 @@ let player = {
   y: 250,
   size: 100,
   fill: 255,
-  vx: 0,
+  vx: 0, // v stands for velocity
   vy: 0,
-  speed: 5,
+  ax: 0, // a stands for acceleration
+  ay: 0,
+  maxSpeed: 10,
+  acceleration: 1
 }
 
 let numStatic = 1000;
@@ -68,28 +71,40 @@ function draw() {
   background(127);
   backgroundFX(); // background FX
 
-  covid19Movement(); // covid 19 movement
   covidOffscreen(); //check for covid offscreen status
+  covid19Movement(); // covid 19 movement
   drawCovid(); // draw covid 19
 
   checkFailState(); // check for covid and player overlap
 
-  playerMovement(); // Player movement
   drawPlayer(); // draw player
+  playerMovement(); // Player movement
 }
 
 function covid19Movement() {
+
   covid19.x += covid19.vx;
   covid19.y += covid19.vy;
   covid19.vx = covid19.speed;
 }
 
 function covidOffscreen() {
+
+
   if (covid19.x > width) {
     covid19.x = 0;
     covid19.y = random(0, height);
-    covid19.speed += 1; // Increase covid's speed evry time it respawns
+    covid19.speed += 1; // Increase covid's speed every time it respawns
     covid19.speed = constrain(covid19.speed, 0, 66); // constrain the speed to 30
+
+    // // vear covid thowards player acording to it's Y position
+    // if (player.y > height / 3) { // bottomost quadrant
+    //   covid19.vy += +0.1;
+    // } else if (player.y > 2 * height / 3) { // middle quadrant
+    //   covid19.vy = covid19.speed;
+    // } else { // top quadrant
+    //   covid19.vy += -1;
+    // }
   }
 }
 
@@ -109,32 +124,34 @@ function drawCovid() {
 }
 
 function playerMovement() {
+  // handle player movement acording to mouse possition
+  // using acceleration, later used to calculate speed.
+  // Left and Right:
   if (mouseX > player.x) {
-    // So set the circle's x velocity to a POSITIVE number to move it to the RIGHT
-    player.vx = player.speed;
+    player.ax = player.acceleration;
+  } else if (mouseX < player.x) {
+    player.ax = -player.acceleration;
   }
-  // Or if the mouse x position is LESS than the circle x position, it must be to the LEFT of the circle
-  else if (mouseX < player.x) {
-    // So set the circle's x velocity to a NEGATIVE number to move it to the LEFT
-    player.vx = -player.speed;
-  }
-
-  // If the mouse position is GREATER than the circle y position, it must be BELOW the circle
+  // Up and Down:
   if (mouseY > player.y) {
-    // So set the circle's x velocity to a POSITIVE number to move it DOWN
-    player.vy = player.speed;
-  }
-  // Or if the mouse y position is LESS than the circle y position, it must be ABOVE the circle
-  else if (mouseY < player.y) {
-    // So set the circle's x velocity to a NEGATIVE number to move it UP
-    player.vy = -player.speed;
+    player.ay = player.acceleration;
+  } else if (mouseY < player.y) {
+    player.ay = -player.acceleration;
   }
 
-  // Then we actually APPLY these changes to `vx` and `vy` to the circle's position
-  player.x = player.x + player.vx;
-  player.y = player.y + player.vy;
+  // update velocity based on acceleration
+  //Left & right:
+  player.vx += player.ax;
+  player.vx = constrain(player.vx, -player.maxSpeed, player.maxSpeed); // contrain to a maximum speed
+  // Up & Down:
+  player.vy += player.ay;
+  player.vy = constrain(player.vy, -player.maxSpeed, player.maxSpeed);
 
-  // And draw the ellipse at its new position
+  // update player position based on velocity
+  player.x += +player.vx;
+  player.y += +player.vy;
+
+  // draw the ellipse again
   ellipse(player.x, player.y, player.size);
 }
 
@@ -172,7 +189,7 @@ function backgroundFX() {
   rect(rect2.x, rect2.y, 100, 100);
   pop();
 
-  // static VFX
+  // static VFX:
   // bgStaticFX();
 }
 
