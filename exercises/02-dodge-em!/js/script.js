@@ -2,7 +2,7 @@
 Dodgy bug!
 Leonardo Morales
 
-A  game about avoiding a big ol bug from ruining your beautifull bug program. The bug veers thowards your program, which you move around by directing it with the target, and it gets faster every time it respawns.
+A  game about avoiding a big ol' bug from ruining your beautifull bug program. The bug veers thowards your program, which you move around by directing it with the target, and it gets faster every time it respawns.
 */
 
 "use strict";
@@ -63,8 +63,9 @@ let target = {
 
 let numStatic = 100;
 
+let nopeLoop = false;
 /**
-Description of preload
+preload images
 */
 function preload() {
   bug.image = loadImage('assets/images/bug.png');
@@ -72,7 +73,7 @@ function preload() {
   target.image = loadImage('assets/images/target.png');
 }
 /**
-Description of setup
+setup global settings
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -88,9 +89,9 @@ function draw() {
   background(0, 0, 15);
   backgroundFX(); // background FX
 
-  covid19Movement(); // covid 19 movement
-  covidOffscreen(); //check for covid offscreen status
-  drawCovid(); // draw covid 19
+  bugMovement(); // covid 19 movement
+  bugOffscreen(); //check for bug offscreen status
+  drawBug(); // draw the pesky bug
 
   checkFailState(); // check for covid and player overlap
 
@@ -104,7 +105,7 @@ function draw() {
   target.y = mouseY;
 }
 
-function covid19Movement() {
+function bugMovement() {
   // covid base movement:
   bug.x += bug.vx;
   bug.y += bug.vy;
@@ -119,12 +120,12 @@ function covid19Movement() {
   }
 }
 
-function covidOffscreen() {
+function bugOffscreen() {
 
   if (bug.x > width) {
     bug.x = 0;
     bug.y = random(0, height);
-    bug.speed += 1; // Increase covid's speed every time it respawns
+    bug.speed += 1; // Increase bug's speed every time it respawns
     bug.speed = constrain(bug.speed, 0, 66); // constrain the speed to 30
   }
 }
@@ -132,11 +133,12 @@ function covidOffscreen() {
 function checkFailState() {
   let d = dist(player.x, player.y, bug.x, bug.y)
   if (d < player.size / 2 + bug.size / 2) {
-    noLoop();
+    cursor(); // display cursor before stopping the simulation
+    noLoop(); // your program is now broken! refresh manualy.
   }
 }
 
-function drawCovid() {
+function drawBug() {
   push();
   noStroke();
   fill(bug.fill.r, bug.fill.g, bug.fill.b, 100);
