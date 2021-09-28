@@ -67,30 +67,16 @@ Description of draw()
 */
 function draw() {
   background(127);
+  backgroundFX(); // background FX
 
-  // background FX
-  backgroundFX();
+  covid19Movement(); // covid 19 movement
+  covidOffscreen(); //check for covid offscreen status
+  drawCovid(); // draw covid 19
 
-  // covid 19 movement
-  covid19Movement();
-  //check for covid offscreen status
-  covidOffscreen();
+  checkFailState(); // check for covid and player overlap
 
-  // check for covid and player overlap
-  checkFailState();
-
-  // draw covid 19
-  drawCovid();
-
-  // Player movement
-  player.x = mouseX;
-  player.y = mouseY;
-
-  // draw player
-  push();
-  noStroke();
-  fill(player.fill);
-  ellipse(player.x, player.y, player.size)
+  playerMovement(); // Player movement
+  drawPlayer(); // draw player
 }
 
 function covid19Movement() {
@@ -121,6 +107,18 @@ function drawCovid() {
   fill(covid19.fill.r, covid19.fill.g, covid19.fill.b);
   ellipse(covid19.x, covid19.y, covid19.size);
   pop();
+}
+
+function playerMovement() {
+  player.x = mouseX;
+  player.y = mouseY;
+}
+
+function drawPlayer() {
+  push();
+  noStroke();
+  fill(player.fill);
+  ellipse(player.x, player.y, player.size)
 }
 
 function backgroundFX() {
