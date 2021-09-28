@@ -12,6 +12,7 @@ let rect1 = {
   y: 0,
   angle: 0,
   speed: 0.01,
+  size: 120,
 };
 
 let rect2 = {
@@ -19,6 +20,7 @@ let rect2 = {
   y: 0,
   angle: 0,
   speed: 0.01,
+  size: 120,
 };
 
 let covid19 = {
@@ -51,10 +53,10 @@ let player = {
   ax: 0, // a stands for acceleration
   ay: 0,
   maxSpeed: 10,
-  acceleration: 1
+  acceleration: 2
 }
 
-let numStatic = 1000;
+let numStatic = 100;
 
 /**
 Description of preload
@@ -74,24 +76,32 @@ function setup() {
 Description of draw()
 */
 function draw() {
-  background(127);
+  background(0);
   backgroundFX(); // background FX
 
-  covidOffscreen(); //check for covid offscreen status
   covid19Movement(); // covid 19 movement
+  covidOffscreen(); //check for covid offscreen status
   drawCovid(); // draw covid 19
 
   checkFailState(); // check for covid and player overlap
 
   drawPlayer(); // draw player
-  playerMovement(); // Player movement
+  playerMovement(); // Player movement with acceletation
 }
 
 function covid19Movement() {
-
+  // covid base movement:
   covid19.x += covid19.vx;
   covid19.y += covid19.vy;
   covid19.vx = covid19.speed;
+
+  // handle conditional movement based on player's y position
+  let currentSpeed = covid19.speed;
+  if (player.y > covid19.y) {
+    covid19.vy = currentSpeed + 0.1;
+  } else if (player.y < covid19.y) {
+    covid19.vy = -currentSpeed - 0.1;
+  }
 }
 
 function covidOffscreen() {
@@ -159,43 +169,46 @@ function drawPlayer() {
 }
 
 function backgroundFX() {
+  // elongated rectandles static VFX:
+  bgStaticFX();
+  // rotating squares vfx:
+  rectsVFX();
+}
+
+function rectsVFX() {
   // move rects in oposite directions
   rect1.angle += rect1.speed;
   rect2.angle += -rect2.speed;
+  fill(25, 110, 100, 200);
 
   // draw rectangle 1
   push();
-  noStroke();
-  fill(255, 110, 50);
   rectMode(CENTER);
   translate(width / 2, height / 2, 0)
   rotate(rect1.angle);
   scale(4);
-  rect(rect1.x, rect1.y, 100, 100);
+  rect(rect1.x, rect1.y, rect1.size);
   pop();
 
   // draw rectangle 2
   push();
-  noStroke();
-  fill(255, 110, 50);
   rectMode(CENTER);
   translate(width / 2, height / 2)
   rotate(rect2.angle);
   scale(4);
-  rect(rect2.x, rect2.y, 100, 100);
+  rect(rect2.x, rect2.y, rect1.size);
   pop();
-
-  // static VFX:
-  // bgStaticFX();
 }
 
 function bgStaticFX() {
   for (let i = 0; i < numStatic; i++) {
     let x = random(0, width);
     let y = random(0, height);
+    let xSize = random(10, 40);
+    let ySize = random(10, 200);
     push();
-    stroke(255);
-    point(x, y);
+    fill(50, 200, 150);
+    rect(x, y, xSize, ySize);
     pop();
   }
 }
