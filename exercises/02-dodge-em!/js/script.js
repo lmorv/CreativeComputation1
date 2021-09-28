@@ -10,7 +10,6 @@ A  game about avoiding the virus covid 19 (represented by a red circle), with an
 let rect1 = {
   x: 0,
   y: 0,
-  z: 0,
   angle: 0,
   speed: 0.01,
 };
@@ -18,7 +17,6 @@ let rect1 = {
 let rect2 = {
   x: 0,
   y: 0,
-  z: 0,
   angle: 0,
   speed: 0.01,
 };
@@ -26,7 +24,6 @@ let rect2 = {
 let covid19 = {
   x: 0,
   y: 255,
-  z: 0,
   size: 100,
   vx: 0,
   vy: 0,
@@ -41,9 +38,11 @@ let covid19 = {
 let player = {
   x: 250,
   y: 250,
-  z: 0,
   size: 100,
-  fill: 255
+  fill: 255,
+  vx: 0,
+  vy: 0,
+  speed: 5,
 }
 
 let numStatic = 1000;
@@ -59,7 +58,7 @@ Description of setup
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  noCursor();
+  // noCursor();
   covid19.y = random(0, height);
 }
 /**
@@ -110,15 +109,40 @@ function drawCovid() {
 }
 
 function playerMovement() {
-  player.x = mouseX;
-  player.y = mouseY;
+  if (mouseX > player.x) {
+    // So set the circle's x velocity to a POSITIVE number to move it to the RIGHT
+    player.vx = player.speed;
+  }
+  // Or if the mouse x position is LESS than the circle x position, it must be to the LEFT of the circle
+  else if (mouseX < player.x) {
+    // So set the circle's x velocity to a NEGATIVE number to move it to the LEFT
+    player.vx = -player.speed;
+  }
+
+  // If the mouse position is GREATER than the circle y position, it must be BELOW the circle
+  if (mouseY > player.y) {
+    // So set the circle's x velocity to a POSITIVE number to move it DOWN
+    player.vy = player.speed;
+  }
+  // Or if the mouse y position is LESS than the circle y position, it must be ABOVE the circle
+  else if (mouseY < player.y) {
+    // So set the circle's x velocity to a NEGATIVE number to move it UP
+    player.vy = -player.speed;
+  }
+
+  // Then we actually APPLY these changes to `vx` and `vy` to the circle's position
+  player.x = player.x + player.vx;
+  player.y = player.y + player.vy;
+
+  // And draw the ellipse at its new position
+  ellipse(player.x, player.y, player.size);
 }
 
 function drawPlayer() {
   push();
   noStroke();
   fill(player.fill);
-  ellipse(player.x, player.y, player.size)
+  // ellipse(player.x, player.y, player.size)
 }
 
 function backgroundFX() {
