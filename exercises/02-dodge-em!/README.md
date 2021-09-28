@@ -1,3 +1,3 @@
 # Dodging game
 
-This is the README file for the dodging Covid 19 challenge/ activity. A very fun and topical project for class
+This is the README file for the Dodgy Bug game exercise. A  game about avoiding a big ol' bug from ruining your beautiful bug program. The bug veers towards your program, which you move around by directing it with the target, and it gets faster every time it respawns.
