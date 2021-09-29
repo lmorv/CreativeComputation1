@@ -1,40 +1,50 @@
-/************************************
-Moving Pictures
+/**
+Moving Cubes!
 Leonardo Morales
 
-Activity 3, applying variables to move two circles across the screen,
-while controling the background color acording to their sizes.
-************************************/
+This is a template. You must fill in the title,
+author, and this description to match your project!
+*/
 
 "use strict";
-let bg = {
-  r: 0,
-  g: 0,
-  b: 0
+
+let cube1 = {
+  dim: 100, // cube dimentions
+  tx: -80, //tanslate x, and so on ...
+  ty: 0,
+  tz: 0,
+  fill: {
+    r: 255,
+    g: 0,
+    b: 0
+  }
+};
+let cube2 = {
+  dim: 100, // cube dimentions
+  tx: 80, //tanslate x, and so on ...
+  ty: 0,
+  tz: 0,
+  fill: {
+    r: 0,
+    g: 0,
+    b: 255
+  }
 };
 
-let circle1 = {
-  x: 0,
-  y: 250,
-  size: 100,
-  growthRate: 1,
-  fill: 255,
-  alpha: 200,
-  speed: 1
-};
-
-let circle2 = {
-  x: 500,
-  y: 250,
-  size: 75,
-  sizeRatio: 0.75,
-  fill: 255,
-  alpha: 200,
-  speed: -1
+let userCube = {
+  dim: 50,
+  tx: 0,
+  ty: 0,
+  tz: 0,
+  fill: {
+    r: 0,
+    g: 0,
+    b: 0
+  }
 };
 
 /**
-Description of preload
+preload does nothing.
 */
 function preload() {
 
@@ -44,34 +54,79 @@ function preload() {
 Description of setup
 */
 function setup() {
-createCanvas(500, 500);
-noStroke();
+  createCanvas(700, 700, WEBGL);
 }
 
 /**
 Description of draw()
 */
 function draw() {
-  // background
-  let blueCapValue = width*0.75;
-  background(bg.r, bg.g, bg.b);
-  bg.r = bg.r + 1;
-  bg.r = map(circle1.size, 100, width, 0, 255);
-  bg.b = map(circle2.size, 75, blueCapValue, 255, 0); // Q: cant use operations on object propertieties inside map? ex: map(circle2.size, 75, circle1.size*0.75, 255, 0)  A: circle1.size is a static value, this function is pulling it's value at the start of the prigram (100), not the dinamically changed value after the calculations below.
+  background(10, 70, 70);
+  // calculate mouse x and y in 3d coordinates:
+  let mouseY3D = mouseY - height / 2;
+  let mouseX3D = mouseX - height / 2;
 
-  // left circle
-  circle1.x += + circle1.speed;
-  circle1.x = constrain(circle1.x, 0, width/2);
-  circle1.size += + circle1.growthRate;
-  circle1.size = constrain(circle1.size, 0, height)
-  fill(circle1.fill, circle1.alpha);
-  ellipse(circle1.x, circle1.y, circle1.size);
+  // global rotation on 0, 0, 0
+  rotateX(frameCount * 0.01);
+  rotateY(frameCount * 0.01);
 
-  // right circle
-  circle2.x += + circle2.speed;
-  circle2.x = constrain(circle2.x, width/2, 500);
-  circle2.size = circle1.size * circle2.sizeRatio;
-  fill(circle2.fill, circle2.alpha);
-  ellipse(circle2.x, circle2.y, circle2.size);
 
+  // CUBE 1:
+  push()
+  fill(cube1.fill.r, cube1.fill.g, cube1.fill.b);
+  translate(cube1.tx, cube1.ty, cube1.tz); // transate cube to the LEFT
+  // rotateX(frameCount * 0.1);
+  rotateY(frameCount * 0.1); // rotate on 'local' axis after having translated the matrix
+  box(cube1.dim);
+  pop();
+
+  // CUBE 2:
+  push();
+  fill(cube2.fill.r, cube2.fill.g, cube2.fill.b);
+  translate(cube2.tx, cube2.ty, cube2.tz); // transate cube to the RIGHT
+  // rotateX(frameCount * 0.1);
+  rotateX(frameCount * 0.1); // rotate on 'local' axis after having translated the matrix
+  // rotateY(frameCount * 0.1);
+  box(cube2.dim);
+  pop();
+
+  //USER CUBE display:
+  push();
+  fill(userCube.fill.r, userCube.fill.g, userCube.fill.b);
+  translate(userCube.tx, userCube.ty); // move this box to mouse possition
+  box(userCube.dim);
+  pop();
+
+  //USER CUBE movemnet:
+  userCube.tx = mouseX3D;
+  userCube.ty = mouseY3D;
+  // constrain user cube translate to canvas (fixed) dimentions
+  userCube.ty = constrain(userCube.ty, -310, 310);
+  userCube.tx = constrain(userCube.tx, -310, 310);
+
+
+  // handle scalar tranformations:
+  cube1.dim = map(mouseY3D, 0, height / 2, 0, mouseY - height / 2);
+  cube2.dim = map(mouseX3D, 0, width / 2, 0, mouseX - width / 2);
+  // constrain cube dimentions:
+  cube1.dim = constrain(cube1.dim, 40, 300);
+  cube2.dim = constrain(cube2.dim, 40, 300);
+
+  //handle USER CUBE color variation
+  // Map red chanel to vertical mouse:
+  if (mouseY3D > 0) {
+    userCube.fill.r = map(mouseY3D, 0, 350, 0, 255);
+  } else {
+    userCube.fill.r = map(mouseY3D, 0, -350, 0, 255);
+  };
+  // Map blue chanel to horizontal mouse:
+  if (mouseX3D > 0) {
+    userCube.fill.b = map(mouseX3D, 0, 350, 0, 255);
+  } else {
+    userCube.fill.b = map(mouseX3D, 0, -350, 0, 255);
+  };
+
+  //DEBUG:
+  console.log(`userCube.fill.r:${userCube.fill.r}`);
+  console.log(`mouseY3D:${mouseY3D}`);
 }
