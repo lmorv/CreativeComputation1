@@ -2,8 +2,10 @@
 Moving Cubes!
 Leonardo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+This is a program about moving cubes in 3D!
+the x and y coordinates of the mouse controll the size of two cubes
+and the possition & color of a 3rd,
+a global rotation along both x & y futher complicates things.
 */
 
 "use strict";
@@ -51,7 +53,7 @@ function preload() {
 }
 
 /**
-Description of setup
+setup a canvas with fixed dimentions, using WEBGL renderer
 */
 function setup() {
   createCanvas(700, 700, WEBGL);
@@ -62,6 +64,7 @@ Description of draw()
 */
 function draw() {
   background(10, 70, 70);
+
   // calculate mouse x and y in 3d coordinates:
   let mouseY3D = mouseY - height / 2;
   let mouseX3D = mouseX - height / 2;
@@ -75,8 +78,7 @@ function draw() {
   push()
   fill(cube1.fill.r, cube1.fill.g, cube1.fill.b);
   translate(cube1.tx, cube1.ty, cube1.tz); // transate cube to the LEFT
-  // rotateX(frameCount * 0.1);
-  rotateY(frameCount * 0.1); // rotate on 'local' axis after having translated the matrix
+  rotateY(frameCount * 0.1); // rotate on 'local' Y axis after having translated the matrix
   box(cube1.dim);
   pop();
 
@@ -84,9 +86,7 @@ function draw() {
   push();
   fill(cube2.fill.r, cube2.fill.g, cube2.fill.b);
   translate(cube2.tx, cube2.ty, cube2.tz); // transate cube to the RIGHT
-  // rotateX(frameCount * 0.1);
-  rotateX(frameCount * 0.1); // rotate on 'local' axis after having translated the matrix
-  // rotateY(frameCount * 0.1);
+  rotateX(frameCount * 0.1); // rotate on 'local' X axis after having translated the matrix
   box(cube2.dim);
   pop();
 
