@@ -32,12 +32,14 @@ let rock = {
 }
 
 let state = `title`; // states: title, simulation, uncharted, colission, profit
-
+let fontAlagard;
+let fontPhazed;
 /**
 Description of preload
 */
 function preload() {
-
+  fontAlagard = loadFont('assets/fonts/alagard.ttf');
+  fontPhazed = loadFont('assets/fonts/Phazed-Regular.otf');
 }
 
 /**
@@ -83,6 +85,7 @@ function draw() {
 function title() {
   push();
   textSize(65);
+  textFont(fontAlagard, 100);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
   text(`LOVE?`, width / 2, height / 2);
