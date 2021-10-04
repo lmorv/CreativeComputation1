@@ -62,7 +62,7 @@ Description of draw()
 */
 function draw() {
   background(10, 70, 70);
-
+  orbitControl();
   // global rotation on 0, 0, 0
   // globalRotation();
 
@@ -71,7 +71,7 @@ function draw() {
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
-  userBehaviour();
+  // userBehaviour();
 
 }
 
@@ -115,7 +115,7 @@ function displayUser() {
 
 function userBehaviour() {
 
-  // move user cube to mouse position 
+  // move user cube to mouse position
   userCube.tx = threeDMouseX();
   userCube.ty = threeDMouseY();
 
