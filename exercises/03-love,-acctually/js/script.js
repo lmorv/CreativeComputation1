@@ -1,13 +1,19 @@
 /**
-Looking for love
+Space mining remote navigator
 Leonardo Morales
 
-A simulation of how love (or the lack of it) works in real life.
+A space mining simulation of navigating among fast moving rock debries,
+and tame mineral ore deposit asteroids.
 */
 
 "use strict";
 
-let circle1 = {
+
+// let starship = {
+
+
+
+let ore = {
   x: undefined,
   y: 250,
   size: 100,
@@ -16,7 +22,7 @@ let circle1 = {
   speed: 5,
 }
 
-let circle2 = {
+let rock = {
   x: undefined,
   y: 250,
   size: 100,
@@ -25,7 +31,7 @@ let circle2 = {
   speed: 5,
 }
 
-let state = `title`; // states: title, simulation, love, sadness
+let state = `title`; // states: title, simulation, uncharted, colission, profit
 
 /**
 Description of preload
@@ -39,19 +45,21 @@ Description of setup
 */
 function setup() {
   createCanvas(500, 500);
-  setupCircles();
+  setupGameObjects(); // maybe needs to be in draw. rename to reset?
 }
 
-function setupCircles() {
-  // Display circles some distance from each other
-  circle1.x = width / 3;
-  circle2.x = 2 * width / 3;
+function setupGameObjects() {
+  // Display circles some distance from each other << change to random positions
+  ore.x = width / 3;
+  rock.x = 2 * width / 3;
+  ore.y = height / 2;
+  rock.y = height / 2;
 
-  // move circles in a random direction
-  circle1.vx = random(-circle1.speed, circle1.speed);
-  circle1.vy = random(-circle1.speed, circle1.speed);
-  circle2.vx = random(-circle2.speed, circle2.speed);
-  circle2.vy = random(-circle2.speed, circle2.speed);
+  // move ore and rocks in a random directions
+  ore.vx = random(-ore.speed, ore.speed);
+  ore.vy = random(-ore.speed, ore.speed);
+  rock.vx = random(-rock.speed, rock.speed);
+  rock.vy = random(-rock.speed, rock.speed);
 }
 
 /**
@@ -82,10 +90,10 @@ function title() {
 }
 
 function simulation() {
-  moveLovers();
+  moveAsteroids();
   checkSadness(); // offscreen condition
   checkLove(); // overlap condition
-  displayLovers();
+  displayAsteroids();
 }
 
 function love() {
@@ -106,17 +114,17 @@ function sadness() {
   pop();
 }
 
-function moveLovers() {
+function moveAsteroids() {
   // move circles
-  circle1.x = circle1.x + circle1.vx;
-  circle1.y = circle1.y + circle1.vy;
+  ore.x = ore.x + ore.vx;
+  ore.y = ore.y + ore.vy;
 
-  circle2.x = circle2.x + circle2.vx;
-  circle2.y = circle2.y + circle2.vy;
+  rock.x = rock.x + rock.vx;
+  rock.y = rock.y + rock.vy;
 }
 
 function checkSadness() {
-  if (loverOffscreen(circle1) || loverOffscreen(circle2)) {
+  if (loverOffscreen(ore) || loverOffscreen(rock)) {
     // sad ending
     state = `sadness`;
   }
@@ -124,17 +132,17 @@ function checkSadness() {
 
 function checkLove() {
   // check for lovers overlapping
-  let d = dist(circle1.x, circle1.y, circle2.x, circle2.y);
-  if (d < circle1.size / 2 + circle2.size / 2) {
+  let d = dist(ore.x, ore.y, rock.x, rock.y);
+  if (d < ore.size / 2 + rock.size / 2) {
     // love ending
     state = `love`;
   }
 }
 
-function displayLovers() {
+function displayAsteroids() {
   //draw circles
-  ellipse(circle1.x, circle1.y, circle1.size);
-  ellipse(circle2.x, circle2.y, circle2.size);
+  ellipse(ore.x, ore.y, ore.size);
+  ellipse(rock.x, rock.y, rock.size);
 }
 
 function loverOffscreen(circle) {
@@ -146,12 +154,12 @@ function loverOffscreen(circle) {
 }
 
 function mousePressed() {
-  if (state = `title`) {
+  if (state === `title`) {
     state = `simulation`;
+    setupGameObjects();
+  } else if (state === `sadness`) {
+    state = `title`;
+  } else if (state === `love`) {
+    state = `title`;
   }
-  // else if (state = `sadness`) {
-  //   state = `title`;
-  // } else if (state = `love`) {
-  //   state = `title`;
-  // }
 }
