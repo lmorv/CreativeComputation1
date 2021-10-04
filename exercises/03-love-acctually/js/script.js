@@ -9,9 +9,14 @@ and tame mineral ore deposit asteroids.
 "use strict";
 
 
-// let starship = {
-
-
+let starship = {
+  x: 0,
+  y: 0,
+  size: 50,
+  vx: 0,
+  vy: 0,
+  speed: 2,
+}
 
 let ore = {
   x: undefined,
@@ -19,7 +24,7 @@ let ore = {
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 5,
+  speed: 2,
 }
 
 let rock = {
@@ -28,7 +33,7 @@ let rock = {
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 5,
+  speed: 2,
 }
 
 let state = `title`; // states: title, simulation, uncharted, colission, profit
@@ -46,16 +51,20 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(900, 600);
   setupGameObjects(); // maybe needs to be in draw. rename to reset?
 }
 
 function setupGameObjects() {
   // Display circles some distance from each other << change to random positions
+  starship.x = width / 2;
+  starship.y = height / 2;
+
   ore.x = width / 3;
-  rock.x = 2 * width / 3;
   ore.y = height / 2;
+
   rock.y = height / 2;
+  rock.x = 2 * width / 3;
 
   // move ore and rocks in a random directions
   ore.vx = random(-ore.speed, ore.speed);
@@ -64,12 +73,11 @@ function setupGameObjects() {
   rock.vy = random(-rock.speed, rock.speed);
 }
 
-/**
-Description of draw()
+/*
+ draw()
 */
 function draw() {
   background(0);
-
   if (state === 'title') {
     title();
   } else if (state === `simulation`) {
@@ -94,9 +102,10 @@ function title() {
 
 function simulation() {
   moveAsteroids();
-  checkSadness(); // offscreen condition
-  checkLove(); // overlap condition
-  displayAsteroids();
+  moveStarship();
+  // checkSadness(); // offscreen condition
+  // checkLove(); // overlap condition
+  displayGameobjects();
 }
 
 function love() {
@@ -126,6 +135,28 @@ function moveAsteroids() {
   rock.y = rock.y + rock.vy;
 }
 
+function moveStarship() {
+  // horizontal movement
+  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+    starship.vx += -starship.speed;
+  } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+    starship.vx += starship.speed;
+  } else {
+    starship.vx = 0;
+  }
+  //vertical movement
+  if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+    starship.vy += -starship.speed;
+  } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+    starship.vy += starship.speed;
+  } else {
+    starship.vy = 0;
+  }
+
+  starship.x += starship.vx
+  starship.y += starship.vy
+}
+
 function checkSadness() {
   if (loverOffscreen(ore) || loverOffscreen(rock)) {
     // sad ending
@@ -142,10 +173,19 @@ function checkLove() {
   }
 }
 
-function displayAsteroids() {
-  //draw circles
+function displayGameobjects() {
+  // draw player starship
+  ellipse(starship.x, starship.y, starship.size)
+  //draw asteroids
+  push();
+  fill(200, 180, 50);
   ellipse(ore.x, ore.y, ore.size);
+  pop();
+
+  push();
+  fill(200, 20, 50);
   ellipse(rock.x, rock.y, rock.size);
+  pop();
 }
 
 function loverOffscreen(circle) {
