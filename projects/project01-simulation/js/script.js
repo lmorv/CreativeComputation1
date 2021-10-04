@@ -42,6 +42,7 @@ let userCube = {
   }
 };
 
+
 /**
 Description of preload
 */
@@ -61,15 +62,26 @@ Description of draw()
 */
 function draw() {
   background(10, 70, 70);
-  // calculate mouse x and y in 3d coordinates:
-  let mouseY3D = mouseY - height / 2;
-  let mouseX3D = mouseX - height / 2;
 
   // global rotation on 0, 0, 0
-  globalRotation();
+  // globalRotation();
 
+  //display GAME OBJECTS:
+  displayCubes();
+  displayUser();
 
-  // CUBE 1:
+  //USER CUBE movemnet & user-driven behaviour:
+  userBehaviour();
+
+}
+
+function globalRotation() {
+  rotateX(frameCount * 0.01);
+  rotateY(frameCount * 0.01);
+}
+
+function displayCubes() {
+  //display CUBE 1:
   push()
   fill(cube1.fill.r, cube1.fill.g, cube1.fill.b);
   translate(cube1.tx, cube1.ty, cube1.tz); // transate cube to the LEFT
@@ -78,7 +90,7 @@ function draw() {
   box(cube1.dim);
   pop();
 
-  // CUBE 2:
+  //display CUBE 2:
   push();
   fill(cube2.fill.r, cube2.fill.g, cube2.fill.b);
   translate(cube2.tx, cube2.ty, cube2.tz); // transate cube to the RIGHT
@@ -87,21 +99,29 @@ function draw() {
   // rotateY(frameCount * 0.1);
   box(cube2.dim);
   pop();
+}
 
+function displayUser() {
+  // calculate mouse x and y in 3d coordinates:
+  let mouseY3D = mouseY - height / 2;
+  let mouseX3D = mouseX - height / 2;
   //USER CUBE display:
   push();
   fill(userCube.fill.r, userCube.fill.g, userCube.fill.b);
   translate(userCube.tx, userCube.ty); // move this box to mouse possition
   box(userCube.dim);
   pop();
+}
 
-  //USER CUBE movemnet:
+function userBehaviour() {
+
+  calculate3DMouse();
+
   userCube.tx = mouseX3D;
   userCube.ty = mouseY3D;
   // constrain user cube translate to canvas (fixed) dimentions
   userCube.ty = constrain(userCube.ty, -310, 310);
   userCube.tx = constrain(userCube.tx, -310, 310);
-
 
   // handle scalar tranformations:
   cube1.dim = map(mouseY3D, 0, height / 2, 0, mouseY - height / 2);
@@ -129,7 +149,13 @@ function draw() {
   console.log(`mouseY3D:${mouseY3D}`);
 }
 
-function globalRotation() {
-  rotateX(frameCount * 0.01);
-  rotateY(frameCount * 0.01);
+function threeDMouseX(x) {
+  // calculate mouse x and y in 3d coordinates:
+  x = mouseX - height / 2;
+  return mouseX3D;
+}
+
+function threeDMouseY(y) {
+  y = mouseY - height / 2;
+  return mouseY3D;
 }
