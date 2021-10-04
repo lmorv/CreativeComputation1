@@ -115,47 +115,47 @@ function displayUser() {
 
 function userBehaviour() {
 
-  calculate3DMouse();
+  // move user cube to mouse position 
+  userCube.tx = threeDMouseX();
+  userCube.ty = threeDMouseY();
 
-  userCube.tx = mouseX3D;
-  userCube.ty = mouseY3D;
   // constrain user cube translate to canvas (fixed) dimentions
   userCube.ty = constrain(userCube.ty, -310, 310);
   userCube.tx = constrain(userCube.tx, -310, 310);
 
   // handle scalar tranformations:
-  cube1.dim = map(mouseY3D, 0, height / 2, 0, mouseY - height / 2);
-  cube2.dim = map(mouseX3D, 0, width / 2, 0, mouseX - width / 2);
+  cube2.dim = map(threeDMouseX(), 0, width / 2, 0, mouseX - width / 2);
+  cube1.dim = map(threeDMouseY(), 0, height / 2, 0, mouseY - height / 2);
   // constrain cube dimentions:
   cube1.dim = constrain(cube1.dim, 40, 300);
   cube2.dim = constrain(cube2.dim, 40, 300);
 
   //handle USER CUBE color variation
   // Map red chanel to vertical mouse:
-  if (mouseY3D > 0) {
-    userCube.fill.r = map(mouseY3D, 0, 350, 0, 255);
+  if (threeDMouseY() > 0) {
+    userCube.fill.r = map(threeDMouseY(), 0, 350, 0, 255);
   } else {
-    userCube.fill.r = map(mouseY3D, 0, -350, 0, 255);
+    userCube.fill.r = map(threeDMouseY(), 0, -350, 0, 255);
   };
   // Map blue chanel to horizontal mouse:
-  if (mouseX3D > 0) {
-    userCube.fill.b = map(mouseX3D, 0, 350, 0, 255);
+  if (threeDMouseX() > 0) {
+    userCube.fill.b = map(threeDMouseX(), 0, 350, 0, 255);
   } else {
-    userCube.fill.b = map(mouseX3D, 0, -350, 0, 255);
+    userCube.fill.b = map(threeDMouseX(), 0, -350, 0, 255);
   };
 
   //DEBUG:
   console.log(`userCube.fill.r:${userCube.fill.r}`);
-  console.log(`mouseY3D:${mouseY3D}`);
+  console.log(`mouseY3D:${threeDMouseY()}`);
 }
 
 function threeDMouseX(x) {
   // calculate mouse x and y in 3d coordinates:
   x = mouseX - height / 2;
-  return mouseX3D;
+  return x;
 }
 
 function threeDMouseY(y) {
   y = mouseY - height / 2;
-  return mouseY3D;
+  return y;
 }
