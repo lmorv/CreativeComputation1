@@ -19,21 +19,25 @@ let starship = {
 }
 
 let ore = {
-  x: undefined,
+  x: 0,
   y: 250,
-  size: 100,
+  size: 80,
   vx: 0,
   vy: 0,
-  speed: 2,
+  speed: 1,
+  angle: 0,
+  orbitSpeed: 0.08,
 }
 
 let rock = {
-  x: undefined,
+  x: 0,
   y: 250,
   size: 100,
   vx: 0,
   vy: 0,
-  speed: 2,
+  speed: 3,
+  angle: 0,
+  orbitSpeed: 0.08,
 }
 
 let state = `title`; // states: title, simulation, uncharted, colision, profit
@@ -101,11 +105,11 @@ function title() {
 }
 
 function simulation() {
-  moveAsteroids();
+  displaceAsteroids();
+  displayGameobjects();
   moveStarship();
   // checkSadness(); // offscreen condition
   // checkLove(); // overlap condition
-  displayGameobjects();
 }
 
 function love() {
@@ -126,13 +130,20 @@ function sadness() {
   pop();
 }
 
-function moveAsteroids() {
+function displaceAsteroids() {
   // move circles
+
+  push();
   ore.x = ore.x + ore.vx;
   ore.y = ore.y + ore.vy;
 
-  rock.x = rock.x + rock.vx;
-  rock.y = rock.y + rock.vy;
+  pop();
+
+  push();
+  // rock.x = rock.x + rock.vx;
+  // rock.y = rock.y + rock.vy;
+  rotate(rock.angle);
+  pop();
 }
 
 function moveStarship() {
@@ -176,10 +187,17 @@ function checkLove() {
 function displayGameobjects() {
   // draw player starship
   ellipse(starship.x, starship.y, starship.size)
+
+  // rotate circles
+  ore.angle += ore.orbitSpeed;
+  rock.angle += -rock.orbitSpeed;
+
   //draw asteroids
   push();
   fill(200, 180, 50);
-  ellipse(ore.x, ore.y, ore.size);
+  translate(ore.x, ore.y); // rotation pivot
+  rotate(ore.angle);
+  ellipse(100, 0, ore.size);
   pop();
 
   push();
