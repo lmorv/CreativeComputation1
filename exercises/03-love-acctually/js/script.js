@@ -3,7 +3,7 @@ Space mining remote navigator
 Leonardo Morales
 
 A space mining simulation of navigating among fast moving rock debries,
-and tame mineral ore deposit asteroids.
+and mineral ore deposit asteroids.
 */
 
 "use strict";
