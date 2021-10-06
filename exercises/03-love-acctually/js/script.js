@@ -24,7 +24,7 @@ let ore = {
   size: 80,
   vx: 0,
   vy: 0,
-  speed: 1,
+  speed: 3,
   angle: 0,
   orbitSpeed: 0.08,
 }
@@ -132,12 +132,17 @@ function sadness() {
 
 function displaceAsteroids() {
   // move circles
+  let change = random(); // random number for direction variation
 
-  push();
+  // change asteroid direction based on probality:
+  if (change < 0.04) {
+    ore.vx = random(-ore.speed, ore.speed);
+    ore.vy = random(-ore.speed, ore.speed);
+  }
+
   ore.x = ore.x + ore.vx;
   ore.y = ore.y + ore.vy;
 
-  pop();
 
   push();
   // rock.x = rock.x + rock.vx;
@@ -177,7 +182,7 @@ function checkSadness() {
 
 function checkLove() {
   // check for lovers overlapping
-  let d = dist(ore.x, ore.y, rock.x, rock.y);
+  let d = dist(ore.x, ore.y, starship.x, starship.y);
   if (d < ore.size / 2 + rock.size / 2) {
     // love ending
     state = `love`;
@@ -197,6 +202,7 @@ function displayGameobjects() {
   fill(200, 180, 50);
   translate(ore.x, ore.y); // rotation pivot
   rotate(ore.angle);
+  ellipse(0, 0, 10);
   ellipse(100, 0, ore.size);
   pop();
 
