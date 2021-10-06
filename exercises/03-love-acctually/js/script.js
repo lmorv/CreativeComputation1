@@ -177,9 +177,9 @@ function simulation() {
   displayGameobjects(); // draws shapes & rotates ROCK & ORE
   moveStarship(); // player movement
 
-  // checkUncharted(); // offscreen condition, ORE & STARSHIP
-  // checkProfit(); // success condition, ORE
-  // checkImpact(); // loss condition, ROCK
+  checkUncharted(); // offscreen condition, ORE & STARSHIP
+  checkProfit(); // success condition, ORE
+  checkImpact(); // loss condition, ROCK
 }
 
 function radarTargets() {
