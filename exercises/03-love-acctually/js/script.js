@@ -17,8 +17,8 @@ let starship = {
   vy: 0,
   ax: 0,
   vx: 0,
-  acceleration: 0.06,
-  maxSpeed: 5,
+  acceleration: 0.07,
+  maxSpeed: 6,
 }
 
 let ore = {
@@ -47,7 +47,7 @@ let rock = {
   orbitSpeed: 0.08,
 }
 
-let state = `title`; // states: title, simulation, uncharted, colision, profit
+let state = `title`; // states: title, simulation, uncharted, impact, profit
 let fontAlagard;
 let fontPhazed;
 /**
@@ -62,20 +62,25 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(900, 600);
+  createCanvas(windowWidth - 100, windowHeight - 100);
   setupGameObjects(); // maybe needs to be in draw. rename to reset?
+  textFont(fontAlagard, 80);
 }
 
 function setupGameObjects() {
-  // Display circles some distance from each other << change to random positions
-  starship.x = width / 2;
-  starship.y = height / 2;
+  // position game objects
+  starship.x = width / 4;
+  starship.y = height / 4;
 
-  ore.x = width / 3;
+  ore.x = width / 2;
   ore.y = height / 2;
 
   rock.y = height / 2;
   rock.x = 2 * width / 3;
+
+  // reset starship velocity
+  starship.vx = 0;
+  starship.vy = 0;
 
   // move ore and rocks in a random directions
   ore.ax = random(-ore.acceleration, ore.acceleration);
@@ -93,47 +98,77 @@ function draw() {
     title();
   } else if (state === `simulation`) {
     simulation();
-  } else if (state === `love`) {
-    love();
-  } else if (state === `sadness`) {
-    sadness();
+  } else if (state === `profit`) {
+    profit();
+  } else if (state === `oreOORange`) {
+    oreOORange();
+  } else if (state === `starshipOORange`) {
+    starshipOORange();
+  } else if (state === `impact`) {
+    impact();
   }
 }
 
 
 function title() {
   push();
-  textSize(65);
-  textFont(fontAlagard, 100);
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
-  text(`LOVE?`, width / 2, height / 2);
+  text(`Interstellar Mining Ops`, width / 2, height / 3);
+  textSize(50);
+  text(`// Colect Ore, avoid Rock`, width / 2, height / 2);
   pop();
+
 }
 
 function simulation() {
-  displaceAsteroids();
-  displayGameobjects();
-  moveStarship();
-  // checkSadness(); // offscreen condition
-  // checkLove(); // success condition
+  displaceAsteroids(); // ROCK & ORE displacement
+  displayGameobjects(); // draws shapes & rotates ROCK & ORE
+
+  moveStarship(); // player movement
+
+  checkUncharted(); // offscreen condition, ORE & STARSHIP
+  checkProfit(); // success condition, ORE
+  checkImpact(); // loss condition, ROCK
 }
 
-function love() {
+function profit() {
   push();
-  textSize(65);
   fill(250, 100, 120);
   textAlign(CENTER, CENTER);
-  text(`LOVE!`, width / 2, height / 2);
+  text(`Ore successfully collected!`, width / 2, height / 3);
+  textSize(65);
+  text(`// Deploy another starship.`, width / 2, height / 2);
   pop();
 }
 
-function sadness() {
+function oreOORange() {
   push();
-  textSize(65);
   fill(100, 100, 250);
   textAlign(CENTER, CENTER);
-  text(`SADNESS :'(`, width / 2, height / 2);
+  text(`Ore out of radar's range.`, width / 2, height / 3);
+  textSize(60);
+  text(`// Deploy another starship.`, width / 2, height / 2);
+  pop();
+}
+
+function starshipOORange() {
+  push();
+  fill(100, 100, 250);
+  textAlign(CENTER, CENTER);
+  text(`Starship out of radar's range.`, width / 2, height / 3);
+  textSize(50);
+  text(`// Deploy another vessel.`, width / 2, height / 2);
+  pop();
+}
+
+function impact() {
+  push();
+  fill(100, 100, 250);
+  textAlign(CENTER, CENTER);
+  text(`Starship destroyed.`, width / 2, height / 3);
+  textSize(50);
+  text(`// Deploy another vessel.`, width / 2, height / 2);
   pop();
 }
 
@@ -177,6 +212,7 @@ function moveStarship() {
   } else {
     starship.ax = 0;
   }
+
   //vertical movement
   if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
     starship.ay += -starship.acceleration;
@@ -200,19 +236,29 @@ function moveStarship() {
   console.log(`starship.vx:${starship.vx}`, `starship.vy: ${starship.vy}`);
 }
 
-function checkSadness() {
-  if (assetOffscreen(ore) || assetOffscreen(starship)) {
+function checkUncharted() {
+  if (assetOffscreen(ore)) {
     // sad ending
-    state = `sadness`;
+    state = `oreOORange`;
+  } else if (assetOffscreen(starship)) {
+    state = `starshipOORange`
+  };
+}
+
+function checkProfit() {
+  // check for lovers overlapping
+  let d = dist(ore.x, ore.y, starship.x, starship.y);
+  if (d < ore.size / 2 + starship.size / 2) {
+    // success ending
+    state = `profit`;
   }
 }
 
-function checkLove() {
-  // check for lovers overlapping
-  let d = dist(ore.x, ore.y, starship.x, starship.y);
-  if (d < ore.size / 2 + rock.size / 2) {
-    // love ending
-    state = `love`;
+function checkImpact() {
+  let d = dist(rock.x, rock.y, starship.x, starship.y);
+  if (d < rock.size / 2 + starship.size / 2) {
+    // loss ending
+    state = `impact`;
   }
 }
 
@@ -254,9 +300,13 @@ function mousePressed() {
   if (state === `title`) {
     state = `simulation`;
     setupGameObjects();
-  } else if (state === `sadness`) {
+  } else if (state === `oreOORange`) {
     state = `title`;
-  } else if (state === `love`) {
+  } else if (state === 'starshipOORange') {
+    state = `title`;
+  } else if (state === `profit`) {
+    state = `title`;
+  } else if (state === `impact`) {
     state = `title`;
   }
 }
