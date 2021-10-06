@@ -32,7 +32,7 @@ let ore = {
 let rock = {
   x: 0,
   y: 250,
-  size: 100,
+  size: 90,
   vx: 0,
   vy: 0,
   speed: 3,
@@ -138,17 +138,18 @@ function displaceAsteroids() {
   if (change < 0.04) {
     ore.vx = random(-ore.speed, ore.speed);
     ore.vy = random(-ore.speed, ore.speed);
+
+    rock.vx = random(-rock.speed, rock.speed);
+    rock.vy = random(-rock.speed, rock.speed);
   }
 
+  // update position based on velocity
   ore.x = ore.x + ore.vx;
   ore.y = ore.y + ore.vy;
 
+  rock.x = rock.x + rock.vx;
+  rock.y = rock.y + rock.vy;
 
-  push();
-  // rock.x = rock.x + rock.vx;
-  // rock.y = rock.y + rock.vy;
-  rotate(rock.angle);
-  pop();
 }
 
 function moveStarship() {
@@ -208,7 +209,10 @@ function displayGameobjects() {
 
   push();
   fill(200, 20, 50);
-  ellipse(rock.x, rock.y, rock.size);
+  translate(rock.x, rock.y); // rotation pivot
+  rotate(rock.angle);
+  ellipse(0, 0, 10);
+  ellipse(100, 0, rock.size);
   pop();
 }
 
