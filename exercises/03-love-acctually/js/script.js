@@ -30,7 +30,7 @@ let ore = {
   ax: 0,
   av: 0,
   maxSpeed: 5,
-  aBurst: 0.5,
+  aBurst: 0.5, // acceleration burst for random direction change
   acceleration: 0.07,
   angle: 0,
   orbitSpeed: 0.08,
@@ -42,7 +42,11 @@ let rock = {
   size: 65,
   vx: 0,
   vy: 0,
-  speed: 3,
+  ax: 0,
+  ay: 0,
+  maxSpeed: 5,
+  aBurst: 0.5, // acceleration burst for random direction change
+  acceleration: 0.07,
   angle: 0,
   orbitSpeed: 0.08,
 }
@@ -62,7 +66,7 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(windowWidth - 100, windowHeight - 100);
+  createCanvas(windowWidth - 200, windowHeight - 100);
   setupGameObjects(); // maybe needs to be in draw. rename to reset?
   textFont(fontAlagard, 80);
 }
@@ -85,8 +89,8 @@ function setupGameObjects() {
   // move ore and rocks in a random directions
   ore.ax = random(-ore.acceleration, ore.acceleration);
   ore.ay = random(-ore.acceleration, ore.acceleration);
-  rock.vx = random(-rock.speed, rock.speed);
-  rock.vy = random(-rock.speed, rock.speed);
+  rock.ax = random(-rock.acceleration, rock.acceleration);
+  rock.ay = random(-rock.acceleration, rock.acceleration);
 }
 
 /*
@@ -116,21 +120,14 @@ function title() {
   textAlign(CENTER, CENTER);
   text(`Interstellar Mining Ops`, width / 2, height / 3);
   textSize(50);
-  text(`// Colect Ore, avoid Rock`, width / 2, height / 2);
+  text(`-- Colect Ore, avoid Rock. --`, width / 2, height / 2);
+  textSize(30);
+  text(`// Use ARROW or WASD keys to move. `, width / 2, 2 * height / 3);
   pop();
 
 }
 
-function simulation() {
-  displaceAsteroids(); // ROCK & ORE displacement
-  displayGameobjects(); // draws shapes & rotates ROCK & ORE
 
-  moveStarship(); // player movement
-
-  checkUncharted(); // offscreen condition, ORE & STARSHIP
-  checkProfit(); // success condition, ORE
-  checkImpact(); // loss condition, ROCK
-}
 
 function profit() {
   push();
@@ -138,7 +135,7 @@ function profit() {
   textAlign(CENTER, CENTER);
   text(`Ore successfully collected!`, width / 2, height / 3);
   textSize(65);
-  text(`// Deploy another starship.`, width / 2, height / 2);
+  text(`-- Deploy another starship. --`, width / 2, height / 2);
   pop();
 }
 
@@ -148,7 +145,7 @@ function oreOORange() {
   textAlign(CENTER, CENTER);
   text(`Ore out of radar's range.`, width / 2, height / 3);
   textSize(60);
-  text(`// Deploy another starship.`, width / 2, height / 2);
+  text(`-- Deploy another starship. --`, width / 2, height / 2);
   pop();
 }
 
@@ -158,7 +155,7 @@ function starshipOORange() {
   textAlign(CENTER, CENTER);
   text(`Starship out of radar's range.`, width / 2, height / 3);
   textSize(50);
-  text(`// Deploy another vessel.`, width / 2, height / 2);
+  text(`-- Deploy another vessel. --`, width / 2, height / 2);
   pop();
 }
 
@@ -168,7 +165,46 @@ function impact() {
   textAlign(CENTER, CENTER);
   text(`Starship destroyed.`, width / 2, height / 3);
   textSize(50);
-  text(`// Deploy another vessel.`, width / 2, height / 2);
+  text(`-- Deploy another vessel. --`, width / 2, height / 2);
+  pop();
+}
+
+function simulation() {
+
+  radarTargets();
+
+  displaceAsteroids(); // ROCK & ORE displacement
+  displayGameobjects(); // draws shapes & rotates ROCK & ORE
+  moveStarship(); // player movement
+
+  // checkUncharted(); // offscreen condition, ORE & STARSHIP
+  // checkProfit(); // success condition, ORE
+  // checkImpact(); // loss condition, ROCK
+}
+
+function radarTargets() {
+  let shipXNEG = starship.x - 40; // nevative horizontal offset
+  let shipXPOS = starship.x + 40; // positive horizontal offset
+  let shipYNEG = starship.y - 40; // nevative horizontal offset
+  let shipYPOS = starship.y + 40; // positive horizontal offset
+
+  push();
+  stroke(0, 100, 100);
+  //VERTICAL lines:
+  line(shipXNEG - starship.vx, 0, shipXNEG - starship.vx, height);
+  line(shipXPOS - starship.vx, 0, shipXPOS - starship.vx, height);
+
+  // HORIZONTAL lines:
+  line(0, shipYNEG - starship.vy, width, shipYNEG - starship.vy);
+  line(0, shipYPOS - starship.vy, width, shipYPOS - starship.vy);
+  pop();
+
+  push();
+  stroke(0, 100, 200);
+  line(ore.x - 20, 0, ore.x - 20, height);
+  line(ore.x + 20, 0, ore.x + 20, height);
+  line(0, ore.y - 20, width, ore.y - 20);
+  line(0, ore.y + 20, width, ore.y + 20);
   pop();
 }
 
@@ -183,21 +219,27 @@ function displaceAsteroids() {
     ore.ay = random(-ore.aBurst, ore.aBurst);
 
     //ROCK
-    rock.vx = random(-rock.speed, rock.speed);
-    rock.vy = random(-rock.speed, rock.speed);
-
+    rock.ax = random(-rock.aBurst, rock.aBurst);
+    rock.ay = random(-rock.aBurst, rock.aBurst);
   }
+
   // update velocity based on acceleration
   //ORE:
   ore.vx += ore.ax;
-  ore.vx = constrain(ore.vx, -ore.maxSpeed, ore.maxSpeed)
+  ore.vx = constrain(ore.vx, -ore.maxSpeed, ore.maxSpeed);
   ore.vy += ore.ay;
-  ore.vy = constrain(ore.vy, -ore.maxSpeed, ore.maxSpeed)
+  ore.vy = constrain(ore.vy, -ore.maxSpeed, ore.maxSpeed);
+  //ROCK
+  rock.vx += rock.ax;
+  rock.vx = constrain(rock.vx, -rock.maxSpeed, rock.maxSpeed);
+  rock.vy += rock.ay;
+  rock.vy = constrain(rock.vy, -rock.maxSpeed, rock.maxSpeed);
 
   // update position based on velocity
+  //ORE
   ore.x += ore.vx;
   ore.y += ore.vy;
-
+  //Rock
   rock.x += rock.vx;
   rock.y += rock.vy;
 
@@ -275,16 +317,18 @@ function displayGameobjects() {
   fill(200, 180, 50);
   translate(ore.x, ore.y); // rotation pivot
   rotate(ore.angle);
-  ellipse(0, 0, 10);
   ellipse(100, 0, ore.size);
+  rotate(-rock.angle);
+  ellipse(50, 0, 25);
   pop();
 
   push();
   fill(200, 20, 50);
   translate(rock.x, rock.y); // rotation pivot
   rotate(rock.angle);
-  ellipse(0, 0, 10);
   ellipse(100, 0, rock.size);
+  rotate(-rock.angle);
+  ellipse(50, 0, 25);
   pop();
 }
 
