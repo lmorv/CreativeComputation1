@@ -36,7 +36,7 @@ let rock = {
   speed: 2,
 }
 
-let state = `title`; // states: title, simulation, uncharted, colission, profit
+let state = `title`; // states: title, simulation, uncharted, colision, profit
 let fontAlagard;
 let fontPhazed;
 /**
@@ -158,7 +158,7 @@ function moveStarship() {
 }
 
 function checkSadness() {
-  if (loverOffscreen(ore) || loverOffscreen(rock)) {
+  if (assetOffscreen(ore) || assetOffscreen(starship)) {
     // sad ending
     state = `sadness`;
   }
@@ -188,7 +188,7 @@ function displayGameobjects() {
   pop();
 }
 
-function loverOffscreen(circle) {
+function assetOffscreen(circle) {
   if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) {
     return true;
   } else {
