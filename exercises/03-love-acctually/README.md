@@ -1,3 +1,3 @@
-# 05-looking-for-love
+# Interstellar Mining Operations
 
-This is the Looking for Love activity folder. A game that simulates real life human relationships at a high level using circles and conditional movement behavior. The simulation also features states that represent the preconditions and possible outcomes of romantic interaction.
+A simulation of remote controlled starships mining for ore in deep space. The ore profits are instantaneously teleported in case of success. Scanners have a limited range; if the starship or the mineral ore go out of range the simulation will stop. Fast floating rocks will destroy your spaceship. You can always launch another one.
