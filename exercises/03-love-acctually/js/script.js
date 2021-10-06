@@ -15,19 +15,22 @@ let starship = {
   size: 50,
   vx: 0,
   vy: 0,
-  speed: 2,
+  ax: 0,
+  vx: 0,
+  acceleration: 0.06,
+  maxSpeed: 5,
 }
 
 let ore = {
   x: 0,
   y: 250,
-  size: 80,
+  size: 60,
   vx: 0,
   vy: 0,
   ax: 0,
   av: 0,
   maxSpeed: 5,
-  aBurst: 0.2,
+  aBurst: 0.5,
   acceleration: 0.07,
   angle: 0,
   orbitSpeed: 0.08,
@@ -36,7 +39,7 @@ let ore = {
 let rock = {
   x: 0,
   y: 250,
-  size: 90,
+  size: 65,
   vx: 0,
   vy: 0,
   speed: 3,
@@ -113,7 +116,7 @@ function simulation() {
   displayGameobjects();
   moveStarship();
   // checkSadness(); // offscreen condition
-  // checkLove(); // overlap condition
+  // checkLove(); // success condition
 }
 
 function love() {
@@ -163,31 +166,38 @@ function displaceAsteroids() {
   rock.x += rock.vx;
   rock.y += rock.vy;
 
-  //DEBUG:
-  console.log(`ore.ax:${ore.ax}`, `ore.vx: ${ore.vx}`);
-
 }
 
 function moveStarship() {
   // horizontal movement
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-    starship.vx += -starship.speed;
+    starship.ax += -starship.acceleration;
   } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-    starship.vx += starship.speed;
+    starship.ax += starship.acceleration;
   } else {
-    starship.vx = 0;
+    starship.ax = 0;
   }
   //vertical movement
   if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-    starship.vy += -starship.speed;
+    starship.ay += -starship.acceleration;
   } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-    starship.vy += starship.speed;
+    starship.ay += starship.acceleration;
   } else {
-    starship.vy = 0;
+    starship.ay = 0;
   }
 
+  // update velocity based on acceleration
+  starship.vx += starship.ax;
+  starship.vx = constrain(starship.vx, -starship.maxSpeed, starship.maxSpeed);
+  starship.vy += starship.ay;
+  starship.vy = constrain(starship.vy, -starship.maxSpeed, starship.maxSpeed);
+
+  // update position based on velocity
   starship.x += starship.vx
   starship.y += starship.vy
+
+  //DEBUG:
+  console.log(`starship.vx:${starship.vx}`, `starship.vy: ${starship.vy}`);
 }
 
 function checkSadness() {
