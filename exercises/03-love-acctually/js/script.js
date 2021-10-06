@@ -24,7 +24,11 @@ let ore = {
   size: 80,
   vx: 0,
   vy: 0,
-  speed: 3,
+  ax: 0,
+  av: 0,
+  maxSpeed: 5,
+  aBurst: 0.2,
+  acceleration: 0.07,
   angle: 0,
   orbitSpeed: 0.08,
 }
@@ -71,8 +75,8 @@ function setupGameObjects() {
   rock.x = 2 * width / 3;
 
   // move ore and rocks in a random directions
-  ore.vx = random(-ore.speed, ore.speed);
-  ore.vy = random(-ore.speed, ore.speed);
+  ore.ax = random(-ore.acceleration, ore.acceleration);
+  ore.ay = random(-ore.acceleration, ore.acceleration);
   rock.vx = random(-rock.speed, rock.speed);
   rock.vy = random(-rock.speed, rock.speed);
 }
@@ -135,20 +139,32 @@ function displaceAsteroids() {
   let change = random(); // random number for direction variation
 
   // change asteroid direction based on probality:
-  if (change < 0.04) {
-    ore.vx = random(-ore.speed, ore.speed);
-    ore.vy = random(-ore.speed, ore.speed);
+  if (change < 0.07) {
+    //ORE:
+    ore.ax = random(-ore.aBurst, ore.aBurst);
+    ore.ay = random(-ore.aBurst, ore.aBurst);
 
+    //ROCK
     rock.vx = random(-rock.speed, rock.speed);
     rock.vy = random(-rock.speed, rock.speed);
+
   }
+  // update velocity based on acceleration
+  //ORE:
+  ore.vx += ore.ax;
+  ore.vx = constrain(ore.vx, -ore.maxSpeed, ore.maxSpeed)
+  ore.vy += ore.ay;
+  ore.vy = constrain(ore.vy, -ore.maxSpeed, ore.maxSpeed)
 
   // update position based on velocity
-  ore.x = ore.x + ore.vx;
-  ore.y = ore.y + ore.vy;
+  ore.x += ore.vx;
+  ore.y += ore.vy;
 
-  rock.x = rock.x + rock.vx;
-  rock.y = rock.y + rock.vy;
+  rock.x += rock.vx;
+  rock.y += rock.vy;
+
+  //DEBUG:
+  console.log(`ore.ax:${ore.ax}`, `ore.vx: ${ore.vx}`);
 
 }
 
@@ -194,7 +210,7 @@ function displayGameobjects() {
   // draw player starship
   ellipse(starship.x, starship.y, starship.size)
 
-  // rotate circles
+  // update angle to rotate circles
   ore.angle += ore.orbitSpeed;
   rock.angle += -rock.orbitSpeed;
 
