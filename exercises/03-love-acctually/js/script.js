@@ -69,6 +69,7 @@ function setup() {
   createCanvas(windowWidth - 200, windowHeight - 100);
   setupGameObjects(); // maybe needs to be in draw. rename to reset?
   textFont(fontAlagard, 80);
+  noStroke();
 }
 
 function setupGameObjects() {
@@ -97,7 +98,8 @@ function setupGameObjects() {
  draw()
 */
 function draw() {
-  background(0);
+  background(30);
+
   if (state === 'title') {
     title();
   } else if (state === `simulation`) {
@@ -121,11 +123,11 @@ function title() {
   push();
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
-  text(`Interstellar Mining Ops`, width / 2, height / 3);
+  text(`Interstellar Mining Ops.`, width / 2, height / 3);
   textSize(50);
   text(`-- Colect Ore. Avoid Rock. --`, width / 2, height / 2);
   textSize(30);
-  text(`// Use ARROW or WASD keys to move. `, width / 2, 2 * height / 3);
+  text(`// Use ARROWS or WASD keys to move. `, width / 2, 2 * height / 3);
   pop();
 
 }
@@ -183,7 +185,7 @@ function impact() {
 }
 
 function fakeUI() {
-  let rectHeight = 55;
+  let rectHeight = 75;
   let rectX = width / 2;
   let rectY = height / 2;
 
@@ -301,8 +303,6 @@ function moveStarship() {
   starship.x += starship.vx
   starship.y += starship.vy
 
-  //DEBUG:
-  console.log(`starship.vx:${starship.vx}`, `starship.vy: ${starship.vy}`);
 }
 
 function checkUncharted() {
@@ -333,7 +333,10 @@ function checkImpact() {
 
 function displayGameobjects() {
   // draw player starship
-  ellipse(starship.x, starship.y, starship.size)
+  push();
+  fill(50, 100, 250);
+  ellipse(starship.x, starship.y, starship.size);
+  pop();
 
   // update angle to rotate circles
   ore.angle += ore.orbitSpeed;
