@@ -58,7 +58,7 @@ let state = `title`; // states: title, simulation, uncharted, impact, profit
 let fontAlagard;
 let fontPhazed;
 /**
-Description of preload
+ preload loads our images and fonts (only fontAlagard works)
 */
 function preload() {
   fontAlagard = loadFont('assets/fonts/alagard.ttf');
@@ -69,7 +69,7 @@ function preload() {
   ore.image = loadImage(`assets/images/ore.png`);
 }
 /**
-Description of setup
+setup positions game objects, sets relative canvas size and defines global settings
 */
 function setup() {
   createCanvas(windowWidth - 200, windowHeight - 100);
@@ -94,7 +94,7 @@ function setupGameObjects() {
   starship.vx = 0;
   starship.vy = 0;
 
-  // move ore and rocks in a random directions
+  // move ore and rock in a random directions
   ore.ax = random(-ore.acceleration, ore.acceleration);
   ore.ay = random(-ore.acceleration, ore.acceleration);
   rock.ax = random(-rock.acceleration, rock.acceleration);
@@ -102,7 +102,7 @@ function setupGameObjects() {
 }
 
 /*
- draw()
+ draw() contains the program's high level state machine
 */
 function draw() {
   background(30);
@@ -206,7 +206,6 @@ function fakeUI() {
 }
 
 function simulation() {
-
   radarTargets(); // Grid lines folloing STARSHIP & ORE
 
   displaceAsteroids(); // ROCK & ORE displacement
@@ -219,22 +218,23 @@ function simulation() {
 }
 
 function radarTargets() {
+  // variables used to create a barely perceptible movement offset.
   let shipXNEG = starship.x - 40; // nevative horizontal offset
   let shipXPOS = starship.x + 40; // positive horizontal offset
-  let shipYNEG = starship.y - 40; // nevative horizontal offset
-  let shipYPOS = starship.y + 40; // positive horizontal offset
+  let shipYNEG = starship.y - 40; // nevative vertical offset
+  let shipYPOS = starship.y + 40; // positive vertical offset
 
+  // Starship target lines
   push();
   stroke(0, 100, 100);
   //VERTICAL lines:
   line(shipXNEG - starship.vx, 0, shipXNEG - starship.vx, height);
   line(shipXPOS - starship.vx, 0, shipXPOS - starship.vx, height);
-
   // HORIZONTAL lines:
   line(0, shipYNEG - starship.vy, width, shipYNEG - starship.vy);
   line(0, shipYPOS - starship.vy, width, shipYPOS - starship.vy);
   pop();
-
+  // Ore target lines:
   push();
   stroke(0, 100, 200);
   line(ore.x - 20, 0, ore.x - 20, height);
@@ -248,7 +248,7 @@ function displaceAsteroids() {
   // move circles
   let change = random(); // random number for direction variation
 
-  // change asteroid direction based on probality:
+  // change asteroid direction based on probality, using a burst in acceleration
   if (change < 0.07) {
     //ORE:
     ore.ax = random(-ore.aBurst, ore.aBurst);
@@ -313,8 +313,8 @@ function moveStarship() {
 }
 
 function checkUncharted() {
+  // out of radar's range endings
   if (assetOffscreen(ore)) {
-    // sad ending
     state = `oreOORange`;
   } else if (assetOffscreen(starship)) {
     state = `starshipOORange`
@@ -322,7 +322,7 @@ function checkUncharted() {
 }
 
 function checkProfit() {
-  // check for lovers overlapping
+  // check for overlap
   let d = dist(ore.x, ore.y, starship.x, starship.y);
   if (d < ore.size / 2 + starship.size / 2) {
     // success ending
@@ -375,6 +375,7 @@ function displayGameobjects() {
   pop();
 }
 
+// Lower level check used in checkUncharted()
 function assetOffscreen(circle) {
   if (circle.x < 0 || circle.x > width || circle.y < 0 || circle.y > height) {
     return true;
@@ -383,6 +384,7 @@ function assetOffscreen(circle) {
   }
 }
 
+// UI controlls
 function mousePressed() {
   if (state === `title`) {
     state = `simulation`;
