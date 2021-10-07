@@ -124,7 +124,7 @@ function title() {
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
   text(`Interstellar Mining Ops.`, width / 2, height / 3);
-  textSize(50);
+  textSize(60);
   text(`-- Colect Ore. Avoid Rock. --`, width / 2, height / 2);
   textSize(30);
   text(`// Use ARROWS or WASD keys to move. `, width / 2, 2 * height / 3);
@@ -140,7 +140,7 @@ function profit() {
   fill(250, 100, 120);
   textAlign(CENTER, CENTER);
   text(`Ore successfully collected!`, width / 2, height / 3);
-  textSize(65);
+  textSize(55);
   text(`-- Deploy another starship. --`, width / 2, height / 2);
   pop();
 }
@@ -153,7 +153,7 @@ function oreOORange() {
   fill(100, 100, 250);
   textAlign(CENTER, CENTER);
   text(`Ore out of radar's range.`, width / 2, height / 3);
-  textSize(60);
+  textSize(55);
   text(`-- Deploy another starship. --`, width / 2, height / 2);
   pop();
 }
@@ -166,7 +166,7 @@ function starshipOORange() {
   fill(100, 100, 250);
   textAlign(CENTER, CENTER);
   text(`Starship out of radar's range.`, width / 2, height / 3);
-  textSize(50);
+  textSize(55);
   text(`-- Deploy another vessel. --`, width / 2, height / 2);
   pop();
 }
@@ -179,7 +179,7 @@ function impact() {
   fill(100, 100, 250);
   textAlign(CENTER, CENTER);
   text(`Starship destroyed.`, width / 2, height / 3);
-  textSize(50);
+  textSize(55);
   text(`-- Deploy another vessel. --`, width / 2, height / 2);
   pop();
 }
@@ -191,7 +191,7 @@ function fakeUI() {
 
   rectMode(CENTER);
   rect(rectX, rectY, width, rectHeight);
-  if (mouseY < rectY - rectHeight || mouseY > rectY + rectHeight) {
+  if (mouseY < rectY - 0.5 * rectHeight || mouseY > rectY + 0.5 * rectHeight) {
     fill(255, 255, 255);
   } else {
     fill(200, 200, 130);
