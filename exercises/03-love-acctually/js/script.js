@@ -115,21 +115,25 @@ function draw() {
 
 
 function title() {
+  // Horizontal band behaviour
+  fakeUI();
+  // Text
   push();
   fill(200, 100, 100);
   textAlign(CENTER, CENTER);
   text(`Interstellar Mining Ops`, width / 2, height / 3);
   textSize(50);
-  text(`-- Colect Ore, avoid Rock. --`, width / 2, height / 2);
+  text(`-- Colect Ore. Avoid Rock. --`, width / 2, height / 2);
   textSize(30);
   text(`// Use ARROW or WASD keys to move. `, width / 2, 2 * height / 3);
   pop();
 
 }
 
-
-
 function profit() {
+  // Horizontal band behaviour
+  fakeUI();
+  // Text
   push();
   fill(250, 100, 120);
   textAlign(CENTER, CENTER);
@@ -140,6 +144,9 @@ function profit() {
 }
 
 function oreOORange() {
+  // Horizontal band behaviour
+  fakeUI();
+  // Text
   push();
   fill(100, 100, 250);
   textAlign(CENTER, CENTER);
@@ -150,6 +157,9 @@ function oreOORange() {
 }
 
 function starshipOORange() {
+  // Horizontal band behaviour
+  fakeUI();
+  // Text
   push();
   fill(100, 100, 250);
   textAlign(CENTER, CENTER);
@@ -160,6 +170,9 @@ function starshipOORange() {
 }
 
 function impact() {
+  // Horizontal band behaviour
+  fakeUI();
+  // Text
   push();
   fill(100, 100, 250);
   textAlign(CENTER, CENTER);
@@ -169,15 +182,29 @@ function impact() {
   pop();
 }
 
+function fakeUI() {
+  let rectHeight = 55;
+  let rectX = width / 2;
+  let rectY = height / 2;
+
+  rectMode(CENTER);
+  rect(rectX, rectY, width, rectHeight);
+  if (mouseY < rectY - rectHeight || mouseY > rectY + rectHeight) {
+    fill(255, 255, 255);
+  } else {
+    fill(200, 200, 130);
+  };
+}
+
 function simulation() {
 
-  radarTargets();
+  radarTargets(); // Grid lines folloing STARSHIP & ORE
 
   displaceAsteroids(); // ROCK & ORE displacement
   displayGameobjects(); // draws shapes & rotates ROCK & ORE
   moveStarship(); // player movement
 
-  checkUncharted(); // offscreen condition, ORE & STARSHIP
+  checkUncharted(); // offscreen conditions, ORE & STARSHIP
   checkProfit(); // success condition, ORE
   checkImpact(); // loss condition, ROCK
 }
