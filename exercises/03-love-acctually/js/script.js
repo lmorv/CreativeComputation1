@@ -19,6 +19,7 @@ let starship = {
   vx: 0,
   acceleration: 0.07,
   maxSpeed: 6,
+  image: undefined,
 }
 
 let ore = {
@@ -34,6 +35,7 @@ let ore = {
   acceleration: 0.07,
   angle: 0,
   orbitSpeed: 0.08,
+  image: undefined,
 }
 
 let rock = {
@@ -49,6 +51,7 @@ let rock = {
   acceleration: 0.07,
   angle: 0,
   orbitSpeed: 0.08,
+  image: undefined,
 }
 
 let state = `title`; // states: title, simulation, uncharted, impact, profit
@@ -60,8 +63,11 @@ Description of preload
 function preload() {
   fontAlagard = loadFont('assets/fonts/alagard.ttf');
   fontPhazed = loadFont('assets/fonts/Phazed-Regular.otf');
-}
 
+  starship.image = loadImage(`assets/images/starship.png`);
+  rock.image = loadImage(`assets/images/rock.png`);
+  ore.image = loadImage(`assets/images/ore.png`);
+}
 /**
 Description of setup
 */
@@ -70,6 +76,7 @@ function setup() {
   setupGameObjects(); // maybe needs to be in draw. rename to reset?
   textFont(fontAlagard, 80);
   noStroke();
+  imageMode(CENTER);
 }
 
 function setupGameObjects() {
@@ -334,8 +341,9 @@ function checkImpact() {
 function displayGameobjects() {
   // draw player starship
   push();
-  fill(50, 100, 250);
+  fill(50, 100, 250, 20);
   ellipse(starship.x, starship.y, starship.size);
+  image(starship.image, starship.x, starship.y, starship.size + 15, starship.size + 15);
   pop();
 
   // update angle to rotate circles
@@ -343,22 +351,27 @@ function displayGameobjects() {
   rock.angle += -rock.orbitSpeed;
 
   //draw asteroids
+  //ORE:
   push();
-  fill(200, 180, 50);
+  fill(200, 180, 50, 20);
   translate(ore.x, ore.y); // rotation pivot
   rotate(ore.angle);
   ellipse(100, 0, ore.size);
+  image(ore.image, 100, 0, ore.size + 12, ore.size + 12);
   rotate(-rock.angle);
   ellipse(50, 0, 25);
+  image(ore.image, 50, 0, 35, 35);
   pop();
-
+  //ROCK:
   push();
-  fill(200, 20, 50);
+  fill(200, 20, 50, 20);
   translate(rock.x, rock.y); // rotation pivot
   rotate(rock.angle);
   ellipse(100, 0, rock.size);
+  image(rock.image, 100, 0, rock.size + 12, rock.size + 12);
   rotate(-rock.angle);
   ellipse(50, 0, 25);
+  image(rock.image, 50, 0, 35, 35);
   pop();
 }
 

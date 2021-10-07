@@ -181,7 +181,6 @@ function playerMovement() {
 
 function drawPlayer() {
   push();
-
   fill(player.fill);
   image(player.image, player.x, player.y, player.size + 20, player.size + 20)
   pop();
