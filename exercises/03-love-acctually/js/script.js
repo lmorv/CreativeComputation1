@@ -132,7 +132,7 @@ function title() {
   textAlign(CENTER, CENTER);
   text(`Interstellar Mining Ops.`, width / 2, height / 3);
   textSize(60);
-  text(`-- Colect Ore. Avoid Rock. --`, width / 2, height / 2);
+  text(`-- Collect Ore. Avoid Rock. --`, width / 2, height / 2);
   textSize(30);
   text(`// Use ARROWS or WASD keys to move. `, width / 2, 2 * height / 3);
   pop();
