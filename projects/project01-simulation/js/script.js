@@ -54,12 +54,26 @@ function preload() {
 Description of setup
 */
 function setup() {
-  createCanvas(700, 700, WEBGL);
+  createCanvas(1100, 700, WEBGL);
 }
 
 /**
 Description of draw()
 */
+
+function createFace(x, y, z, width, height, depth) {
+  let face = {
+    x: x,
+    y: y,
+    z: z,
+    width: width,
+    height: height,
+    depth: depth,
+  };
+  return face;
+
+}
+
 function draw() {
   background(10, 70, 70);
   orbitControl();
