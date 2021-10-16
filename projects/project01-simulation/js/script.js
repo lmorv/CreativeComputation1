@@ -42,7 +42,7 @@ let userCube = {
   }
 };
 
-
+let face1;
 /**
 Description of preload
 */
@@ -55,6 +55,7 @@ Description of setup
 */
 function setup() {
   createCanvas(1100, 700, WEBGL);
+  face1 = createFace(0, 0, 0, 100, 100, 10);
 }
 
 /**
@@ -71,7 +72,6 @@ function createFace(x, y, z, width, height, depth) {
     depth: depth,
   };
   return face;
-
 }
 
 function draw() {
@@ -81,12 +81,22 @@ function draw() {
   // globalRotation();
 
   //display GAME OBJECTS:
-  displayCubes();
+
+  displayFace(face1);
+
+  // displayCubes();
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
   // userBehaviour();
 
+}
+
+function displayFace(face) {
+  push();
+  translate(face.x, face.y, face.z);
+  box(face.width, face.height, face.depth);
+  pop();
 }
 
 function globalRotation() {
