@@ -21,34 +21,8 @@ let userCube = {
 };
 
 let cubieOffset = 70; // offset from origin used to translate cubies
-let angle = 0; // layer rotate andgle
 let faces = [];
 let cubies = [];
-
-let facePos1 = faces[0];
-let facePos2 = faces[1];
-let facePos3 = faces[2];
-let facePos4 = faces[3];
-let facePos5 = faces[4];
-let facePos6 = faces[5];
-let facePos7 = faces[6];
-let facePos8 = faces[7];
-let facePos9 = faces[8];
-let facePos10 = faces[9];
-let facePos11 = faces[10];
-let facePos12 = faces[11];
-let facePos13 = faces[12];
-let facePos14 = faces[13];
-let facePos15 = faces[14];
-let facePos16 = faces[15];
-let facePos17 = faces[16];
-let facePos18 = faces[17];
-let facePos19 = faces[18];
-let facePos20 = faces[19];
-let facePos21 = faces[20];
-let facePos22 = faces[21];
-let facePos23 = faces[22];
-let facePos24 = faces[23];
 
 /**
 Description of preload
@@ -148,7 +122,7 @@ function draw() {
 
   //display GAME OBJECTS:
 
-  // displayCubies();
+  displayCubies();
   rotateUPlyr();
   // rotateDOWNlyr();
   // rotateRIGHTlyr();
@@ -165,9 +139,8 @@ function draw() {
 
 function rotateUPlyr() {
   //Rotate UP layer cubies
-  angle += radians(0.6) // update andgle by an amount
   push();
-  rotateY(angle);
+  rotateY(frameCount * 0.03);
   // UP layer:
   displayCUBIE1();
   displayCUBIE2();
@@ -209,7 +182,6 @@ function rotateLEFTlyr() {
 }
 
 function rotateFRONTlyr() {
-
   push();
   rotateZ(frameCount * 0.03);
   //FRONT layer
