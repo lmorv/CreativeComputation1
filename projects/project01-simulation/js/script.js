@@ -37,6 +37,19 @@ Description of setup
 function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
+  setupFaces();
+
+  cubies[0] = createCubie(undefined, undefined, undefined);
+  cubies[1] = createCubie(undefined, undefined, undefined);
+  cubies[2] = createCubie(undefined, undefined, undefined);
+  cubies[3] = createCubie(undefined, undefined, undefined);
+  cubies[4] = createCubie(undefined, undefined, undefined);
+  cubies[5] = createCubie(undefined, undefined, undefined);
+  cubies[6] = createCubie(undefined, undefined, undefined);
+  cubies[7] = createCubie(undefined, undefined, undefined);
+}
+
+function setupFaces() {
   // CUBIE1 faces: (yellow - green - red)
   faces[0] = createFace(0, -50, 0, 100, 10, 100, 255, 255, 0); // yellow
   faces[1] = createFace(-50, 0, 0, 10, 100, 100, 0, 255, 0); // green
@@ -70,18 +83,7 @@ function setup() {
   faces[21] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
   faces[22] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
   faces[23] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
-
-  cubies[0] = createCubie(undefined, undefined, undefined);
-  cubies[1] = createCubie(undefined, undefined, undefined);
-  cubies[2] = createCubie(undefined, undefined, undefined);
-  cubies[3] = createCubie(undefined, undefined, undefined);
-  cubies[4] = createCubie(undefined, undefined, undefined);
-  cubies[5] = createCubie(undefined, undefined, undefined);
-  cubies[6] = createCubie(undefined, undefined, undefined);
-  cubies[7] = createCubie(undefined, undefined, undefined);
 }
-
-
 
 /**
 Description of draw()
@@ -119,7 +121,8 @@ function draw() {
   //display GAME OBJECTS:
 
   displayCubies();
-  rotateUPlyr()
+  rotateUPlyr();
+  rotateRIGHTlyr();
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
@@ -136,6 +139,16 @@ function rotateUPlyr() {
   displayCUBIE2();
   displayCUBIE3();
   displayCUBIE4();
+  pop();
+}
+
+function rotateRIGHTlyr() {
+  push();
+  rotateX(frameCount * 0.03);
+  displayCUBIE2();
+  displayCUBIE4();
+  displayCUBIE6();
+  displayCUBIE8();
   pop();
 }
 
