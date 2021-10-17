@@ -119,7 +119,7 @@ function draw() {
   //display GAME OBJECTS:
 
   displayCubies();
-  rotateTop()
+  rotateUPlyr()
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
@@ -127,46 +127,15 @@ function draw() {
 
 }
 
-function keyTyped() {
-  if (key === `u`) {
-    rotateTop();
-  };
-}
 
-function rotateTop() {
-
+function rotateUPlyr() {
+  //Rotate TOP layer cubies
   push();
   rotateY(frameCount * 0.03);
-  push();
-  translate(-cubieOffset, -cubieOffset, -cubieOffset)
-  displayFace(faces[0]);
-  displayFace(faces[1]);
-  displayFace(faces[2]);
-  pop();
-
-  //display CUBIE 2:
-  push();
-  translate(cubieOffset, -cubieOffset, -cubieOffset)
-  displayFace(faces[3]);
-  displayFace(faces[4]);
-  displayFace(faces[5]);
-  pop();
-
-  //display CUBIE 3:
-  push();
-  translate(-cubieOffset, -cubieOffset, cubieOffset)
-  displayFace(faces[6]);
-  displayFace(faces[7]);
-  displayFace(faces[8]);
-  pop();
-
-  //display CUBIE 4:
-  push();
-  translate(cubieOffset, -cubieOffset, cubieOffset)
-  displayFace(faces[9]);
-  displayFace(faces[10]);
-  displayFace(faces[11]);
-  pop();
+  displayCUBIE1();
+  displayCUBIE2();
+  displayCUBIE3();
+  displayCUBIE4();
   pop();
 }
 
@@ -180,61 +149,83 @@ function displayFace(face) {
 
 
 function displayCubies() {
+  //UP layer:
+  displayCUBIE1();
+  displayCUBIE2();
+  displayCUBIE3();
+  displayCUBIE4();
 
-  //display CUBIE 1:
+  //DOWN layer:
+  displayCUBIE5();
+  displayCUBIE6();
+  displayCUBIE7();
+  displayCUBIE8();
+}
+
+function displayCUBIE1() {
   push();
   translate(-cubieOffset, -cubieOffset, -cubieOffset)
   displayFace(faces[0]);
   displayFace(faces[1]);
   displayFace(faces[2]);
   pop();
+}
 
-  //display CUBIE 2:
+function displayCUBIE2() {
   push();
   translate(cubieOffset, -cubieOffset, -cubieOffset)
   displayFace(faces[3]);
   displayFace(faces[4]);
   displayFace(faces[5]);
   pop();
+}
 
-  //display CUBIE 3:
+function displayCUBIE3() {
   push();
   translate(-cubieOffset, -cubieOffset, cubieOffset)
   displayFace(faces[6]);
   displayFace(faces[7]);
   displayFace(faces[8]);
   pop();
+}
 
-  //display CUBIE 4:
+function displayCUBIE4() {
   push();
   translate(cubieOffset, -cubieOffset, cubieOffset)
   displayFace(faces[9]);
   displayFace(faces[10]);
   displayFace(faces[11]);
   pop();
+}
 
-  //display CUBIE 5:
+function displayCUBIE5() {
   push();
   translate(-cubieOffset, cubieOffset, -cubieOffset)
   displayFace(faces[12]);
   displayFace(faces[13]);
   displayFace(faces[14]);
   pop();
-  //display CUBIE 6:
+}
+
+function displayCUBIE6() {
   push();
   translate(cubieOffset, cubieOffset, -cubieOffset)
   displayFace(faces[15]);
   displayFace(faces[16]);
   displayFace(faces[17]);
   pop();
-  //display CUBIE 7:
+}
+
+function displayCUBIE7() {
   push();
   translate(-cubieOffset, cubieOffset, cubieOffset)
   displayFace(faces[18]);
   displayFace(faces[19]);
   displayFace(faces[20]);
   pop();
-  //display CUBIE 8:
+}
+
+function displayCUBIE8() {
   push();
   translate(cubieOffset, cubieOffset, cubieOffset)
   displayFace(faces[21]);
