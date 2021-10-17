@@ -31,7 +31,7 @@ let cube2 = {
 };
 
 let userCube = {
-  dim: 50,
+  dim: 40,
   tx: 0,
   ty: 0,
   tz: 0,
@@ -42,7 +42,9 @@ let userCube = {
   }
 };
 
-let face1;
+let faces = [];
+// let cubie1 = [];
+
 /**
 Description of preload
 */
@@ -55,14 +57,47 @@ Description of setup
 */
 function setup() {
   createCanvas(1100, 700, WEBGL);
-  face1 = createFace(0, 0, 0, 100, 100, 10);
+  noStroke();
+  // CUBIE1 faces: (yellow - green - red)
+  faces[0] = createFace(0, -50, 0, 100, 10, 100, 255, 255, 0); // yellow
+  faces[1] = createFace(-50, 0, 0, 10, 100, 100, 0, 255, 0); // green
+  faces[2] = createFace(0, 0, -50, 100, 100, 10, 255, 0, 0); // red
+  // CUBIE2 faces: (yellow - red - blue)
+  faces[3] = createFace(0, -50, 0, 100, 10, 100, 255, 255, 0); // yellow
+  faces[4] = createFace(0, 0, -50, 100, 100, 10, 255, 0, 0); // red
+  faces[5] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
+  // CUBIE3 faces: (yellow - green - orange)
+  faces[6] = createFace(0, -50, 0, 100, 10, 100, 255, 255, 0); // yellow
+  faces[7] = createFace(-50, 0, 0, 10, 100, 100, 0, 255, 0); // green
+  faces[8] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
+  // CUBIE4 faces: (yellow - blue - orange)
+  faces[9] = createFace(0, -50, 0, 100, 10, 100, 255, 255, 0); // yellow
+  faces[10] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
+  faces[11] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
+
+  // CUBIE5 faces: (white - green - red)
+  faces[12] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
+  faces[13] = createFace(-50, 0, 0, 10, 100, 100, 0, 255, 0); // green
+  faces[14] = createFace(0, 0, -50, 100, 100, 10, 255, 0, 0); // red
+  // CUBIE6 faces: (white - red - blue)
+  faces[15] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
+  faces[16] = createFace(0, 0, -50, 100, 100, 10, 255, 0, 0); // red
+  faces[17] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
+  // CUBIE7 faces: (white - green - orange)
+  faces[18] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
+  faces[19] = createFace(-50, 0, 0, 10, 100, 100, 0, 255, 0); // green
+  faces[20] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
+  // CUBIE6 faces: (white - blue - orange)
+  faces[21] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
+  faces[22] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
+  faces[23] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
 }
 
 /**
 Description of draw()
 */
 
-function createFace(x, y, z, width, height, depth) {
+function createFace(x, y, z, width, height, depth, r, g, b) {
   let face = {
     x: x,
     y: y,
@@ -70,21 +105,19 @@ function createFace(x, y, z, width, height, depth) {
     width: width,
     height: height,
     depth: depth,
+    r: r,
+    g: g,
+    b: b,
   };
   return face;
 }
 
 function draw() {
   background(10, 70, 70);
-  orbitControl();
-  // global rotation on 0, 0, 0
-  // globalRotation();
+  orbitControl(10, 10, .3);
 
   //display GAME OBJECTS:
-
-  displayFace(face1);
-
-  // displayCubes();
+  displayCubies();
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
@@ -95,40 +128,83 @@ function draw() {
 function displayFace(face) {
   push();
   translate(face.x, face.y, face.z);
+  fill(face.r, face.g, face.b);
   box(face.width, face.height, face.depth);
   pop();
 }
 
-function globalRotation() {
-  rotateX(frameCount * 0.01);
-  rotateY(frameCount * 0.01);
-}
 
-function displayCubes() {
-  //display CUBE 1:
-  push()
-  fill(cube1.fill.r, cube1.fill.g, cube1.fill.b);
-  translate(cube1.tx, cube1.ty, cube1.tz); // transate cube to the LEFT
-  // rotateX(frameCount * 0.1);
-  rotateY(frameCount * 0.1); // rotate on 'local' axis after having translated the matrix
-  box(cube1.dim);
+function displayCubies() {
+  let cubieOffset = 70;
+  push();
+
+  rotateY(frameCount * 0.01);
+  //display CUBIE 1:
+  push();
+  translate(-cubieOffset, -cubieOffset, -cubieOffset)
+  displayFace(faces[0]);
+  displayFace(faces[1]);
+  displayFace(faces[2]);
   pop();
 
-  //display CUBE 2:
+  //display CUBIE 2:
   push();
-  fill(cube2.fill.r, cube2.fill.g, cube2.fill.b);
-  translate(cube2.tx, cube2.ty, cube2.tz); // transate cube to the RIGHT
-  // rotateX(frameCount * 0.1);
-  rotateX(frameCount * 0.1); // rotate on 'local' axis after having translated the matrix
-  // rotateY(frameCount * 0.1);
-  box(cube2.dim);
+  translate(cubieOffset, -cubieOffset, -cubieOffset)
+  displayFace(faces[3]);
+  displayFace(faces[4]);
+  displayFace(faces[5]);
+  pop();
+
+  //display CUBIE 3:
+  push();
+  translate(-cubieOffset, -cubieOffset, cubieOffset)
+  displayFace(faces[6]);
+  displayFace(faces[7]);
+  displayFace(faces[8]);
+  pop();
+
+  //display CUBIE 4:
+  push();
+  translate(cubieOffset, -cubieOffset, cubieOffset)
+  displayFace(faces[9]);
+  displayFace(faces[10]);
+  displayFace(faces[11]);
+  pop();
+
+  pop();
+
+
+  //display CUBIE 5:
+  push();
+  translate(-cubieOffset, cubieOffset, -cubieOffset)
+  displayFace(faces[12]);
+  displayFace(faces[13]);
+  displayFace(faces[14]);
+  pop();
+  //display CUBIE 6:
+  push();
+  translate(cubieOffset, cubieOffset, -cubieOffset)
+  displayFace(faces[15]);
+  displayFace(faces[16]);
+  displayFace(faces[17]);
+  pop();
+  //display CUBIE 7:
+  push();
+  translate(-cubieOffset, cubieOffset, cubieOffset)
+  displayFace(faces[18]);
+  displayFace(faces[19]);
+  displayFace(faces[20]);
+  pop();
+  //display CUBIE 8:
+  push();
+  translate(cubieOffset, cubieOffset, cubieOffset)
+  displayFace(faces[21]);
+  displayFace(faces[22]);
+  displayFace(faces[23]);
   pop();
 }
 
 function displayUser() {
-  // calculate mouse x and y in 3d coordinates:
-  let mouseY3D = mouseY - height / 2;
-  let mouseX3D = mouseX - height / 2;
   //USER CUBE display:
   push();
   fill(userCube.fill.r, userCube.fill.g, userCube.fill.b);
@@ -138,44 +214,14 @@ function displayUser() {
 }
 
 function userBehaviour() {
-
   // move user cube to mouse position
   userCube.tx = threeDMouseX();
   userCube.ty = threeDMouseY();
-
-  // constrain user cube translate to canvas (fixed) dimentions
-  userCube.ty = constrain(userCube.ty, -310, 310);
-  userCube.tx = constrain(userCube.tx, -310, 310);
-
-  // handle scalar tranformations:
-  cube2.dim = map(threeDMouseX(), 0, width / 2, 0, mouseX - width / 2);
-  cube1.dim = map(threeDMouseY(), 0, height / 2, 0, mouseY - height / 2);
-  // constrain cube dimentions:
-  cube1.dim = constrain(cube1.dim, 40, 300);
-  cube2.dim = constrain(cube2.dim, 40, 300);
-
-  //handle USER CUBE color variation
-  // Map red chanel to vertical mouse:
-  if (threeDMouseY() > 0) {
-    userCube.fill.r = map(threeDMouseY(), 0, 350, 0, 255);
-  } else {
-    userCube.fill.r = map(threeDMouseY(), 0, -350, 0, 255);
-  };
-  // Map blue chanel to horizontal mouse:
-  if (threeDMouseX() > 0) {
-    userCube.fill.b = map(threeDMouseX(), 0, 350, 0, 255);
-  } else {
-    userCube.fill.b = map(threeDMouseX(), 0, -350, 0, 255);
-  };
-
-  //DEBUG:
-  console.log(`userCube.fill.r:${userCube.fill.r}`);
-  console.log(`mouseY3D:${threeDMouseY()}`);
 }
 
 function threeDMouseX(x) {
   // calculate mouse x and y in 3d coordinates:
-  x = mouseX - height / 2;
+  x = mouseX - width / 2;
   return x;
 }
 
