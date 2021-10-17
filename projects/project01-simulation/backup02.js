@@ -19,10 +19,9 @@ let userCube = {
     b: 0
   }
 };
-
 let cubieOffset = 70; // offset from origin used to translate cubies
 let faces = [];
-let cubies = [];
+// let cubie1 = [];
 
 /**
 Description of preload
@@ -70,18 +69,7 @@ function setup() {
   faces[21] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
   faces[22] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
   faces[23] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
-
-  cubies[0] = createCubie(undefined, undefined, undefined);
-  cubies[1] = createCubie(undefined, undefined, undefined);
-  cubies[2] = createCubie(undefined, undefined, undefined);
-  cubies[3] = createCubie(undefined, undefined, undefined);
-  cubies[4] = createCubie(undefined, undefined, undefined);
-  cubies[5] = createCubie(undefined, undefined, undefined);
-  cubies[6] = createCubie(undefined, undefined, undefined);
-  cubies[7] = createCubie(undefined, undefined, undefined);
 }
-
-
 
 /**
 Description of draw()
@@ -102,16 +90,6 @@ function createFace(x, y, z, width, height, depth, r, g, b) {
   return face;
 }
 
-function createCubie(x, y, z) {
-  let cubie = {
-    x: x,
-    y: y,
-    z: z,
-  };
-  return cubie;
-};
-
-
 function draw() {
   background(10, 70, 70);
   orbitControl(10, 10, .3);
@@ -119,7 +97,7 @@ function draw() {
   //display GAME OBJECTS:
 
   displayCubies();
-  rotateTop()
+
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
@@ -134,9 +112,8 @@ function keyTyped() {
 }
 
 function rotateTop() {
-
-  push();
-  rotateY(frameCount * 0.03);
+  push()
+  rotateY(radians(90));
   push();
   translate(-cubieOffset, -cubieOffset, -cubieOffset)
   displayFace(faces[0]);
@@ -167,7 +144,7 @@ function rotateTop() {
   displayFace(faces[10]);
   displayFace(faces[11]);
   pop();
-  pop();
+
 }
 
 function displayFace(face) {
