@@ -7,28 +7,6 @@ author, and this description to match your project!
 */
 
 "use strict";
-let cube1 = {
-  dim: 100, // cube dimentions
-  tx: -80, //tanslate x, and so on ...
-  ty: 0,
-  tz: 0,
-  fill: {
-    r: 255,
-    g: 0,
-    b: 0
-  }
-};
-let cube2 = {
-  dim: 100, // cube dimentions
-  tx: 80, //tanslate x, and so on ...
-  ty: 0,
-  tz: 0,
-  fill: {
-    r: 0,
-    g: 0,
-    b: 255
-  }
-};
 
 let userCube = {
   dim: 40,
@@ -41,7 +19,7 @@ let userCube = {
     b: 0
   }
 };
-
+let cubieOffset = 70; // offset from origin used to translate cubies
 let faces = [];
 // let cubie1 = [];
 
@@ -117,7 +95,9 @@ function draw() {
   orbitControl(10, 10, .3);
 
   //display GAME OBJECTS:
+
   displayCubies();
+
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
@@ -125,21 +105,15 @@ function draw() {
 
 }
 
-function displayFace(face) {
-  push();
-  translate(face.x, face.y, face.z);
-  fill(face.r, face.g, face.b);
-  box(face.width, face.height, face.depth);
-  pop();
+function keyTyped() {
+  if (key === `u`) {
+    rotateTop();
+  };
 }
 
-
-function displayCubies() {
-  let cubieOffset = 70;
-  push();
-
-  rotateY(frameCount * 0.01);
-  //display CUBIE 1:
+function rotateTop() {
+  push()
+  rotateY(radians(90));
   push();
   translate(-cubieOffset, -cubieOffset, -cubieOffset)
   displayFace(faces[0]);
@@ -171,8 +145,50 @@ function displayCubies() {
   displayFace(faces[11]);
   pop();
 
+}
+
+function displayFace(face) {
+  push();
+  translate(face.x, face.y, face.z);
+  fill(face.r, face.g, face.b);
+  box(face.width, face.height, face.depth);
+  pop();
+}
+
+
+function displayCubies() {
+
+  //display CUBIE 1:
+  push();
+  translate(-cubieOffset, -cubieOffset, -cubieOffset)
+  displayFace(faces[0]);
+  displayFace(faces[1]);
+  displayFace(faces[2]);
   pop();
 
+  //display CUBIE 2:
+  push();
+  translate(cubieOffset, -cubieOffset, -cubieOffset)
+  displayFace(faces[3]);
+  displayFace(faces[4]);
+  displayFace(faces[5]);
+  pop();
+
+  //display CUBIE 3:
+  push();
+  translate(-cubieOffset, -cubieOffset, cubieOffset)
+  displayFace(faces[6]);
+  displayFace(faces[7]);
+  displayFace(faces[8]);
+  pop();
+
+  //display CUBIE 4:
+  push();
+  translate(cubieOffset, -cubieOffset, cubieOffset)
+  displayFace(faces[9]);
+  displayFace(faces[10]);
+  displayFace(faces[11]);
+  pop();
 
   //display CUBIE 5:
   push();
