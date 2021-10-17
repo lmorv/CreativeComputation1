@@ -39,6 +39,7 @@ function setup() {
   noStroke();
   setupFaces();
 
+  //How do I use these?
   cubies[0] = createCubie(undefined, undefined, undefined);
   cubies[1] = createCubie(undefined, undefined, undefined);
   cubies[2] = createCubie(undefined, undefined, undefined);
@@ -104,6 +105,7 @@ function createFace(x, y, z, width, height, depth, r, g, b) {
   return face;
 }
 
+// Create cubie contruct to store face configs??
 function createCubie(x, y, z) {
   let cubie = {
     x: x,
@@ -120,9 +122,13 @@ function draw() {
 
   //display GAME OBJECTS:
 
-  displayCubies();
+  // displayCubies();
   rotateUPlyr();
+  rotateDOWNlyr();
   rotateRIGHTlyr();
+  rotateLEFTlyr();
+  rotateFRONTlyr();
+  rotateBACKlyr();
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
@@ -132,9 +138,10 @@ function draw() {
 
 
 function rotateUPlyr() {
-  //Rotate TOP layer cubies
+  //Rotate UP layer cubies
   push();
   rotateY(frameCount * 0.03);
+  // UP layer:
   displayCUBIE1();
   displayCUBIE2();
   displayCUBIE3();
@@ -145,10 +152,53 @@ function rotateUPlyr() {
 function rotateRIGHTlyr() {
   push();
   rotateX(frameCount * 0.03);
+  // RIGHT layer:
   displayCUBIE2();
   displayCUBIE4();
   displayCUBIE6();
   displayCUBIE8();
+  pop();
+}
+
+function rotateDOWNlyr() {
+  push();
+  rotateY(frameCount * -0.03);
+  //DOWN layer:
+  displayCUBIE5();
+  displayCUBIE6();
+  displayCUBIE7();
+  displayCUBIE8();
+  pop();
+}
+
+function rotateLEFTlyr() {
+  push();
+  rotateX(frameCount * -0.03);
+  displayCUBIE1();
+  displayCUBIE3();
+  displayCUBIE5();
+  displayCUBIE7();
+  pop();
+}
+
+function rotateFRONTlyr() {
+  push();
+  rotateZ(frameCount * 0.03);
+  //FRONT layer
+  displayCUBIE3();
+  displayCUBIE4();
+  displayCUBIE7();
+  displayCUBIE8();
+  pop();
+}
+
+function rotateBACKlyr() {
+  push();
+  rotateZ(frameCount * -0.03);
+  displayCUBIE1();
+  displayCUBIE2();
+  displayCUBIE5();
+  displayCUBIE6();
   pop();
 }
 
