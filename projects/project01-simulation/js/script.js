@@ -8,9 +8,33 @@ author, and this description to match your project!
 
 "use strict";
 
-let userCube = {
+let proxyCube1 = {
   dim: 40,
   tx: 0,
+  ty: 40,
+  tz: 0,
+  fill: {
+    r: 0,
+    g: 0,
+    b: 0
+  }
+};
+
+let proxyCube2 = {
+  dim: 40,
+  tx: 40,
+  ty: 0,
+  tz: 0,
+  fill: {
+    r: 0,
+    g: 0,
+    b: 0
+  }
+};
+
+let proxyCube3 = {
+  dim: 40,
+  tx: -40,
   ty: 0,
   tz: 0,
   fill: {
@@ -205,7 +229,8 @@ let face23color = {
 
 let cubieOffset = 70; // offset from origin used to translate cubies
 let rotationSpeed = 0.09; // Layer rotation speed
-let faces = [];
+let delay = rotationSpeed * 100;
+let faces = []; // array of faces, populated in updateFaces() at draw()
 let cubies = []; // not currently being used
 
 /**
@@ -221,7 +246,7 @@ Description of setup
 function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
-  // setupFaces(); // needs to be called in draw in order to update face colors
+  // updateFaces(); // needs to be called in draw in order to update face colors
 
   //How do I use these?
   cubies[0] = createCubie(undefined, undefined, undefined);
@@ -234,7 +259,7 @@ function setup() {
   cubies[7] = createCubie(undefined, undefined, undefined);
 }
 
-function setupFaces() {
+function updateFaces() {
   // CUBIE1 faces: (yellow - green - red)
   faces[0] = createFace(0, -50, 0, 100, 10, 100, face0color.r, face0color.g, face0color.b); // yellow
   faces[1] = createFace(-50, 0, 0, 10, 100, 100, face1color.r, face1color.g, face1color.b); // green
@@ -301,11 +326,10 @@ function createCubie(x, y, z) {
   return cubie;
 };
 
-
 function draw() {
   background(10, 70, 70);
   orbitControl(10, 10, .3);
-  setupFaces();
+  updateFaces();
 
   //display GAME OBJECTS:
 
@@ -313,9 +337,9 @@ function draw() {
   if (keyIsDown(81)) {
     rotateUPlyr();
   } else if (keyIsDown(87)) {
-    rotateDOWNlyr();
-  } else if (keyIsDown(69)) {
     rotateRIGHTlyr();
+  } else if (keyIsDown(69)) {
+    rotateDOWNlyr();
   } else if (keyIsDown(82)) {
     rotateLEFTlyr();
   } else if (keyIsDown(84)) {
@@ -326,7 +350,7 @@ function draw() {
   displayCubies();
 
   // displayCubies();
-  displayUser();
+  displayProxy01();
 
   //USER CUBE movemnet & user-driven behaviour:
   // userBehaviour();
@@ -345,45 +369,55 @@ function rotateUPlyr() {
   displayCUBIE4();
   pop();
   // update face colors
-  face1color.r = face4color.r;
-  face1color.g = face4color.g;
-  face1color.b = face4color.b;
 
-  face7color.r = face2color.r;
-  face7color.g = face2color.g;
-  face7color.b = face2color.b;
+  delay -= 1;
 
-  face8color.r = face1color.r;
-  face8color.g = face1color.g;
-  face8color.b = face1color.b;
+  if (delay < 0) {
+    //RIGHT-TOP-BACK_BACK into proxyCube1
+    proxyCube1.fill.r = face4color.r;
+    proxyCube1.fill.g = face4color.g;
+    proxyCube1.fill.b = face4color.b;
 
-  face11color.r = face7color.r;
-  face11color.g = face7color.g;
-  face11color.b = face7color.b;
+    //LEFT-TOP-BACK_BACK into proxyCube2
+    proxyCube2.fill.r = face2color.r;
+    proxyCube2.fill.g = face2color.g;
+    proxyCube2.fill.b = face2color.b;
 
-  face10color.r = face8color.r;
-  face10color.g = face8color.g;
-  face10color.b = face8color.b;
+    //RIGHT-TOP-BACK_RIGHT into LEFT-TOP-BACK_BACK
+    face2color.r = face5color.r;
+    face2color.g = face5color.g;
+    face2color.b = face5color.b;
 
-  face4color.r = face10color.r;
-  face4color.g = face10color.g;
-  face4color.b = face10color.b;
+    face4color.r = face10color.r;
+    face4color.g = face10color.g;
+    face4color.b = face10color.b;
 
-  face5color.r = face11color.r;
-  face5color.g = face11color.g;
-  face5color.b = face11color.b;
+    face10color.r = face8color.r;
+    face10color.g = face8color.g;
+    face10color.b = face8color.b;
 
-  face2color.r = face5color.r;
-  face2color.g = face5color.g;
-  face2color.b = face5color.b;
+    face5color.r = face11color.r;
+    face5color.g = face11color.g;
+    face5color.b = face11color.b;
 
+    face8color.r = face1color.r;
+    face8color.g = face1color.g;
+    face8color.b = face1color.b;
 
+    face11color.r = face7color.r;
+    face11color.g = face7color.g;
+    face11color.b = face7color.b;
 
+    face1color.r = proxyCube1.fill.r;
+    face1color.g = proxyCube1.fill.g;
+    face1color.b = proxyCube1.fill.b;
 
+    face7color.r = proxyCube2.fill.r;
+    face7color.g = proxyCube2.fill.g;
+    face7color.b = proxyCube2.fill.b;
 
-
-
-
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  }
 }
 
 function rotateRIGHTlyr() {
@@ -395,6 +429,52 @@ function rotateRIGHTlyr() {
   displayCUBIE6();
   displayCUBIE8();
   pop();
+
+  delay -= 1;
+  if (delay < 0) {
+    proxyCube1.fill.r = face4color.r;
+    proxyCube1.fill.g = face4color.g;
+    proxyCube1.fill.b = face4color.b;
+
+    proxyCube2.fill.r = face16color.r;
+    proxyCube2.fill.g = face16color.g;
+    proxyCube2.fill.b = face16color.b;
+
+    face3color.r = face11color.r;
+    face3color.g = face11color.g;
+    face3color.b = face11color.b;
+
+    face9color.r = face23color.r;
+    face9color.g = face23color.g;
+    face9color.b = face23color.b;
+
+    face11color.r = face21color.r;
+    face11color.g = face21color.g;
+    face11color.b = face21color.b;
+
+    face23color.r = face15color.r;
+    face23color.g = face15color.g;
+    face23color.b = face15color.b;
+
+    face21color.r = face16color.r;
+    face21color.g = face16color.g;
+    face21color.b = face16color.b;
+
+    face15color.r = face4color.r;
+    face15color.g = face4color.g;
+    face15color.b = face4color.b;
+
+    face16color.r = proxyCube2.fill.r;
+    face16color.g = proxyCube2.fill.g;
+    face16color.b = proxyCube2.fill.b;
+
+    face4color.r = proxyCube1.fill.r;
+    face4color.g = proxyCube1.fill.g;
+    face4color.b = proxyCube1.fill.b;
+
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  }
+
 }
 
 function rotateDOWNlyr() {
@@ -535,19 +615,25 @@ function displayCUBIE8() {
   pop();
 }
 
-function displayUser() {
+function displayProxy01() {
   //USER CUBE display:
   push();
-  fill(userCube.fill.r, userCube.fill.g, userCube.fill.b);
-  translate(userCube.tx, userCube.ty); // move this box to mouse possition
-  box(userCube.dim);
+  fill(proxyCube1.fill.r, proxyCube1.fill.g, proxyCube1.fill.b);
+  translate(proxyCube1.tx, proxyCube1.ty); // move this box to mouse possition
+  box(proxyCube1.dim);
   pop();
-}
 
-function userBehaviour() {
-  // move user cube to mouse position
-  userCube.tx = threeDMouseX();
-  userCube.ty = threeDMouseY();
+  push();
+  fill(proxyCube2.fill.r, proxyCube2.fill.g, proxyCube2.fill.b);
+  translate(proxyCube2.tx, proxyCube2.ty); // move this box to mouse possition
+  box(proxyCube2.dim);
+  pop();
+
+  push();
+  fill(proxyCube3.fill.r, proxyCube3.fill.g, proxyCube3.fill.b);
+  translate(proxyCube3.tx, proxyCube3.ty); // move this box to mouse possition
+  box(proxyCube3.dim);
+  pop();
 }
 
 function threeDMouseX(x) {
