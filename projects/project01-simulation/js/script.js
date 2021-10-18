@@ -20,6 +20,7 @@ let userCube = {
   }
 };
 
+// color declarations
 let yellow = {
   r: 255,
   g: 255,
@@ -56,7 +57,154 @@ let white = {
   b: 255,
 }
 
+// face color declarations, to be changed on keyIsPressed events
+
+let face0color = {
+  r: yellow.r,
+  g: yellow.g,
+  b: yellow.b,
+};
+
+let face1color = {
+  r: green.r,
+  g: green.g,
+  b: green.b,
+};
+
+let face2color = {
+  r: red.r,
+  g: red.g,
+  b: red.b,
+};
+
+let face3color = {
+  r: yellow.r,
+  g: yellow.g,
+  b: yellow.b,
+};
+
+let face4color = {
+  r: red.r,
+  g: red.g,
+  b: red.b,
+};
+
+let face5color = {
+  r: blue.r,
+  g: blue.g,
+  b: blue.b,
+};
+
+let face6color = {
+  r: yellow.r,
+  g: yellow.g,
+  b: yellow.b,
+};
+
+let face7color = {
+  r: green.r,
+  g: green.g,
+  b: green.b,
+};
+
+let face8color = {
+  r: orange.r,
+  g: orange.g,
+  b: orange.b,
+};
+
+let face9color = {
+  r: yellow.r,
+  g: yellow.g,
+  b: yellow.b,
+};
+
+let face10color = {
+  r: blue.r,
+  g: blue.g,
+  b: blue.b,
+};
+
+let face11color = {
+  r: orange.r,
+  g: orange.g,
+  b: orange.b,
+};
+
+let face12color = {
+  r: white.r,
+  g: white.g,
+  b: white.b,
+};
+
+let face13color = {
+  r: green.r,
+  g: green.g,
+  b: green.b,
+};
+
+let face14color = {
+  r: red.r,
+  g: red.g,
+  b: red.b,
+};
+
+let face15color = {
+  r: white.r,
+  g: white.g,
+  b: white.b,
+};
+
+let face16color = {
+  r: red.r,
+  g: red.g,
+  b: red.b,
+};
+
+let face17color = {
+  r: blue.r,
+  g: blue.g,
+  b: blue.b,
+};
+
+let face18color = {
+  r: white.r,
+  g: white.g,
+  b: white.b,
+};
+
+let face19color = {
+  r: green.r,
+  g: green.g,
+  b: green.b,
+};
+
+let face20color = {
+  r: orange.r,
+  g: orange.g,
+  b: orange.b,
+};
+
+let face21color = {
+  r: white.r,
+  g: white.g,
+  b: white.b,
+};
+
+let face22color = {
+  r: blue.r,
+  g: blue.g,
+  b: blue.b,
+};
+
+let face23color = {
+  r: orange.r,
+  g: orange.g,
+  b: orange.b,
+};
+
 let cubieOffset = 70; // offset from origin used to translate cubies
+let rotationSpeed = 0.09; // Layer rotation speed
 let faces = [];
 let cubies = []; // not currently being used
 
@@ -73,7 +221,7 @@ Description of setup
 function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
-  setupFaces();
+  // setupFaces(); // needs to be called in draw in order to update face colors
 
   //How do I use these?
   cubies[0] = createCubie(undefined, undefined, undefined);
@@ -88,38 +236,38 @@ function setup() {
 
 function setupFaces() {
   // CUBIE1 faces: (yellow - green - red)
-  faces[0] = createFace(0, -50, 0, 100, 10, 100, yellow.r, yellow.g, yellow.b); // yellow
-  faces[1] = createFace(-50, 0, 0, 10, 100, 100, green.r, green.g, green.b); // green
-  faces[2] = createFace(0, 0, -50, 100, 100, 10, red.r, red.g, red.b); // red
+  faces[0] = createFace(0, -50, 0, 100, 10, 100, face0color.r, face0color.g, face0color.b); // yellow
+  faces[1] = createFace(-50, 0, 0, 10, 100, 100, face1color.r, face1color.g, face1color.b); // green
+  faces[2] = createFace(0, 0, -50, 100, 100, 10, face2color.r, face2color.g, face2color.b); // red
   // CUBIE2 faces: (yellow - red - blue)
-  faces[3] = createFace(0, -50, 0, 100, 10, 100, yellow.r, yellow.g, yellow.b); // yellow
-  faces[4] = createFace(0, 0, -50, 100, 100, 10, red.r, red.g, red.b); // red
-  faces[5] = createFace(50, 0, 0, 10, 100, 100, blue.r, blue.g, blue.b); // blue
+  faces[3] = createFace(0, -50, 0, 100, 10, 100, face3color.r, face3color.g, face3color.b); // yellow
+  faces[4] = createFace(0, 0, -50, 100, 100, 10, face4color.r, face4color.g, face4color.b); // red
+  faces[5] = createFace(50, 0, 0, 10, 100, 100, face5color.r, face5color.g, face5color.b); // blue
   // CUBIE3 faces: (yellow - green - orange)
-  faces[6] = createFace(0, -50, 0, 100, 10, 100, yellow.r, yellow.g, yellow.b); // yellow
-  faces[7] = createFace(-50, 0, 0, 10, 100, 100, green.r, green.g, green.b); // green
-  faces[8] = createFace(0, 0, 50, 100, 100, 10, orange.r, orange.g, orange.b); // orange
+  faces[6] = createFace(0, -50, 0, 100, 10, 100, face6color.r, face6color.g, face6color.b); // yellow
+  faces[7] = createFace(-50, 0, 0, 10, 100, 100, face7color.r, face7color.g, face7color.b); // green
+  faces[8] = createFace(0, 0, 50, 100, 100, 10, face8color.r, face8color.g, face8color.b); // orange
   // CUBIE4 faces: (yellow - blue - orange)
-  faces[9] = createFace(0, -50, 0, 100, 10, 100, yellow.r, yellow.g, yellow.b); // yellow
-  faces[10] = createFace(50, 0, 0, 10, 100, 100, blue.r, blue.g, blue.b); // blue
-  faces[11] = createFace(0, 0, 50, 100, 100, 10, orange.r, orange.g, orange.b); // orange
+  faces[9] = createFace(0, -50, 0, 100, 10, 100, face9color.r, face9color.g, face9color.b); // yellow
+  faces[10] = createFace(50, 0, 0, 10, 100, 100, face10color.r, face10color.g, face10color.b); // blue
+  faces[11] = createFace(0, 0, 50, 100, 100, 10, face11color.r, face11color.g, face11color.b); // orange
 
   // CUBIE5 faces: (white - green - red)
-  faces[12] = createFace(0, 50, 0, 100, 10, 100, white.r, white.g, white.b); // white
-  faces[13] = createFace(-50, 0, 0, 10, 100, 100, green.r, green.g, green.b); // green
-  faces[14] = createFace(0, 0, -50, 100, 100, 10, red.r, red.g, red.b); // red
+  faces[12] = createFace(0, 50, 0, 100, 10, 100, face12color.r, face12color.g, face12color.b); // white
+  faces[13] = createFace(-50, 0, 0, 10, 100, 100, face13color.r, face13color.g, face13color.b); // green
+  faces[14] = createFace(0, 0, -50, 100, 100, 10, face14color.r, face14color.g, face14color.b); // red
   // CUBIE6 faces: (white - red - blue)
-  faces[15] = createFace(0, 50, 0, 100, 10, 100, white.r, white.g, white.b); // white
-  faces[16] = createFace(0, 0, -50, 100, 100, 10, red.r, red.g, red.b); // red
-  faces[17] = createFace(50, 0, 0, 10, 100, 100, blue.r, blue.g, blue.b); // blue
+  faces[15] = createFace(0, 50, 0, 100, 10, 100, face15color.r, face15color.g, face15color.b); // white
+  faces[16] = createFace(0, 0, -50, 100, 100, 10, face16color.r, face16color.g, face16color.b); // red
+  faces[17] = createFace(50, 0, 0, 10, 100, 100, face17color.r, face17color.g, face17color.b); // blue
   // CUBIE7 faces: (white - green - orange)
-  faces[18] = createFace(0, 50, 0, 100, 10, 100, white.r, white.g, white.b); // white
-  faces[19] = createFace(-50, 0, 0, 10, 100, 100, green.r, green.g, green.b); // green
-  faces[20] = createFace(0, 0, 50, 100, 100, 10, orange.r, orange.g, orange.b); // orange
+  faces[18] = createFace(0, 50, 0, 100, 10, 100, face18color.r, face18color.g, face18color.b); // white
+  faces[19] = createFace(-50, 0, 0, 10, 100, 100, face19color.r, face19color.g, face19color.b); // green
+  faces[20] = createFace(0, 0, 50, 100, 100, 10, face20color.r, face20color.g, face20color.b); // orange
   // CUBIE6 faces: (white - blue - orange)
-  faces[21] = createFace(0, 50, 0, 100, 10, 100, white.r, white.g, white.b); // white
-  faces[22] = createFace(50, 0, 0, 10, 100, 100, blue.r, blue.g, blue.b); // blue
-  faces[23] = createFace(0, 0, 50, 100, 100, 10, orange.r, orange.g, orange.b); // orange
+  faces[21] = createFace(0, 50, 0, 100, 10, 100, face21color.r, face21color.g, face21color.b); // white
+  faces[22] = createFace(50, 0, 0, 10, 100, 100, face22color.r, face22color.g, face22color.b); // blue
+  faces[23] = createFace(0, 0, 50, 100, 100, 10, face23color.r, face23color.g, face23color.b); // orange
 }
 
 /**
@@ -157,16 +305,27 @@ function createCubie(x, y, z) {
 function draw() {
   background(10, 70, 70);
   orbitControl(10, 10, .3);
+  setupFaces();
 
   //display GAME OBJECTS:
 
+
+  if (keyIsDown(81)) {
+    rotateUPlyr();
+  } else if (keyIsDown(87)) {
+    rotateDOWNlyr();
+  } else if (keyIsDown(69)) {
+    rotateRIGHTlyr();
+  } else if (keyIsDown(82)) {
+    rotateLEFTlyr();
+  } else if (keyIsDown(84)) {
+    rotateFRONTlyr();
+  } else if (keyIsDown(89)) {
+    rotateBACKlyr();
+  };
   displayCubies();
-  // rotateUPlyr();
-  // rotateDOWNlyr();
-  // rotateRIGHTlyr();
-  // rotateLEFTlyr();
-  // rotateFRONTlyr();
-  // rotateBACKlyr();
+
+  // displayCubies();
   displayUser();
 
   //USER CUBE movemnet & user-driven behaviour:
@@ -176,20 +335,24 @@ function draw() {
 
 
 function rotateUPlyr() {
-  //Rotate UP layer cubies
+  // Rotate UP layer cubies
   push();
-  rotateY(frameCount * 0.03);
+  rotateY(frameCount * rotationSpeed);
   // UP layer:
   displayCUBIE1();
   displayCUBIE2();
   displayCUBIE3();
   displayCUBIE4();
   pop();
+  // update face colors
+  face2color.r = face5color.r;
+  face2color.g = face5color.g;
+  face2color.b = face5color.b;
 }
 
 function rotateRIGHTlyr() {
   push();
-  rotateX(frameCount * 0.03);
+  rotateX(frameCount * rotationSpeed);
   // RIGHT layer:
   displayCUBIE2();
   displayCUBIE4();
@@ -200,7 +363,7 @@ function rotateRIGHTlyr() {
 
 function rotateDOWNlyr() {
   push();
-  rotateY(frameCount * -0.03);
+  rotateY(frameCount * -rotationSpeed);
   //DOWN layer:
   displayCUBIE5();
   displayCUBIE6();
@@ -211,7 +374,7 @@ function rotateDOWNlyr() {
 
 function rotateLEFTlyr() {
   push();
-  rotateX(frameCount * -0.03);
+  rotateX(frameCount * -rotationSpeed);
   displayCUBIE1();
   displayCUBIE3();
   displayCUBIE5();
@@ -221,7 +384,7 @@ function rotateLEFTlyr() {
 
 function rotateFRONTlyr() {
   push();
-  rotateZ(frameCount * 0.03);
+  rotateZ(frameCount * rotationSpeed);
   //FRONT layer
   displayCUBIE3();
   displayCUBIE4();
@@ -232,7 +395,7 @@ function rotateFRONTlyr() {
 
 function rotateBACKlyr() {
   push();
-  rotateZ(frameCount * -0.03);
+  rotateZ(frameCount * -rotationSpeed);
   displayCUBIE1();
   displayCUBIE2();
   displayCUBIE5();
@@ -241,6 +404,11 @@ function rotateBACKlyr() {
 }
 
 function displayFace(face) {
+  if (keyIsDown(81)) {
+    face2color.r = face5color.r;
+    face2color.g = face5color.g;
+    face2color.b = face5color.b;
+  };
   push();
   translate(face.x, face.y, face.z);
   fill(face.fill.r, face.fill.g, face.fill.b);
