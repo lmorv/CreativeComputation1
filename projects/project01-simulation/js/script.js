@@ -23,8 +23,10 @@ let userCube = {
 let cubieOffset = 70; // offset from origin used to translate cubies
 let angle = 0; // layer rotate andgle
 let faces = [];
+let cube = createRubuksCube();
 let cubies = [];
 
+// assign faces to face positions
 let facePos1 = faces[0];
 let facePos2 = faces[1];
 let facePos3 = faces[2];
@@ -110,6 +112,7 @@ function setupFaces() {
   faces[21] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
   faces[22] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
   faces[23] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
+
 }
 
 /**
@@ -131,6 +134,13 @@ function createFace(x, y, z, width, height, depth, r, g, b) {
   return face;
 }
 
+function createRubuksCube() {
+  let cube = {
+    upLeftBack: createFace(0, 0, -50, 100, 100, 10, 255, 0, 0),
+  };
+  return cube;
+}
+
 // Create cubie contruct to store face configs??
 function createCubie(x, y, z) {
   let cubie = {
@@ -145,11 +155,11 @@ function createCubie(x, y, z) {
 function draw() {
   background(10, 70, 70);
   orbitControl(10, 10, .3);
-
   //display GAME OBJECTS:
 
+  displayCube(cube);
   // displayCubies();
-  rotateUPlyr();
+  // rotateUPlyr();
   // rotateDOWNlyr();
   // rotateRIGHTlyr();
   // rotateLEFTlyr();
@@ -162,6 +172,19 @@ function draw() {
 
 }
 
+function rotateTOPlyr(cube) {
+  push()
+  cube.upLeftBack.
+  pop()
+}
+
+function displayCube(cube) {
+  push();
+  translate(cube.upLeftBack.x, cube.upLeftBack.y, cube.upLeftBack.z);
+  fill(cube.upLeftBack.r, cube.upLeftBack.g, cube.upLeftBack.b);
+  box(cube.upLeftBack.width, cube.upLeftBack.height, cube.upLeftBack.depth);
+  pop();
+}
 
 function rotateUPlyr() {
   //Rotate UP layer cubies
@@ -256,36 +279,36 @@ function displayCubies() {
 function displayCUBIE1() {
   push();
   translate(-cubieOffset, -cubieOffset, -cubieOffset)
-  displayFace(faces[0]);
-  displayFace(faces[1]);
-  displayFace(faces[2]);
+  displayFace(facePos1); // diaplay face curretly on global facePosition variable
+  displayFace(facePos2);
+  displayFace(facePos3);
   pop();
 }
 
 function displayCUBIE2() {
   push();
   translate(cubieOffset, -cubieOffset, -cubieOffset)
-  displayFace(faces[3]);
-  displayFace(faces[4]);
-  displayFace(faces[5]);
+  displayFace(facePos4);
+  displayFace(facePos5);
+  displayFace(facePos6);
   pop();
 }
 
 function displayCUBIE3() {
   push();
   translate(-cubieOffset, -cubieOffset, cubieOffset)
-  displayFace(faces[6]);
-  displayFace(faces[7]);
-  displayFace(faces[8]);
+  displayFace(facePos7);
+  displayFace(facePos8);
+  displayFace(facePos9);
   pop();
 }
 
 function displayCUBIE4() {
   push();
   translate(cubieOffset, -cubieOffset, cubieOffset)
-  displayFace(faces[9]);
-  displayFace(faces[10]);
-  displayFace(faces[11]);
+  displayFace(facePos10);
+  displayFace(facePos11);
+  displayFace(facePos12);
   pop();
 }
 
