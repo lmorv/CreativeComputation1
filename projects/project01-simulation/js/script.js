@@ -345,9 +345,45 @@ function rotateUPlyr() {
   displayCUBIE4();
   pop();
   // update face colors
+  face1color.r = face4color.r;
+  face1color.g = face4color.g;
+  face1color.b = face4color.b;
+
+  face7color.r = face2color.r;
+  face7color.g = face2color.g;
+  face7color.b = face2color.b;
+
+  face8color.r = face1color.r;
+  face8color.g = face1color.g;
+  face8color.b = face1color.b;
+
+  face11color.r = face7color.r;
+  face11color.g = face7color.g;
+  face11color.b = face7color.b;
+
+  face10color.r = face8color.r;
+  face10color.g = face8color.g;
+  face10color.b = face8color.b;
+
+  face4color.r = face10color.r;
+  face4color.g = face10color.g;
+  face4color.b = face10color.b;
+
+  face5color.r = face11color.r;
+  face5color.g = face11color.g;
+  face5color.b = face11color.b;
+
   face2color.r = face5color.r;
   face2color.g = face5color.g;
   face2color.b = face5color.b;
+
+
+
+
+
+
+
+
 }
 
 function rotateRIGHTlyr() {
@@ -404,11 +440,7 @@ function rotateBACKlyr() {
 }
 
 function displayFace(face) {
-  if (keyIsDown(81)) {
-    face2color.r = face5color.r;
-    face2color.g = face5color.g;
-    face2color.b = face5color.b;
-  };
+
   push();
   translate(face.x, face.y, face.z);
   fill(face.fill.r, face.fill.g, face.fill.b);
