@@ -218,58 +218,7 @@ function setup() {
 
 }
 
-function updateFaces() {
-  // CUBIE1 faces: (yellow - green - red)
-  faces[0] = createFace(0, -faceOffset, 0, 100, 10, 100, face0color.r, face0color.g, face0color.b); // yellow
-  faces[1] = createFace(-faceOffset, 0, 0, 10, 100, 100, face1color.r, face1color.g, face1color.b); // green
-  faces[2] = createFace(0, 0, -faceOffset, 100, 100, 10, face2color.r, face2color.g, face2color.b); // red
-  // CUBIE2 faces: (yellow - red - blue)
-  faces[3] = createFace(0, -faceOffset, 0, 100, 10, 100, face3color.r, face3color.g, face3color.b); // yellow
-  faces[4] = createFace(0, 0, -faceOffset, 100, 100, 10, face4color.r, face4color.g, face4color.b); // red
-  faces[5] = createFace(faceOffset, 0, 0, 10, 100, 100, face5color.r, face5color.g, face5color.b); // blue
-  // CUBIE3 faces: (yellow - green - orange)
-  faces[6] = createFace(0, -faceOffset, 0, 100, 10, 100, face6color.r, face6color.g, face6color.b); // yellow
-  faces[7] = createFace(-faceOffset, 0, 0, 10, 100, 100, face7color.r, face7color.g, face7color.b); // green
-  faces[8] = createFace(0, 0, 50, 100, 100, 10, face8color.r, face8color.g, face8color.b); // orange
-  // CUBIE4 faces: (yellow - blue - orange)
-  faces[9] = createFace(0, -faceOffset, 0, 100, 10, 100, face9color.r, face9color.g, face9color.b); // yellow
-  faces[10] = createFace(faceOffset, 0, 0, 10, 100, 100, face10color.r, face10color.g, face10color.b); // blue
-  faces[11] = createFace(0, 0, faceOffset, 100, 100, 10, face11color.r, face11color.g, face11color.b); // orange
 
-  // CUBIE5 faces: (white - green - red)
-  faces[12] = createFace(0, 50, 0, 100, 10, 100, face12color.r, face12color.g, face12color.b); // white
-  faces[13] = createFace(-faceOffset, 0, 0, 10, 100, 100, face13color.r, face13color.g, face13color.b); // green
-  faces[14] = createFace(0, 0, -faceOffset, 100, 100, 10, face14color.r, face14color.g, face14color.b); // red
-  // CUBIE6 faces: (white - red - blue)
-  faces[15] = createFace(0, faceOffset, 0, 100, 10, 100, face15color.r, face15color.g, face15color.b); // white
-  faces[16] = createFace(0, 0, -faceOffset, 100, 100, 10, face16color.r, face16color.g, face16color.b); // red
-  faces[17] = createFace(faceOffset, 0, 0, 10, 100, 100, face17color.r, face17color.g, face17color.b); // blue
-  // CUBIE7 faces: (white - green - orange)
-  faces[18] = createFace(0, faceOffset, 0, 100, 10, 100, face18color.r, face18color.g, face18color.b); // white
-  faces[19] = createFace(-faceOffset, 0, 0, 10, 100, 100, face19color.r, face19color.g, face19color.b); // green
-  faces[20] = createFace(0, 0, faceOffset, 100, 100, 10, face20color.r, face20color.g, face20color.b); // orange
-  // CUBIE6 faces: (white - blue - orange)
-  faces[21] = createFace(0, faceOffset, 0, 100, 10, 100, face21color.r, face21color.g, face21color.b); // white
-  faces[22] = createFace(faceOffset, 0, 0, 10, 100, 100, face22color.r, face22color.g, face22color.b); // blue
-  faces[23] = createFace(0, 0, faceOffset, 100, 100, 10, face23color.r, face23color.g, face23color.b); // orange
-}
-
-function createFace(x, y, z, width, height, depth, r, g, b) {
-  let face = {
-    x: x,
-    y: y,
-    z: z,
-    width: width,
-    height: height,
-    depth: depth,
-    fill: {
-      r: r,
-      g: g,
-      b: b,
-    }
-  };
-  return face;
-}
 
 /**
 Description of draw()
@@ -295,27 +244,19 @@ function draw() {
   } else if (keyIsDown(89)) {
     rotateBACKlyr();
   };
-  displayCubies();
+
+  displayCube();
 
   displayProxyCubes();
-
-  //USER CUBE movemnet & user-driven behaviour:
-  // userBehaviour();
 
 }
 
 function rotateUPlyr() {
-  // Rotate UP layer cubies
   push();
-  rotateY(frameCount * rotationSpeed);
-  // UP layer:
-  displayCUBIE1();
-  displayCUBIE2();
-  displayCUBIE3();
-  displayCUBIE4();
+  rotateY(frameCount * rotationSpeed); // Rotate UP layer cubies
+  displayUPlyr();
   pop();
-  // update face colors
-
+  // update face colors:
   delay -= 1;
 
   if (delay < 0) {
@@ -391,10 +332,7 @@ function rotateRIGHTlyr() {
   push();
   rotateX(frameCount * -rotationSpeed);
   // RIGHT layer:
-  displayCUBIE2();
-  displayCUBIE4();
-  displayCUBIE6();
-  displayCUBIE8();
+  displayRIGHTlyr();
   pop();
 
   delay -= 1;
@@ -469,20 +407,14 @@ function rotateDOWNlyr() {
   push();
   rotateY(frameCount * -rotationSpeed);
   //DOWN layer:
-  displayCUBIE5();
-  displayCUBIE6();
-  displayCUBIE7();
-  displayCUBIE8();
+  displayDOWNlyr();
   pop();
 }
 
 function rotateLEFTlyr() {
   push();
   rotateX(frameCount * -rotationSpeed);
-  displayCUBIE1();
-  displayCUBIE3();
-  displayCUBIE5();
-  displayCUBIE7();
+  displayLEFTlyr();
   pop();
 }
 
@@ -490,47 +422,68 @@ function rotateFRONTlyr() {
   push();
   rotateZ(frameCount * rotationSpeed);
   //FRONT layer
-  displayCUBIE3();
-  displayCUBIE4();
-  displayCUBIE7();
-  displayCUBIE8();
+  displayFRONTlyr();
   pop();
 }
 
 function rotateBACKlyr() {
   push();
   rotateZ(frameCount * -rotationSpeed);
-  displayCUBIE1();
-  displayCUBIE2();
-  displayCUBIE5();
-  displayCUBIE6();
+  displayBACKlyr();
   pop();
 }
 
-function displayFace(face) {
-
-  push();
-  translate(face.x, face.y, face.z);
-  fill(face.fill.r, face.fill.g, face.fill.b);
-  box(face.width, face.height, face.depth);
-  pop();
-}
-
-
-function displayCubies() {
+function displayCube() {
   //UP layer:
+  displayUPlyr();
+  //DOWN layer:
+  displayDOWNlyr();
+}
+
+// Layer display functions:
+function displayUPlyr() {
   displayCUBIE1();
   displayCUBIE2();
   displayCUBIE3();
   displayCUBIE4();
+}
 
-  //DOWN layer:
+function displayDOWNlyr() {
   displayCUBIE5();
   displayCUBIE6();
   displayCUBIE7();
   displayCUBIE8();
 }
 
+function displayRIGHTlyr() {
+  displayCUBIE2();
+  displayCUBIE4();
+  displayCUBIE6();
+  displayCUBIE8();
+}
+
+function displayLEFTlyr() {
+  displayCUBIE1();
+  displayCUBIE3();
+  displayCUBIE5();
+  displayCUBIE7();
+}
+
+function displayFRONTlyr() {
+  displayCUBIE3();
+  displayCUBIE4();
+  displayCUBIE7();
+  displayCUBIE8();
+}
+
+function displayBACKlyr() {
+  displayCUBIE3();
+  displayCUBIE4();
+  displayCUBIE7();
+  displayCUBIE8();
+}
+
+// CUBIE display functions:
 function displayCUBIE1() {
   push();
   translate(-cubieOffset, -cubieOffset, -cubieOffset)
@@ -600,6 +553,67 @@ function displayCUBIE8() {
   displayFace(faces[21]);
   displayFace(faces[22]);
   displayFace(faces[23]);
+  pop();
+}
+
+function updateFaces() {
+  // CUBIE1 faces: (yellow - green - red)
+  faces[0] = createFace(0, -faceOffset, 0, 100, 10, 100, face0color.r, face0color.g, face0color.b); // yellow
+  faces[1] = createFace(-faceOffset, 0, 0, 10, 100, 100, face1color.r, face1color.g, face1color.b); // green
+  faces[2] = createFace(0, 0, -faceOffset, 100, 100, 10, face2color.r, face2color.g, face2color.b); // red
+  // CUBIE2 faces: (yellow - red - blue)
+  faces[3] = createFace(0, -faceOffset, 0, 100, 10, 100, face3color.r, face3color.g, face3color.b); // yellow
+  faces[4] = createFace(0, 0, -faceOffset, 100, 100, 10, face4color.r, face4color.g, face4color.b); // red
+  faces[5] = createFace(faceOffset, 0, 0, 10, 100, 100, face5color.r, face5color.g, face5color.b); // blue
+  // CUBIE3 faces: (yellow - green - orange)
+  faces[6] = createFace(0, -faceOffset, 0, 100, 10, 100, face6color.r, face6color.g, face6color.b); // yellow
+  faces[7] = createFace(-faceOffset, 0, 0, 10, 100, 100, face7color.r, face7color.g, face7color.b); // green
+  faces[8] = createFace(0, 0, 50, 100, 100, 10, face8color.r, face8color.g, face8color.b); // orange
+  // CUBIE4 faces: (yellow - blue - orange)
+  faces[9] = createFace(0, -faceOffset, 0, 100, 10, 100, face9color.r, face9color.g, face9color.b); // yellow
+  faces[10] = createFace(faceOffset, 0, 0, 10, 100, 100, face10color.r, face10color.g, face10color.b); // blue
+  faces[11] = createFace(0, 0, faceOffset, 100, 100, 10, face11color.r, face11color.g, face11color.b); // orange
+
+  // CUBIE5 faces: (white - green - red)
+  faces[12] = createFace(0, 50, 0, 100, 10, 100, face12color.r, face12color.g, face12color.b); // white
+  faces[13] = createFace(-faceOffset, 0, 0, 10, 100, 100, face13color.r, face13color.g, face13color.b); // green
+  faces[14] = createFace(0, 0, -faceOffset, 100, 100, 10, face14color.r, face14color.g, face14color.b); // red
+  // CUBIE6 faces: (white - red - blue)
+  faces[15] = createFace(0, faceOffset, 0, 100, 10, 100, face15color.r, face15color.g, face15color.b); // white
+  faces[16] = createFace(0, 0, -faceOffset, 100, 100, 10, face16color.r, face16color.g, face16color.b); // red
+  faces[17] = createFace(faceOffset, 0, 0, 10, 100, 100, face17color.r, face17color.g, face17color.b); // blue
+  // CUBIE7 faces: (white - green - orange)
+  faces[18] = createFace(0, faceOffset, 0, 100, 10, 100, face18color.r, face18color.g, face18color.b); // white
+  faces[19] = createFace(-faceOffset, 0, 0, 10, 100, 100, face19color.r, face19color.g, face19color.b); // green
+  faces[20] = createFace(0, 0, faceOffset, 100, 100, 10, face20color.r, face20color.g, face20color.b); // orange
+  // CUBIE6 faces: (white - blue - orange)
+  faces[21] = createFace(0, faceOffset, 0, 100, 10, 100, face21color.r, face21color.g, face21color.b); // white
+  faces[22] = createFace(faceOffset, 0, 0, 10, 100, 100, face22color.r, face22color.g, face22color.b); // blue
+  faces[23] = createFace(0, 0, faceOffset, 100, 100, 10, face23color.r, face23color.g, face23color.b); // orange
+}
+
+function createFace(x, y, z, width, height, depth, r, g, b) {
+  let face = {
+    x: x,
+    y: y,
+    z: z,
+    width: width,
+    height: height,
+    depth: depth,
+    fill: {
+      r: r,
+      g: g,
+      b: b,
+    }
+  };
+  return face;
+}
+
+function displayFace(face) {
+  push();
+  translate(face.x, face.y, face.z);
+  fill(face.fill.r, face.fill.g, face.fill.b);
+  box(face.width, face.height, face.depth);
   pop();
 }
 
