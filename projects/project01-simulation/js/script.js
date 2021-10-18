@@ -198,7 +198,7 @@ let face23color = {
 
 let cubieOffset = 60; // offset from world origin used to translate cubies
 let faceOffset = 55; // face offset from center of cubie
-let rotationSpeed = 0.09; // Layer rotation speed
+let rotationSpeed = 0.15; // Layer rotation speed
 let delay = rotationSpeed * 100;
 let faces = []; // array of faces, populated in updateFaces() at draw()
 
@@ -215,16 +215,10 @@ Description of setup
 function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
-
 }
-
-
-
 /**
 Description of draw()
 */
-
-
 function draw() {
   background(10, 70, 70);
   orbitControl(10, 10, 0.3);
@@ -243,9 +237,9 @@ function draw() {
     rotateFRONTlyr();
   } else if (keyIsDown(89)) {
     rotateBACKlyr();
-  };
-
-  displayCube();
+  } else {
+    displayCube();
+  }
 
   displayProxyCubes();
 
@@ -256,6 +250,8 @@ function rotateUPlyr() {
   rotateY(frameCount * rotationSpeed); // Rotate UP layer cubies
   displayUPlyr();
   pop();
+  displayDOWNlyr(); // static layer
+
   // update face colors:
   delay -= 1;
 
@@ -325,15 +321,23 @@ function rotateUPlyr() {
     face0color.b = proxyCube3.fill.b;
 
     delay = rotationSpeed * 100; // reset 'rotation' delay
-  }
+  };
+}
+
+function rotateDOWNlyr() {
+  push();
+  rotateY(frameCount * -rotationSpeed); // roate DOWN layer:
+  displayDOWNlyr();
+  pop();
+  displayUPlyr(); // static UP layer
 }
 
 function rotateRIGHTlyr() {
   push();
-  rotateX(frameCount * -rotationSpeed);
-  // RIGHT layer:
+  rotateX(frameCount * -rotationSpeed); // Rotate RIGHT layer cubies
   displayRIGHTlyr();
   pop();
+  displayLEFTlyr(); // static left layer
 
   delay -= 1;
   if (delay < 0) {
@@ -399,44 +403,39 @@ function rotateRIGHTlyr() {
     face10color.b = proxyCube3.fill.b;
 
     delay = rotationSpeed * 100; // reset 'rotation' delay
-  }
-
+  };
 }
 
-function rotateDOWNlyr() {
-  push();
-  rotateY(frameCount * -rotationSpeed);
-  //DOWN layer:
-  displayDOWNlyr();
-  pop();
-}
+
 
 function rotateLEFTlyr() {
   push();
-  rotateX(frameCount * -rotationSpeed);
+  rotateX(frameCount * -rotationSpeed); // rotate LEFT layer
   displayLEFTlyr();
   pop();
+  displayRIGHTlyr();
 }
 
 function rotateFRONTlyr() {
   push();
-  rotateZ(frameCount * rotationSpeed);
-  //FRONT layer
+  rotateZ(frameCount * rotationSpeed); // rotate FRONT layer
   displayFRONTlyr();
   pop();
+  displayBACKlyr(); // static BACK layer
+
 }
 
 function rotateBACKlyr() {
   push();
-  rotateZ(frameCount * -rotationSpeed);
+  rotateZ(frameCount * -rotationSpeed); // rotate BACK layer
   displayBACKlyr();
   pop();
+  displayFRONTlyr(); // static FRONT layer
 }
 
 function displayCube() {
-  //UP layer:
+  // display whole cube
   displayUPlyr();
-  //DOWN layer:
   displayDOWNlyr();
 }
 
@@ -477,10 +476,10 @@ function displayFRONTlyr() {
 }
 
 function displayBACKlyr() {
-  displayCUBIE3();
-  displayCUBIE4();
-  displayCUBIE7();
-  displayCUBIE8();
+  displayCUBIE1();
+  displayCUBIE2();
+  displayCUBIE5();
+  displayCUBIE6();
 }
 
 // CUBIE display functions:
