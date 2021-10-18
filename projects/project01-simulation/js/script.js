@@ -21,36 +21,8 @@ let userCube = {
 };
 
 let cubieOffset = 70; // offset from origin used to translate cubies
-let angle = 0; // layer rotate andgle
 let faces = [];
-let cube = createRubuksCube();
-let cubies = [];
-
-// assign faces to face positions
-let facePos1 = faces[0];
-let facePos2 = faces[1];
-let facePos3 = faces[2];
-let facePos4 = faces[3];
-let facePos5 = faces[4];
-let facePos6 = faces[5];
-let facePos7 = faces[6];
-let facePos8 = faces[7];
-let facePos9 = faces[8];
-let facePos10 = faces[9];
-let facePos11 = faces[10];
-let facePos12 = faces[11];
-let facePos13 = faces[12];
-let facePos14 = faces[13];
-let facePos15 = faces[14];
-let facePos16 = faces[15];
-let facePos17 = faces[16];
-let facePos18 = faces[17];
-let facePos19 = faces[18];
-let facePos20 = faces[19];
-let facePos21 = faces[20];
-let facePos22 = faces[21];
-let facePos23 = faces[22];
-let facePos24 = faces[23];
+let cubies = []; // not currently being used
 
 /**
 Description of preload
@@ -112,7 +84,6 @@ function setupFaces() {
   faces[21] = createFace(0, 50, 0, 100, 10, 100, 255, 255, 255); // white
   faces[22] = createFace(50, 0, 0, 10, 100, 100, 0, 0, 255); // blue
   faces[23] = createFace(0, 0, 50, 100, 100, 10, 245, 100, 60); // orange
-
 }
 
 /**
@@ -134,13 +105,6 @@ function createFace(x, y, z, width, height, depth, r, g, b) {
   return face;
 }
 
-function createRubuksCube() {
-  let cube = {
-    upLeftBack: createFace(0, 0, -50, 100, 100, 10, 255, 0, 0),
-  };
-  return cube;
-}
-
 // Create cubie contruct to store face configs??
 function createCubie(x, y, z) {
   let cubie = {
@@ -155,11 +119,11 @@ function createCubie(x, y, z) {
 function draw() {
   background(10, 70, 70);
   orbitControl(10, 10, .3);
+
   //display GAME OBJECTS:
 
-  displayCube(cube);
-  // displayCubies();
-  // rotateUPlyr();
+  displayCubies();
+  rotateUPlyr();
   // rotateDOWNlyr();
   // rotateRIGHTlyr();
   // rotateLEFTlyr();
@@ -172,25 +136,11 @@ function draw() {
 
 }
 
-function rotateTOPlyr(cube) {
-  push()
-  cube.upLeftBack.
-  pop()
-}
-
-function displayCube(cube) {
-  push();
-  translate(cube.upLeftBack.x, cube.upLeftBack.y, cube.upLeftBack.z);
-  fill(cube.upLeftBack.r, cube.upLeftBack.g, cube.upLeftBack.b);
-  box(cube.upLeftBack.width, cube.upLeftBack.height, cube.upLeftBack.depth);
-  pop();
-}
 
 function rotateUPlyr() {
   //Rotate UP layer cubies
-  angle += radians(0.6) // update andgle by an amount
   push();
-  rotateY(angle);
+  rotateY(frameCount * 0.03);
   // UP layer:
   displayCUBIE1();
   displayCUBIE2();
@@ -232,7 +182,6 @@ function rotateLEFTlyr() {
 }
 
 function rotateFRONTlyr() {
-
   push();
   rotateZ(frameCount * 0.03);
   //FRONT layer
@@ -279,36 +228,36 @@ function displayCubies() {
 function displayCUBIE1() {
   push();
   translate(-cubieOffset, -cubieOffset, -cubieOffset)
-  displayFace(facePos1); // diaplay face curretly on global facePosition variable
-  displayFace(facePos2);
-  displayFace(facePos3);
+  displayFace(faces[0]);
+  displayFace(faces[1]);
+  displayFace(faces[2]);
   pop();
 }
 
 function displayCUBIE2() {
   push();
   translate(cubieOffset, -cubieOffset, -cubieOffset)
-  displayFace(facePos4);
-  displayFace(facePos5);
-  displayFace(facePos6);
+  displayFace(faces[3]);
+  displayFace(faces[4]);
+  displayFace(faces[5]);
   pop();
 }
 
 function displayCUBIE3() {
   push();
   translate(-cubieOffset, -cubieOffset, cubieOffset)
-  displayFace(facePos7);
-  displayFace(facePos8);
-  displayFace(facePos9);
+  displayFace(faces[6]);
+  displayFace(faces[7]);
+  displayFace(faces[8]);
   pop();
 }
 
 function displayCUBIE4() {
   push();
   translate(cubieOffset, -cubieOffset, cubieOffset)
-  displayFace(facePos10);
-  displayFace(facePos11);
-  displayFace(facePos12);
+  displayFace(faces[9]);
+  displayFace(faces[10]);
+  displayFace(faces[11]);
   pop();
 }
 
