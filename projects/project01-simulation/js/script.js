@@ -228,9 +228,9 @@ function draw() {
   if (keyIsDown(81)) {
     rotateUPlyr();
   } else if (keyIsDown(87)) {
-    rotateRIGHTlyr();
+    rotateRIGHTlyr_prime();
   } else if (keyIsDown(69)) {
-    rotateDOWNlyr();
+    rotateDOWNlyr_prime();
   } else if (keyIsDown(82)) {
     rotateLEFTlyr();
   } else if (keyIsDown(84)) {
@@ -242,7 +242,6 @@ function draw() {
   }
 
   displayProxyCubes();
-
 }
 
 function rotateUPlyr() {
@@ -250,163 +249,45 @@ function rotateUPlyr() {
   rotateY(frameCount * rotationSpeed); // Rotate UP layer cubies
   displayUPlyr();
   pop();
-  displayDOWNlyr(); // static layer
+  displayDOWNlyr(); // static down layer
 
   // update face colors:
   delay -= 1;
-
   if (delay < 0) {
-    //RIGHT-TOP-BACK_BACK into proxyCube1
-    proxyCube1.fill.r = face4color.r;
-    proxyCube1.fill.g = face4color.g;
-    proxyCube1.fill.b = face4color.b;
-
-    //LEFT-TOP-BACK_BACK into proxyCube2
-    proxyCube2.fill.r = face2color.r;
-    proxyCube2.fill.g = face2color.g;
-    proxyCube2.fill.b = face2color.b;
-
-    //RIGHT-TOP-BACK_RIGHT into LEFT-TOP-BACK_BACK
-    face2color.r = face5color.r;
-    face2color.g = face5color.g;
-    face2color.b = face5color.b;
-
-    face4color.r = face10color.r;
-    face4color.g = face10color.g;
-    face4color.b = face10color.b;
-
-    face10color.r = face8color.r;
-    face10color.g = face8color.g;
-    face10color.b = face8color.b;
-
-    face5color.r = face11color.r;
-    face5color.g = face11color.g;
-    face5color.b = face11color.b;
-
-    face8color.r = face1color.r;
-    face8color.g = face1color.g;
-    face8color.b = face1color.b;
-
-    face11color.r = face7color.r;
-    face11color.g = face7color.g;
-    face11color.b = face7color.b;
-
-    face1color.r = proxyCube1.fill.r;
-    face1color.g = proxyCube1.fill.g;
-    face1color.b = proxyCube1.fill.b;
-
-    face7color.r = proxyCube2.fill.r;
-    face7color.g = proxyCube2.fill.g;
-    face7color.b = proxyCube2.fill.b;
-
-    //UP side rotation
-    proxyCube3.fill.r = face3color.r;
-    proxyCube3.fill.g = face3color.g;
-    proxyCube3.fill.b = face3color.b;
-
-    face3color.r = face9color.r;
-    face3color.g = face9color.g;
-    face3color.b = face9color.b;
-
-    face9color.r = face6color.r;
-    face9color.g = face6color.g;
-    face9color.b = face6color.b;
-
-    face6color.r = face0color.r;
-    face6color.g = face0color.g;
-    face6color.b = face0color.b;
-
-    face0color.r = proxyCube3.fill.r;
-    face0color.g = proxyCube3.fill.g;
-    face0color.b = proxyCube3.fill.b;
-
+    UP_MOVE(); // UP layer face color update instructions, clockwise direction
     delay = rotationSpeed * 100; // reset 'rotation' delay
   };
 }
 
-function rotateDOWNlyr() {
+function rotateDOWNlyr_prime() {
   push();
   rotateY(frameCount * -rotationSpeed); // roate DOWN layer:
   displayDOWNlyr();
   pop();
   displayUPlyr(); // static UP layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    DOWNPRIME_MOVE(); // DOWN layer face color update instructions, counter-clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
 }
 
-function rotateRIGHTlyr() {
+function rotateRIGHTlyr_prime() {
   push();
   rotateX(frameCount * -rotationSpeed); // Rotate RIGHT layer cubies
   displayRIGHTlyr();
   pop();
   displayLEFTlyr(); // static left layer
 
+  // update face colors:
   delay -= 1;
   if (delay < 0) {
-    proxyCube1.fill.r = face4color.r;
-    proxyCube1.fill.g = face4color.g;
-    proxyCube1.fill.b = face4color.b; // proxyCube1 now contains face4
-
-    proxyCube2.fill.r = face16color.r;
-    proxyCube2.fill.g = face16color.g;
-    proxyCube2.fill.b = face16color.b; // proxyCube2 now contains face16
-
-    face4color.r = face15color.r;
-    face4color.g = face15color.g;
-    face4color.b = face15color.b;
-
-    face16color.r = face21color.r;
-    face16color.g = face21color.g;
-    face16color.b = face21color.b;
-
-    face15color.r = face23color.r;
-    face15color.g = face23color.g;
-    face15color.b = face23color.b;
-
-    face21color.r = face11color.r;
-    face21color.g = face11color.g;
-    face21color.b = face11color.b;
-
-    face23color.r = face9color.r;
-    face23color.g = face9color.g;
-    face23color.b = face9color.b;
-
-    face11color.r = face3color.r;
-    face11color.g = face3color.g;
-    face11color.b = face3color.b;
-
-    face3color.r = proxyCube2.fill.r;
-    face3color.g = proxyCube2.fill.g;
-    face3color.b = proxyCube2.fill.b;
-
-    face9color.r = proxyCube1.fill.r;
-    face9color.g = proxyCube1.fill.g;
-    face9color.b = proxyCube1.fill.b;
-
-    //RIGHT side rotation
-    proxyCube3.fill.r = face5color.r;
-    proxyCube3.fill.g = face5color.g;
-    proxyCube3.fill.b = face5color.b;
-
-    face5color.r = face17color.r;
-    face5color.g = face17color.g;
-    face5color.b = face17color.b;
-
-    face17color.r = face22color.r;
-    face17color.g = face22color.g;
-    face17color.b = face22color.b;
-
-    face22color.r = face10color.r;
-    face22color.g = face10color.g;
-    face22color.b = face10color.b;
-
-    face10color.r = proxyCube3.fill.r;
-    face10color.g = proxyCube3.fill.g;
-    face10color.b = proxyCube3.fill.b;
-
+    RIGHTPRIME_MOVE(); // RIGHT layer face color update instructions, counter-clockwise direction
     delay = rotationSpeed * 100; // reset 'rotation' delay
   };
 }
-
-
 
 function rotateLEFTlyr() {
   push();
@@ -414,6 +295,13 @@ function rotateLEFTlyr() {
   displayLEFTlyr();
   pop();
   displayRIGHTlyr();
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    LEFT_MOVE(); // LEFT layer face color update instructions, clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
 }
 
 function rotateFRONTlyr() {
@@ -423,6 +311,12 @@ function rotateFRONTlyr() {
   pop();
   displayBACKlyr(); // static BACK layer
 
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    FRONT_MOVE(); // FRONT layer face color update instructions, clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
 }
 
 function rotateBACKlyr() {
@@ -431,10 +325,399 @@ function rotateBACKlyr() {
   displayBACKlyr();
   pop();
   displayFRONTlyr(); // static FRONT layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    BACK_MOVE(); // BACK layer face color update instructions, clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
 }
 
+// Move-set color switch instructions:
+function UP_MOVE() {
+  // UP band rotation
+  proxyCube1.fill.r = face4color.r;
+  proxyCube1.fill.g = face4color.g;
+  proxyCube1.fill.b = face4color.b; //store face 4 in proxyCube1
+
+  proxyCube2.fill.r = face2color.r;
+  proxyCube2.fill.g = face2color.g;
+  proxyCube2.fill.b = face2color.b; //store face 2 in proxyCube2
+
+  face2color.r = face5color.r;
+  face2color.g = face5color.g;
+  face2color.b = face5color.b;
+
+  face4color.r = face10color.r;
+  face4color.g = face10color.g;
+  face4color.b = face10color.b;
+
+  face10color.r = face8color.r;
+  face10color.g = face8color.g;
+  face10color.b = face8color.b;
+
+  face5color.r = face11color.r;
+  face5color.g = face11color.g;
+  face5color.b = face11color.b;
+
+  face8color.r = face1color.r;
+  face8color.g = face1color.g;
+  face8color.b = face1color.b;
+
+  face11color.r = face7color.r;
+  face11color.g = face7color.g;
+  face11color.b = face7color.b;
+
+  face1color.r = proxyCube1.fill.r;
+  face1color.g = proxyCube1.fill.g;
+  face1color.b = proxyCube1.fill.b; // place stored face 4 into face 1
+
+  face7color.r = proxyCube2.fill.r;
+  face7color.g = proxyCube2.fill.g;
+  face7color.b = proxyCube2.fill.b; // place stored face 2 into face 7
+
+  //UP side rotation
+  proxyCube3.fill.r = face3color.r;
+  proxyCube3.fill.g = face3color.g;
+  proxyCube3.fill.b = face3color.b; // store face 3 in proxyCube3
+
+  face3color.r = face9color.r;
+  face3color.g = face9color.g;
+  face3color.b = face9color.b;
+
+  face9color.r = face6color.r;
+  face9color.g = face6color.g;
+  face9color.b = face6color.b;
+
+  face6color.r = face0color.r;
+  face6color.g = face0color.g;
+  face6color.b = face0color.b;
+
+  face0color.r = proxyCube3.fill.r;
+  face0color.g = proxyCube3.fill.g;
+  face0color.b = proxyCube3.fill.b; // place stored face 3 into face 0
+}
+
+function DOWNPRIME_MOVE() {
+  // DOWN band rotation
+  proxyCube1.fill.r = face14color.r;
+  proxyCube1.fill.g = face14color.g;
+  proxyCube1.fill.b = face14color.b; // store face 14 in proxyCube1
+
+  proxyCube2.fill.r = face16color.r;
+  proxyCube2.fill.g = face16color.g;
+  proxyCube2.fill.b = face16color.b; // store face 16 in proxyCube2
+
+  face14color.r = face19color.r;
+  face14color.g = face19color.g;
+  face14color.b = face19color.b;
+
+  face16color.r = face13color.r;
+  face16color.g = face13color.g;
+  face16color.b = face13color.b;
+
+  face19color.r = face23color.r;
+  face19color.g = face23color.g;
+  face19color.b = face23color.b;
+
+  face13color.r = face20color.r;
+  face13color.g = face20color.g;
+  face13color.b = face20color.b;
+
+  face23color.r = face17color.r;
+  face23color.g = face17color.g;
+  face23color.b = face17color.b;
+
+  face20color.r = face22color.r;
+  face20color.g = face22color.g;
+  face20color.b = face22color.b;
+
+  face17color.r = proxyCube1.fill.r;
+  face17color.g = proxyCube1.fill.g;
+  face17color.b = proxyCube1.fill.b; // place stored face 14 into face 17
+
+  face22color.r = proxyCube2.fill.r;
+  face22color.g = proxyCube2.fill.g;
+  face22color.b = proxyCube2.fill.b; // place stored face 16 into face 22
+
+  //DOWN side rotation
+  proxyCube3.fill.r = face15color.r;
+  proxyCube3.fill.g = face15color.g;
+  proxyCube3.fill.b = face15color.b; // store face 15 in proxyCube3
+
+  face15color.r = face12color.r;
+  face15color.g = face12color.g;
+  face15color.b = face12color.b;
+
+  face12color.r = face18color.r;
+  face12color.g = face18color.g;
+  face12color.b = face18color.b;
+
+  face18color.r = face21color.r;
+  face18color.g = face21color.g;
+  face18color.b = face21color.b;
+
+  face21color.r = proxyCube3.fill.r;
+  face21color.g = proxyCube3.fill.g;
+  face21color.b = proxyCube3.fill.b; // place stored face 15 into face 21
+}
+
+function RIGHTPRIME_MOVE() {
+  proxyCube1.fill.r = face4color.r;
+  proxyCube1.fill.g = face4color.g;
+  proxyCube1.fill.b = face4color.b; // proxyCube1 now contains face4
+
+  proxyCube2.fill.r = face16color.r;
+  proxyCube2.fill.g = face16color.g;
+  proxyCube2.fill.b = face16color.b; // proxyCube2 now contains face16
+
+  face4color.r = face15color.r;
+  face4color.g = face15color.g;
+  face4color.b = face15color.b;
+
+  face16color.r = face21color.r;
+  face16color.g = face21color.g;
+  face16color.b = face21color.b;
+
+  face15color.r = face23color.r;
+  face15color.g = face23color.g;
+  face15color.b = face23color.b;
+
+  face21color.r = face11color.r;
+  face21color.g = face11color.g;
+  face21color.b = face11color.b;
+
+  face23color.r = face9color.r;
+  face23color.g = face9color.g;
+  face23color.b = face9color.b;
+
+  face11color.r = face3color.r;
+  face11color.g = face3color.g;
+  face11color.b = face3color.b;
+
+  face3color.r = proxyCube2.fill.r;
+  face3color.g = proxyCube2.fill.g;
+  face3color.b = proxyCube2.fill.b; // place stored face 16 into face 3
+
+  face9color.r = proxyCube1.fill.r;
+  face9color.g = proxyCube1.fill.g;
+  face9color.b = proxyCube1.fill.b; // place stored face 4 into face 9
+
+  //RIGHT side rotation
+  proxyCube3.fill.r = face5color.r;
+  proxyCube3.fill.g = face5color.g;
+  proxyCube3.fill.b = face5color.b; // store face 5 in proxyCube3
+
+  face5color.r = face17color.r;
+  face5color.g = face17color.g;
+  face5color.b = face17color.b;
+
+  face17color.r = face22color.r;
+  face17color.g = face22color.g;
+  face17color.b = face22color.b;
+
+  face22color.r = face10color.r;
+  face22color.g = face10color.g;
+  face22color.b = face10color.b;
+
+  face10color.r = proxyCube3.fill.r;
+  face10color.g = proxyCube3.fill.g;
+  face10color.b = proxyCube3.fill.b; // // place stored face 5 into face 10
+}
+
+function LEFT_MOVE() {
+  //LEFT band rotation
+  proxyCube1.fill.r = face2color.r;
+  proxyCube1.fill.g = face2color.g;
+  proxyCube1.fill.b = face2color.b; // proxyCube1 now contains face 2
+
+  proxyCube2.fill.r = face14color.r;
+  proxyCube2.fill.g = face14color.g;
+  proxyCube2.fill.b = face14color.b; // proxyCube2 now contains face 14
+
+  face2color.r = face12color.r;
+  face2color.g = face12color.g;
+  face2color.b = face12color.b;
+
+  face14color.r = face18color.r;
+  face14color.g = face18color.g;
+  face14color.b = face18color.b;
+
+  face12color.r = face20color.r;
+  face12color.g = face20color.g;
+  face12color.b = face20color.b;
+
+  face18color.r = face8color.r;
+  face18color.g = face8color.g;
+  face18color.b = face8color.b;
+
+  face20color.r = face6color.r;
+  face20color.g = face6color.g;
+  face20color.b = face6color.b;
+
+  face8color.r = face0color.r;
+  face8color.g = face0color.g;
+  face8color.b = face0color.b;
+
+  face0color.r = proxyCube2.fill.r;
+  face0color.g = proxyCube2.fill.g;
+  face0color.b = proxyCube2.fill.b; // place stored face 14 into face 0
+
+  face6color.r = proxyCube1.fill.r;
+  face6color.g = proxyCube1.fill.g;
+  face6color.b = proxyCube1.fill.b; // place stored face 2 into face 6
+
+  //LEFT side rotation
+  proxyCube3.fill.r = face1color.r;
+  proxyCube3.fill.g = face1color.g;
+  proxyCube3.fill.b = face1color.b; // store face 1 in proxyCube3
+
+  face1color.r = face13color.r;
+  face1color.g = face13color.g;
+  face1color.b = face13color.b;
+
+  face13color.r = face19color.r;
+  face13color.g = face19color.g;
+  face13color.b = face19color.b;
+
+  face19color.r = face7color.r;
+  face19color.g = face7color.g;
+  face19color.b = face7color.b;
+
+  face7color.r = proxyCube3.fill.r;
+  face7color.g = proxyCube3.fill.g;
+  face7color.b = proxyCube3.fill.b; // place stored face 1 into face 7
+}
+
+function FRONT_MOVE() {
+  proxyCube1.fill.r = face6color.r;
+  proxyCube1.fill.g = face6color.g;
+  proxyCube1.fill.b = face6color.b; // proxyCube1 now contains face 6
+
+  proxyCube2.fill.r = face9color.r;
+  proxyCube2.fill.g = face9color.g;
+  proxyCube2.fill.b = face9color.b; // proxyCube2 now contains face 9
+
+  face6color.r = face19color.r;
+  face6color.g = face19color.g;
+  face6color.b = face19color.b;
+
+  face9color.r = face7color.r;
+  face9color.g = face7color.g;
+  face9color.b = face7color.b;
+
+  face19color.r = face21color.r;
+  face19color.g = face21color.g;
+  face19color.b = face21color.b;
+
+  face7color.r = face18color.r;
+  face7color.g = face18color.g;
+  face7color.b = face18color.b;
+
+  face21color.r = face10color.r;
+  face21color.g = face10color.g;
+  face21color.b = face10color.b;
+
+  face18color.r = face22color.r;
+  face18color.g = face22color.g;
+  face18color.b = face22color.b;
+
+  face22color.r = proxyCube2.fill.r;
+  face22color.g = proxyCube2.fill.g;
+  face22color.b = proxyCube2.fill.b; // place stored face 9 into face 22
+
+  face10color.r = proxyCube1.fill.r;
+  face10color.g = proxyCube1.fill.g;
+  face10color.b = proxyCube1.fill.b; // place stored face 6 into face 10
+
+  //FRONT side rotation
+  proxyCube3.fill.r = face11color.r;
+  proxyCube3.fill.g = face11color.g;
+  proxyCube3.fill.b = face11color.b; // store face 11 in proxyCube3
+
+  face11color.r = face8color.r;
+  face11color.g = face8color.g;
+  face11color.b = face8color.b;
+
+  face8color.r = face20color.r;
+  face8color.g = face20color.g;
+  face8color.b = face20color.b;
+
+  face20color.r = face23color.r;
+  face20color.g = face23color.g;
+  face20color.b = face23color.b;
+
+  face23color.r = proxyCube3.fill.r;
+  face23color.g = proxyCube3.fill.g;
+  face23color.b = proxyCube3.fill.b; // place stored face 11 into face 23
+}
+
+function BACK_MOVE() {
+  proxyCube1.fill.r = face3color.r;
+  proxyCube1.fill.g = face3color.g;
+  proxyCube1.fill.b = face3color.b; // proxyCube1 now contains face 3
+
+  proxyCube2.fill.r = face0color.r;
+  proxyCube2.fill.g = face0color.g;
+  proxyCube2.fill.b = face0color.b; // proxyCube2 now contains face 0
+
+  face3color.r = face17color.r;
+  face3color.g = face17color.g;
+  face3color.b = face17color.b;
+
+  face0color.r = face5color.r;
+  face0color.g = face5color.g;
+  face0color.b = face5color.b;
+
+  face17color.r = face12color.r;
+  face17color.g = face12color.g;
+  face17color.b = face12color.b;
+
+  face5color.r = face15color.r;
+  face5color.g = face15color.g;
+  face5color.b = face15color.b;
+
+  face15color.r = face13color.r;
+  face15color.g = face13color.g;
+  face15color.b = face13color.b;
+
+  face12color.r = face1color.r;
+  face12color.g = face1color.g;
+  face12color.b = face1color.b;
+
+  face13color.r = proxyCube2.fill.r;
+  face13color.g = proxyCube2.fill.g;
+  face13color.b = proxyCube2.fill.b; // place stored face 0 into face 13
+
+  face1color.r = proxyCube1.fill.r;
+  face1color.g = proxyCube1.fill.g;
+  face1color.b = proxyCube1.fill.b; // place stored face 3 into face 1
+
+  //BACK side rotation
+  proxyCube3.fill.r = face2color.r;
+  proxyCube3.fill.g = face2color.g;
+  proxyCube3.fill.b = face2color.b; // store face 2 in proxyCube3
+
+  face2color.r = face4color.r;
+  face2color.g = face4color.g;
+  face2color.b = face4color.b;
+
+  face4color.r = face16color.r;
+  face4color.g = face16color.g;
+  face4color.b = face16color.b;
+
+  face16color.r = face14color.r;
+  face16color.g = face14color.g;
+  face16color.b = face14color.b;
+
+  face14color.r = proxyCube3.fill.r;
+  face14color.g = proxyCube3.fill.g;
+  face14color.b = proxyCube3.fill.b; // place stored face 2 into face 14
+}
+
+// display entire cube function
 function displayCube() {
-  // display whole cube
   displayUPlyr();
   displayDOWNlyr();
 }
