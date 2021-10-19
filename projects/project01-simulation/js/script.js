@@ -7,10 +7,22 @@ author, and this description to match your project!
 */
 
 "use strict";
+
+let innerCube = {
+  dim: 172,
+  tx: 0,
+  ty: 0,
+  tz: 0,
+  fill: {
+    r: 15,
+    g: 5,
+    b: 15
+  }
+};
 // proxy cubes for color storage during rotations
 let proxyCube1 = {
   dim: 40,
-  tx: 200,
+  tx: 190,
   ty: -150,
   tz: 0,
   fill: {
@@ -21,7 +33,7 @@ let proxyCube1 = {
 };
 let proxyCube2 = {
   dim: 40,
-  tx: 240,
+  tx: 235,
   ty: -150,
   tz: 0,
   fill: {
@@ -196,11 +208,15 @@ let face23color = {
   b: orange.b,
 };
 
+let state = `title` // possible states are `title`, `controlls`, `simulation`
 let cubieOffset = 60; // offset from world origin used to translate cubies
-let faceOffset = 55; // face offset from center of cubie
+let faceOffset = 60; // face offset from center of cubie
 let rotationSpeed = 0.15; // Layer rotation speed
 let delay = rotationSpeed * 100;
 let faces = []; // array of faces, populated in updateFaces() at draw()
+
+let titleCard;
+let controllsCard;
 
 /**
 Description of preload
@@ -215,16 +231,42 @@ Description of setup
 function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
+
+  titleCard = createGraphics(220, 200);
+
+
 }
 /**
 Description of draw()
 */
 function draw() {
   background(10, 70, 70);
+  // //Initial perspective view:
+  // rotateX(radians(-20));
+  // rotateY(radians(-20));
+  // // default camera:
+  // camera(0, 0, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
+
+  // //text experiments:
+  // push();
+  // textAlign(CENTER, CENTER);
+  // textSize(width / 3);
+  // text(`CUBE!`, 300, 0)
+  // pop();
+
+  push();
+  translate(270, 0, 0)
+  texture(titleCard);
+  titleCard.fill(255);
+  titleCard.textAlign(CENTER, CENTER);
+  titleCard.text(`Instructions`, 50, 50);
+  plane(220, 200);
+  pop();
+
+  //state = `simulation`
   orbitControl(10, 10, 0.3);
   updateFaces();
-
-  //moveset controls:
+  //moveset controls
   if (keyIsDown(81)) { // Q key
     rotateUPlyr();
   } else if (keyIsDown(87)) { // W key
@@ -1335,14 +1377,14 @@ function updateFaces() {
   // CUBIE3 faces: (yellow - green - orange)
   faces[6] = createFace(0, -faceOffset, 0, 100, 10, 100, face6color.r, face6color.g, face6color.b); // yellow
   faces[7] = createFace(-faceOffset, 0, 0, 10, 100, 100, face7color.r, face7color.g, face7color.b); // green
-  faces[8] = createFace(0, 0, 50, 100, 100, 10, face8color.r, face8color.g, face8color.b); // orange
+  faces[8] = createFace(0, 0, faceOffset, 100, 100, 10, face8color.r, face8color.g, face8color.b); // orange
   // CUBIE4 faces: (yellow - blue - orange)
   faces[9] = createFace(0, -faceOffset, 0, 100, 10, 100, face9color.r, face9color.g, face9color.b); // yellow
   faces[10] = createFace(faceOffset, 0, 0, 10, 100, 100, face10color.r, face10color.g, face10color.b); // blue
   faces[11] = createFace(0, 0, faceOffset, 100, 100, 10, face11color.r, face11color.g, face11color.b); // orange
 
   // CUBIE5 faces: (white - green - red)
-  faces[12] = createFace(0, 50, 0, 100, 10, 100, face12color.r, face12color.g, face12color.b); // white
+  faces[12] = createFace(0, faceOffset, 0, 100, 10, 100, face12color.r, face12color.g, face12color.b); // white
   faces[13] = createFace(-faceOffset, 0, 0, 10, 100, 100, face13color.r, face13color.g, face13color.b); // green
   faces[14] = createFace(0, 0, -faceOffset, 100, 100, 10, face14color.r, face14color.g, face14color.b); // red
   // CUBIE6 faces: (white - red - blue)
@@ -1388,20 +1430,26 @@ function displayProxyCubes() {
   //USER CUBE display:
   push();
   fill(proxyCube1.fill.r, proxyCube1.fill.g, proxyCube1.fill.b);
-  translate(proxyCube1.tx, proxyCube1.ty); // move this box to mouse possition
+  translate(proxyCube1.tx, proxyCube1.ty);
   box(proxyCube1.dim);
   pop();
 
   push();
   fill(proxyCube2.fill.r, proxyCube2.fill.g, proxyCube2.fill.b);
-  translate(proxyCube2.tx, proxyCube2.ty); // move this box to mouse possition
+  translate(proxyCube2.tx, proxyCube2.ty);
   box(proxyCube2.dim);
   pop();
 
   push();
   fill(proxyCube3.fill.r, proxyCube3.fill.g, proxyCube3.fill.b);
-  translate(proxyCube3.tx, proxyCube3.ty); // move this box to mouse possition
+  translate(proxyCube3.tx, proxyCube3.ty);
   box(proxyCube3.dim);
+  pop();
+
+  push();
+  fill(innerCube.fill.r, innerCube.fill.g, innerCube.fill.b);
+  translate(innerCube.tx, innerCube.ty);
+  box(innerCube.dim);
   pop();
 }
 
