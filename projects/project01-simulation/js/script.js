@@ -208,15 +208,25 @@ let face23color = {
   b: orange.b,
 };
 
-let state = `title` // possible states are `title`, `controlls`, `simulation`
+let state = `title` // possible states are `title`, `controlls`, `gameplay`
 let cubieOffset = 60; // offset from world origin used to translate cubies
 let faceOffset = 60; // face offset from center of cubie
 let rotationSpeed = 0.15; // Layer rotation speed
 let delay = rotationSpeed * 100;
 let faces = []; // array of faces, populated in updateFaces() at draw()
 
+// graphics objects
 let titleCard;
 let controllsCard;
+
+// fonts
+let afronik;
+let astrohex;
+let stellari;
+let jxTabe;
+let mago;
+let phazed;
+let radiotechnika;
 
 /**
 Description of preload
@@ -232,9 +242,17 @@ function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
 
+  // create graphics objects
   titleCard = createGraphics(220, 200);
 
-
+  // load fonts
+  afronik = loadFont(`assets/fonts/Afronik.ttf`);
+  astrohex = loadFont(`assets/fonts/Astrohex-Regular.otf`);
+  stellari = loadFont(`assets/fonts/ep-stellari-display.ttf`);
+  jxTabe = loadFont(`assets/fonts/JxTabeDEMO-Regular.ttf`);
+  mago = loadFont(`assets/fonts/MAGO Sans.otf`);
+  phazed = loadFont(`assets/fonts/Phazed-Regular.otf`);
+  radiotechnika = loadFont(`assets/fonts/Radiotechnika-2.0.otf`);
 }
 /**
 Description of draw()
@@ -247,21 +265,23 @@ function draw() {
   // // default camera:
   // camera(0, 0, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
 
-  // //text experiments:
-  // push();
-  // textAlign(CENTER, CENTER);
-  // textSize(width / 3);
-  // text(`CUBE!`, 300, 0)
-  // pop();
-
+  camera(200, -300, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
+  //text experiments:
   push();
-  translate(270, 0, 0)
-  texture(titleCard);
-  titleCard.fill(255);
-  titleCard.textAlign(CENTER, CENTER);
-  titleCard.text(`Instructions`, 50, 50);
-  plane(220, 200);
+  textAlign(CENTER, CENTER);
+  textSize(width / 3);
+  textFont(stellari, 200);
+  text(`CUBE!`, 0, -255)
   pop();
+
+  // push();
+  // translate(270, 0, 0)
+  // texture(titleCard);
+  // titleCard.fill(255);
+  // titleCard.textAlign(CENTER, CENTER);
+  // titleCard.text(`Instructions`, 50, 50);
+  // plane(220, 200);
+  // pop();
 
   //state = `simulation`
   orbitControl(10, 10, 0.3);
@@ -296,8 +316,16 @@ function draw() {
   };
 
   displayProxyCubes();
+  displayInnerCube();
 }
 
+function mouseClicked() {
+  if (state === `title`) {
+    state = 'gameplay'
+  };
+}
+
+// Rotate layer functions
 function rotateUPlyr() {
   push();
   rotateY(frameCount * -rotationSpeed); // Rotate UP layer cubies
@@ -1446,6 +1474,9 @@ function displayProxyCubes() {
   box(proxyCube3.dim);
   pop();
 
+}
+
+function displayInnerCube() {
   push();
   fill(innerCube.fill.r, innerCube.fill.g, innerCube.fill.b);
   translate(innerCube.tx, innerCube.ty);
