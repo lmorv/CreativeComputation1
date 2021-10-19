@@ -259,6 +259,36 @@ function rotateUPlyr() {
   };
 }
 
+function rotateUPlyr_prime() {
+  push();
+  rotateY(frameCount * -rotationSpeed); // Rotate UP layer cubies
+  displayUPlyr();
+  pop();
+  displayDOWNlyr(); // static down layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    UPPRIME_MOVE(); // UP layer face color update instructions, counter-clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
+}
+
+function rotateDOWNlyr() {
+  push();
+  rotateY(frameCount * rotationSpeed); // roate DOWN layer:
+  displayDOWNlyr();
+  pop();
+  displayUPlyr(); // static UP layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    DOWN_MOVE(); // DOWN layer face color update instructions, clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
+}
+
 function rotateDOWNlyr_prime() {
   push();
   rotateY(frameCount * -rotationSpeed); // roate DOWN layer:
@@ -270,6 +300,21 @@ function rotateDOWNlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     DOWNPRIME_MOVE(); // DOWN layer face color update instructions, counter-clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
+}
+
+function rotateRIGHTlyr() {
+  push();
+  rotateX(frameCount * rotationSpeed); // Rotate RIGHT layer cubies
+  displayRIGHTlyr();
+  pop();
+  displayLEFTlyr(); // static left layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    RIGHT_MOVE(); // RIGHT layer face color update instructions, clockwise direction
     delay = rotationSpeed * 100; // reset 'rotation' delay
   };
 }
@@ -294,12 +339,27 @@ function rotateLEFTlyr() {
   rotateX(frameCount * -rotationSpeed); // rotate LEFT layer
   displayLEFTlyr();
   pop();
-  displayRIGHTlyr();
+  displayRIGHTlyr(); // static right layer
 
   // update face colors:
   delay -= 1;
   if (delay < 0) {
     LEFT_MOVE(); // LEFT layer face color update instructions, clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
+}
+
+function rotateLEFTlyr_prime() {
+  push();
+  rotateX(frameCount * rotationSpeed); // rotate LEFT layer
+  displayLEFTlyr();
+  pop();
+  displayRIGHTlyr(); // static right layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    LEFTPRIME_MOVE(); // LEFT layer face color update instructions, counter-clockwise direction
     delay = rotationSpeed * 100; // reset 'rotation' delay
   };
 }
@@ -319,6 +379,21 @@ function rotateFRONTlyr() {
   };
 }
 
+function rotateFRONTlyr_prime() {
+  push();
+  rotateZ(frameCount * -rotationSpeed); // rotate FRONT layer
+  displayFRONTlyr();
+  pop();
+  displayBACKlyr(); // static BACK layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    FRONTPRIME_MOVE(); // FRONT layer face color update instructions, counter-clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
+}
+
 function rotateBACKlyr() {
   push();
   rotateZ(frameCount * -rotationSpeed); // rotate BACK layer
@@ -330,6 +405,21 @@ function rotateBACKlyr() {
   delay -= 1;
   if (delay < 0) {
     BACK_MOVE(); // BACK layer face color update instructions, clockwise direction
+    delay = rotationSpeed * 100; // reset 'rotation' delay
+  };
+}
+
+function rotateBACKlyr_prime() {
+  push();
+  rotateZ(frameCount * rotationSpeed); // rotate BACK layer
+  displayBACKlyr();
+  pop();
+  displayFRONTlyr(); // static FRONT layer
+
+  // update face colors:
+  delay -= 1;
+  if (delay < 0) {
+    BACKPRIME_MOVE(); // BACK layer face color update instructions, counter-clockwise direction
     delay = rotationSpeed * 100; // reset 'rotation' delay
   };
 }
