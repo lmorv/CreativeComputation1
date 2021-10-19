@@ -10,8 +10,8 @@ author, and this description to match your project!
 // proxy cubes for color storage during rotations
 let proxyCube1 = {
   dim: 40,
-  tx: 0,
-  ty: 40,
+  tx: 200,
+  ty: -150,
   tz: 0,
   fill: {
     r: 0,
@@ -21,8 +21,8 @@ let proxyCube1 = {
 };
 let proxyCube2 = {
   dim: 40,
-  tx: 40,
-  ty: 0,
+  tx: 240,
+  ty: -150,
   tz: 0,
   fill: {
     r: 0,
@@ -32,8 +32,8 @@ let proxyCube2 = {
 };
 let proxyCube3 = {
   dim: 40,
-  tx: -40,
-  ty: 0,
+  tx: 280,
+  ty: -150,
   tz: 0,
   fill: {
     r: 0,
