@@ -264,7 +264,23 @@ function draw() {
   // rotateY(radians(-20));
   // // default camera:
   // camera(0, 0, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
+  // push();
+  // translate(270, 0, 0)
+  // texture(titleCard);
+  // titleCard.fill(255);
+  // titleCard.textAlign(CENTER, CENTER);
+  // titleCard.text(`Instructions`, 50, 50);
+  // plane(220, 200);
+  // pop();
+  if (state === `title`) {
+    TITLE();
+    GAMEPLAY();
+  } else if (state === 'gameplay') {
+    GAMEPLAY();
+  }
+}
 
+function TITLE() {
   camera(200, -300, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
   //text experiments:
   push();
@@ -274,16 +290,14 @@ function draw() {
   text(`CUBE!`, 0, -255)
   pop();
 
-  // push();
-  // translate(270, 0, 0)
-  // texture(titleCard);
-  // titleCard.fill(255);
-  // titleCard.textAlign(CENTER, CENTER);
-  // titleCard.text(`Instructions`, 50, 50);
-  // plane(220, 200);
-  // pop();
+  // // display game objects
+  // displayCube();
+  // displayProxyCubes();
+  // displayInnerCube();
 
-  //state = `simulation`
+}
+
+function GAMEPLAY() {
   orbitControl(10, 10, 0.3);
   updateFaces();
   //moveset controls
@@ -319,7 +333,7 @@ function draw() {
   displayInnerCube();
 }
 
-function mouseClicked() {
+function mousePressed() {
   if (state === `title`) {
     state = 'gameplay'
   };
