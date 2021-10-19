@@ -22,7 +22,7 @@ let innerCube = {
 // proxy cubes for color storage during rotations
 let proxyCube1 = {
   dim: 40,
-  tx: 190,
+  tx: 170,
   ty: -150,
   tz: 0,
   fill: {
@@ -33,7 +33,7 @@ let proxyCube1 = {
 };
 let proxyCube2 = {
   dim: 40,
-  tx: 235,
+  tx: 215,
   ty: -150,
   tz: 0,
   fill: {
@@ -44,7 +44,7 @@ let proxyCube2 = {
 };
 let proxyCube3 = {
   dim: 40,
-  tx: 280,
+  tx: 260,
   ty: -150,
   tz: 0,
   fill: {
@@ -208,16 +208,12 @@ let face23color = {
   b: orange.b,
 };
 
-let state = `title` // possible states are `title`, `controlls`, `gameplay`
+let state = `title` // possible states are `title`, `controls`, `gameplay`
 let cubieOffset = 60; // offset from world origin used to translate cubies
 let faceOffset = 60; // face offset from center of cubie
 let rotationSpeed = 0.15; // Layer rotation speed
 let delay = rotationSpeed * 100;
 let faces = []; // array of faces, populated in updateFaces() at draw()
-
-// graphics objects
-let titleCard;
-let controllsCard;
 
 // fonts
 let afronik;
@@ -241,39 +237,25 @@ Description of setup
 function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
-
-  // create graphics objects
-  titleCard = createGraphics(220, 200);
-
+  textAlign(CENTER, CENTER);
   // load fonts
-  afronik = loadFont(`assets/fonts/Afronik.ttf`);
-  astrohex = loadFont(`assets/fonts/Astrohex-Regular.otf`);
-  stellari = loadFont(`assets/fonts/ep-stellari-display.ttf`);
-  jxTabe = loadFont(`assets/fonts/JxTabeDEMO-Regular.ttf`);
-  mago = loadFont(`assets/fonts/MAGO Sans.otf`);
-  phazed = loadFont(`assets/fonts/Phazed-Regular.otf`);
-  radiotechnika = loadFont(`assets/fonts/Radiotechnika-2.0.otf`);
+  afronik = loadFont(`assets/fonts/Afronik.ttf`); // works
+  astrohex = loadFont(`assets/fonts/Astrohex-Regular.otf`); // dont work
+  stellari = loadFont(`assets/fonts/ep-stellari-display.ttf`); // works
+  jxTabe = loadFont(`assets/fonts/JxTabeDEMO-Regular.ttf`); // works
+  mago = loadFont(`assets/fonts/MAGO Sans.otf`); // works
 }
 /**
 Description of draw()
 */
 function draw() {
   background(10, 70, 70);
-  // //Initial perspective view:
-  // rotateX(radians(-20));
-  // rotateY(radians(-20));
-  // // default camera:
-  // camera(0, 0, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
-  // push();
-  // translate(270, 0, 0)
-  // texture(titleCard);
-  // titleCard.fill(255);
-  // titleCard.textAlign(CENTER, CENTER);
-  // titleCard.text(`Instructions`, 50, 50);
-  // plane(220, 200);
-  // pop();
+
   if (state === `title`) {
     TITLE();
+    GAMEPLAY(); // play during `title`!
+  } else if (state === `controls`) {
+    showControls();
     GAMEPLAY();
   } else if (state === 'gameplay') {
     GAMEPLAY();
@@ -282,19 +264,52 @@ function draw() {
 
 function TITLE() {
   camera(200, -300, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
-  //text experiments:
   push();
-  textAlign(CENTER, CENTER);
-  textSize(width / 3);
   textFont(stellari, 200);
-  text(`CUBE!`, 0, -255)
+  text(`cube!`, 0, -260)
   pop();
 
-  // // display game objects
-  // displayCube();
-  // displayProxyCubes();
-  // displayInnerCube();
+  let yPos = -90;
+  push();
+  textAlign(LEFT, LEFT);
+  textFont(stellari, 30);
+  text(`//use keys:`, 180, yPos)
+  text(`[q] [w] [e] [r]`, 180, yPos + 55)
+  text(`[a] [s] [d] [f]`, 180, yPos + 110)
+  text(`[z] [x] [c] [v]`, 180, yPos + 165)
+  text(`to control`, 180, yPos + 220)
+  text(`the cube.`, 180, yPos + 275)
+  // text(``, -200, yPos + 330)
+  pop();
 
+  push();
+  textAlign(RIGHT, RIGHT);
+  textFont(stellari, 45);
+  text(`//click and drag`, -200, 270)
+  text(`  to orbit cube.`, -200, 270 + 45)
+  pop();
+}
+
+function showControls() {
+  let yPos = -200;
+  push();
+  textAlign(RIGHT, RIGHT);
+  textFont(stellari, 40);
+  text(`controls:`, -160, yPos)
+  text(`U:[q] U':[w]`, -200, yPos + 55)
+  text(`D:[e] D':[r]`, -200, yPos + 110)
+  text(`L:[a], L':[s]`, -200, yPos + 165)
+  text(`R:[d], R':[f]`, -200, yPos + 220)
+  text(`F:[z], F':[x]`, -200, yPos + 275)
+  text(`B:[c], B':[v]`, -200, yPos + 330)
+  pop();
+
+  push();
+  textAlign(LEFT, LEFT);
+  textFont(stellari, 30);
+  text(`//press SHIFT`, 160, -yPos)
+  text(`  to hide controls.`, 160, -yPos + 35)
+  pop();
 }
 
 function GAMEPLAY() {
@@ -310,13 +325,13 @@ function GAMEPLAY() {
   } else if (keyIsDown(82)) { // R key
     rotateDOWNlyr_prime();
   } else if (keyIsDown(65)) { // A key
-    rotateRIGHTlyr();
-  } else if (keyIsDown(83)) { // S key
-    rotateRIGHTlyr_prime();
-  } else if (keyIsDown(68)) { // D key
     rotateLEFTlyr();
-  } else if (keyIsDown(70)) { // F key
+  } else if (keyIsDown(83)) { // S key
     rotateLEFTlyr_prime();
+  } else if (keyIsDown(68)) { // D key
+    rotateRIGHTlyr();
+  } else if (keyIsDown(70)) { // F key
+    rotateRIGHTlyr_prime();
   } else if (keyIsDown(90)) { // Z key
     rotateFRONTlyr();
   } else if (keyIsDown(88)) { // X key
@@ -335,8 +350,16 @@ function GAMEPLAY() {
 
 function mousePressed() {
   if (state === `title`) {
-    state = 'gameplay'
+    state = 'controls';
   };
+}
+
+function keyPressed() {
+  if (keyCode === SHIFT && state === `controls`) {
+    state = 'gameplay';
+  } else if (keyCode === SHIFT && state === `gameplay`) {
+    state = `controls`;
+  }
 }
 
 // Rotate layer functions
@@ -516,10 +539,13 @@ function rotateBACKlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     BACKPRIME_MOVE(); // BACK layer face color update instructions, counter-clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
+function resetDelay() {
+  delay = rotationSpeed * 100;
+}
 // Move-set color switch instructions:
 
 function UP_MOVE() { // <<---!
