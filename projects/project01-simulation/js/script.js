@@ -2,7 +2,7 @@
 Cube Simulator
 Leonardo Morales
 
-his program simulates the real-life mechanics of a 2x2x2 Rubik's Cube using a color update approach on pre-defined faces with fixed dimensions and positions in 3D space forming `cubies`, which are then grouped into `layers` that are dynamically displayed and animated alongside simulated rotation behavior based on user input.
+This program simulates the real-life mechanics of a 2x2x2 Rubik's Cube using a color update approach on pre-defined faces with fixed dimensions and positions in 3D space forming `cubies`, which are then grouped into `layers` that are dynamically displayed and animated alongside simulated rotation behavior based on user input.
 */
 
 "use strict";
@@ -1542,7 +1542,6 @@ function displayProxyCubes() {
   translate(proxyCube3.tx, proxyCube3.ty);
   box(proxyCube3.dim);
   pop();
-
 }
 
 function displayInnerCube() {
