@@ -1,5 +1,5 @@
 /**
-Simulation
+Cube Simulator
 Leonardo Morales
 
 This is a template. You must fill in the title,
@@ -212,17 +212,14 @@ let state = `title` // possible states are `title`, `controls`, `gameplay`
 let cubieOffset = 60; // offset from world origin used to translate cubies
 let faceOffset = 60; // face offset from center of cubie
 let rotationSpeed = 0.15; // Layer rotation speed
-let delay = rotationSpeed * 100;
+let delay = 20;
 let faces = []; // array of faces, populated in updateFaces() at draw()
 
-// fonts
-let afronik;
-let astrohex;
+function resetDelay() { // resets delay timer on keyPressed and when delay reaches 0 when holding a key.
+  delay = 20;
+}
+// font
 let stellari;
-let jxTabe;
-let mago;
-let phazed;
-let radiotechnika;
 
 /**
 Description of preload
@@ -238,18 +235,16 @@ function setup() {
   createCanvas(1100, 700, WEBGL);
   noStroke();
   textAlign(CENTER, CENTER);
-  // load fonts
-  afronik = loadFont(`assets/fonts/Afronik.ttf`); // works
-  astrohex = loadFont(`assets/fonts/Astrohex-Regular.otf`); // dont work
+  // load font
   stellari = loadFont(`assets/fonts/ep-stellari-display.ttf`); // works
-  jxTabe = loadFont(`assets/fonts/JxTabeDEMO-Regular.ttf`); // works
-  mago = loadFont(`assets/fonts/MAGO Sans.otf`); // works
 }
 /**
 Description of draw()
 */
 function draw() {
   background(10, 70, 70);
+
+  console.log(`delay:${delay}`);
 
   if (state === `title`) {
     TITLE();
@@ -269,7 +264,7 @@ function TITLE() {
   text(`cube!`, 0, -260)
   pop();
 
-  let yPos = -90;
+  let yPos = -80;
   push();
   textAlign(LEFT, LEFT);
   textFont(stellari, 30);
@@ -278,7 +273,7 @@ function TITLE() {
   text(`[a] [s] [d] [f]`, 180, yPos + 110)
   text(`[z] [x] [c] [v]`, 180, yPos + 165)
   text(`to control`, 180, yPos + 220)
-  text(`the cube.`, 180, yPos + 275)
+  text(`the cube.`, 180, yPos + 255)
   // text(``, -200, yPos + 330)
   pop();
 
@@ -355,11 +350,40 @@ function mousePressed() {
 }
 
 function keyPressed() {
+  resetDelay();
+  // handle show/hide controls condition:
   if (keyCode === SHIFT && state === `controls`) {
     state = 'gameplay';
   } else if (keyCode === SHIFT && state === `gameplay`) {
     state = `controls`;
   }
+
+  // handle instantaneous move-set execution:
+  else if (keyCode === 81) { // Q key
+    UP_MOVE();
+  } else if (keyCode === 87) { // W key
+    UPPRIME_MOVE();
+  } else if (keyCode === 69) { // E key
+    DOWN_MOVE();
+  } else if (keyCode === 82) { // R key
+    DOWNPRIME_MOVE();
+  } else if (keyCode === 65) { // A key
+    LEFT_MOVE();
+  } else if (keyCode === 83) { // S key
+    LEFTPRIME_MOVE();
+  } else if (keyCode === 68) { // D key
+    RIGHT_MOVE();
+  } else if (keyCode === 70) { // F key
+    RIGHTPRIME_MOVE();
+  } else if (keyCode === 90) { // Z key
+    FRONT_MOVE();
+  } else if (keyCode === 88) { // X key
+    FRONTPRIME_MOVE();
+  } else if (keyCode === 67) { // C key
+    BACK_MOVE();
+  } else if (keyCode === 86) { // V key
+    BACKPRIME_MOVE();
+  };
 }
 
 // Rotate layer functions
@@ -374,7 +398,7 @@ function rotateUPlyr() {
   delay -= 1;
   if (delay < 0) {
     UP_MOVE(); // UP layer face color update instructions, clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -389,7 +413,7 @@ function rotateUPlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     UPPRIME_MOVE(); // UP layer face color update instructions, counter-clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -404,7 +428,7 @@ function rotateDOWNlyr() {
   delay -= 1;
   if (delay < 0) {
     DOWN_MOVE(); // DOWN layer face color update instructions, clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -419,7 +443,7 @@ function rotateDOWNlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     DOWNPRIME_MOVE(); // DOWN layer face color update instructions, counter-clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -434,7 +458,7 @@ function rotateRIGHTlyr() {
   delay -= 1;
   if (delay < 0) {
     RIGHT_MOVE(); // RIGHT layer face color update instructions, clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -449,7 +473,7 @@ function rotateRIGHTlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     RIGHTPRIME_MOVE(); // RIGHT layer face color update instructions, counter-clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -464,7 +488,7 @@ function rotateLEFTlyr() {
   delay -= 1;
   if (delay < 0) {
     LEFT_MOVE(); // LEFT layer face color update instructions, clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -479,7 +503,7 @@ function rotateLEFTlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     LEFTPRIME_MOVE(); // LEFT layer face color update instructions, counter-clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -494,7 +518,7 @@ function rotateFRONTlyr() {
   delay -= 1;
   if (delay < 0) {
     FRONT_MOVE(); // FRONT layer face color update instructions, clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -509,7 +533,7 @@ function rotateFRONTlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     FRONTPRIME_MOVE(); // FRONT layer face color update instructions, counter-clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -524,7 +548,7 @@ function rotateBACKlyr() {
   delay -= 1;
   if (delay < 0) {
     BACK_MOVE(); // BACK layer face color update instructions, clockwise direction
-    delay = rotationSpeed * 100; // reset 'rotation' delay
+    resetDelay(); // reset 'rotation' delay
   };
 }
 
@@ -543,9 +567,6 @@ function rotateBACKlyr_prime() {
   };
 }
 
-function resetDelay() {
-  delay = rotationSpeed * 100;
-}
 // Move-set color switch instructions:
 
 function UP_MOVE() { // <<---!
