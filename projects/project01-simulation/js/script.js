@@ -7,7 +7,7 @@ author, and this description to match your project!
 */
 
 "use strict";
-
+// your inner cube:
 let innerCube = {
   dim: 172,
   tx: 0,
@@ -19,7 +19,8 @@ let innerCube = {
     b: 15
   }
 };
-// proxy cubes for color storage during rotations
+
+// proxy cubes for color storage during move-set execution:
 let proxyCube1 = {
   dim: 40,
   tx: 170,
@@ -54,7 +55,7 @@ let proxyCube3 = {
   }
 };
 
-// color declarations to initialize face colors
+// color declarations to initialize face colors:
 let yellow = {
   r: 255,
   g: 255,
@@ -86,7 +87,7 @@ let white = {
   b: 255,
 }
 
-// face color declarations, to be changed on keyIsPressed events
+// face color declarations, to be changed on keyIsPressed & keyPressed events
 let face0color = {
   r: yellow.r,
   g: yellow.g,
@@ -209,16 +210,19 @@ let face23color = {
 };
 
 let state = `title` // possible states are `title`, `controls`, `gameplay`
+let faces = []; // array of faces, populated in updateFaces() at draw()
+
 let cubieOffset = 60; // offset from world origin used to translate cubies
 let faceOffset = 60; // face offset from center of cubie
-let rotationSpeed = 0.15; // Layer rotation speed
-let delay = 20;
-let faces = []; // array of faces, populated in updateFaces() at draw()
+let rotationSpeed = 0.15; // Layer rotation animation speed
+
+let delay = 20; // used to delay move-set execution when holding a key.
 
 function resetDelay() { // resets delay timer on keyPressed and when delay reaches 0 when holding a key.
   delay = 20;
 }
-// font
+
+// font:
 let stellari;
 
 /**
@@ -229,7 +233,7 @@ function preload() {
 }
 
 /**
-Description of setup
+setup loads a font and defines global display setting
 */
 function setup() {
   createCanvas(1100, 700, WEBGL);
@@ -239,32 +243,35 @@ function setup() {
   stellari = loadFont(`assets/fonts/ep-stellari-display.ttf`); // works
 }
 /**
-Description of draw()
+draw() handles definitions of states' behaviour
 */
 function draw() {
   background(10, 70, 70);
 
-  console.log(`delay:${delay}`);
-
+  // handle state change:
   if (state === `title`) {
-    TITLE();
+    TITLE(); //shows title text
     GAMEPLAY(); // play during `title`!
   } else if (state === `controls`) {
-    showControls();
+    showControls(); // shows controls text
     GAMEPLAY();
   } else if (state === 'gameplay') {
     GAMEPLAY();
   }
+
+  // debug:
+  console.log(`delay:${delay}`);
 }
 
 function TITLE() {
   camera(200, -300, (height / 2) / tan(PI / 6), 0, 0, 0, 0, 1, 0);
+  let yPos = -80;
+
   push();
   textFont(stellari, 200);
   text(`cube!`, 0, -260)
   pop();
 
-  let yPos = -80;
   push();
   textAlign(LEFT, LEFT);
   textFont(stellari, 30);
@@ -274,7 +281,6 @@ function TITLE() {
   text(`[z] [x] [c] [v]`, 180, yPos + 165)
   text(`to control`, 180, yPos + 220)
   text(`the cube.`, 180, yPos + 255)
-  // text(``, -200, yPos + 330)
   pop();
 
   push();
@@ -302,8 +308,8 @@ function showControls() {
   push();
   textAlign(LEFT, LEFT);
   textFont(stellari, 30);
-  text(`//press SHIFT`, 160, -yPos)
-  text(`  to hide controls.`, 160, -yPos + 35)
+  text(`//press SHIFT to`, 160, -yPos)
+  text(`  hide controls.`, 160, -yPos + 35)
   pop();
 }
 
@@ -358,7 +364,7 @@ function keyPressed() {
     state = `controls`;
   }
 
-  // handle instantaneous move-set execution:
+  // handle instantaneous move-set execution (no delay):
   else if (keyCode === 81) { // Q key
     UP_MOVE();
   } else if (keyCode === 87) { // W key
@@ -386,7 +392,7 @@ function keyPressed() {
   };
 }
 
-// Rotate layer functions
+// Rotate layer functions, they handle animation and move set execution with a delay
 function rotateUPlyr() {
   push();
   rotateY(frameCount * -rotationSpeed); // Rotate UP layer cubies
@@ -398,7 +404,7 @@ function rotateUPlyr() {
   delay -= 1;
   if (delay < 0) {
     UP_MOVE(); // UP layer face color update instructions, clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -413,7 +419,7 @@ function rotateUPlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     UPPRIME_MOVE(); // UP layer face color update instructions, counter-clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -428,7 +434,7 @@ function rotateDOWNlyr() {
   delay -= 1;
   if (delay < 0) {
     DOWN_MOVE(); // DOWN layer face color update instructions, clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -443,7 +449,7 @@ function rotateDOWNlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     DOWNPRIME_MOVE(); // DOWN layer face color update instructions, counter-clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -458,7 +464,7 @@ function rotateRIGHTlyr() {
   delay -= 1;
   if (delay < 0) {
     RIGHT_MOVE(); // RIGHT layer face color update instructions, clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -473,7 +479,7 @@ function rotateRIGHTlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     RIGHTPRIME_MOVE(); // RIGHT layer face color update instructions, counter-clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -488,7 +494,7 @@ function rotateLEFTlyr() {
   delay -= 1;
   if (delay < 0) {
     LEFT_MOVE(); // LEFT layer face color update instructions, clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -503,7 +509,7 @@ function rotateLEFTlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     LEFTPRIME_MOVE(); // LEFT layer face color update instructions, counter-clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -518,7 +524,7 @@ function rotateFRONTlyr() {
   delay -= 1;
   if (delay < 0) {
     FRONT_MOVE(); // FRONT layer face color update instructions, clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -533,7 +539,7 @@ function rotateFRONTlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     FRONTPRIME_MOVE(); // FRONT layer face color update instructions, counter-clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -548,7 +554,7 @@ function rotateBACKlyr() {
   delay -= 1;
   if (delay < 0) {
     BACK_MOVE(); // BACK layer face color update instructions, clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
@@ -563,13 +569,12 @@ function rotateBACKlyr_prime() {
   delay -= 1;
   if (delay < 0) {
     BACKPRIME_MOVE(); // BACK layer face color update instructions, counter-clockwise direction
-    resetDelay(); // reset 'rotation' delay
+    resetDelay(); // reset moveset execution delay
   };
 }
 
 // Move-set color switch instructions:
-
-function UP_MOVE() { // <<---!
+function UP_MOVE() {
   // UP band rotation
   proxyCube1.fill.r = face4color.r;
   proxyCube1.fill.g = face4color.g;
@@ -698,7 +703,7 @@ function UPPRIME_MOVE() {
 }
 
 
-function DOWN_MOVE() { // <<---!
+function DOWN_MOVE() {
   // DOWN band rotation
   proxyCube1.fill.r = face14color.r;
   proxyCube1.fill.g = face14color.g;
@@ -826,7 +831,7 @@ function DOWNPRIME_MOVE() {
   face21color.b = proxyCube3.fill.b; // place stored face 15 into face 21
 }
 
-function RIGHT_MOVE() { // <<---!
+function RIGHT_MOVE() {
   proxyCube1.fill.r = face4color.r;
   proxyCube1.fill.g = face4color.g;
   proxyCube1.fill.b = face4color.b; // proxyCube1 now contains face4
@@ -886,7 +891,7 @@ function RIGHT_MOVE() { // <<---!
 
   face17color.r = proxyCube3.fill.r;
   face17color.g = proxyCube3.fill.g;
-  face17color.b = proxyCube3.fill.b; // // place stored face 5 into face 17
+  face17color.b = proxyCube3.fill.b; // place stored face 5 into face 17
 }
 
 function RIGHTPRIME_MOVE() {
@@ -1016,7 +1021,7 @@ function LEFT_MOVE() {
   face7color.b = proxyCube3.fill.b; // place stored face 1 into face 7
 }
 
-function LEFTPRIME_MOVE() { // <<---!
+function LEFTPRIME_MOVE() {
   //LEFT band rotation
   proxyCube1.fill.r = face2color.r;
   proxyCube1.fill.g = face2color.g;
@@ -1143,7 +1148,7 @@ function FRONT_MOVE() {
   face23color.b = proxyCube3.fill.b; // place stored face 11 into face 23
 }
 
-function FRONTPRIME_MOVE() { // <<---!
+function FRONTPRIME_MOVE() {
   proxyCube1.fill.r = face6color.r;
   proxyCube1.fill.g = face6color.g;
   proxyCube1.fill.b = face6color.b; // proxyCube1 now contains face 6
@@ -1269,7 +1274,7 @@ function BACK_MOVE() {
   face14color.b = proxyCube3.fill.b; // place stored face 2 into face 14
 }
 
-function BACKPRIME_MOVE() { // <<---!
+function BACKPRIME_MOVE() {
   proxyCube1.fill.r = face3color.r;
   proxyCube1.fill.g = face3color.g;
   proxyCube1.fill.b = face3color.b; // proxyCube1 now contains face 3
@@ -1332,13 +1337,13 @@ function BACKPRIME_MOVE() { // <<---!
   face4color.b = proxyCube3.fill.b; // place stored face 2 into face 4
 }
 
-// display entire cube
+// displays entire cube
 function displayCube() {
   displayUPlyr();
   displayDOWNlyr();
 }
 
-// Layer display functions:
+// Layer display functions, used alongside rotation to show static layers:
 function displayUPlyr() {
   displayCUBIE1();
   displayCUBIE2();
@@ -1381,7 +1386,7 @@ function displayBACKlyr() {
   displayCUBIE6();
 }
 
-// CUBIE display functions:
+// CUBIE display functions, they possition cubies and their faces:
 function displayCUBIE1() {
   push();
   translate(-cubieOffset, -cubieOffset, -cubieOffset)
@@ -1453,7 +1458,7 @@ function displayCUBIE8() {
   displayFace(faces[23]);
   pop();
 }
-
+// master function containing all 24 faces and their current colors:
 function updateFaces() {
   // CUBIE1 faces: (yellow - green - red)
   faces[0] = createFace(0, -faceOffset, 0, 100, 10, 100, face0color.r, face0color.g, face0color.b); // yellow
@@ -1544,14 +1549,4 @@ function displayInnerCube() {
   box(innerCube.dim);
   pop();
 }
-
-function threeDMouseX(x) {
-  // calculate mouse x and y in 3d coordinates:
-  x = mouseX - width / 2;
-  return x;
-}
-
-function threeDMouseY(y) {
-  y = mouseY - height / 2;
-  return y;
-}
+// The End.
