@@ -295,13 +295,15 @@ function showControls() {
   push();
   textAlign(RIGHT, RIGHT);
   textFont(stellari, 40);
-  text(`controls:`, -160, yPos)
-  text(`U:[q] U':[w]`, -200, yPos + 55)
-  text(`D:[e] D':[r]`, -200, yPos + 110)
-  text(`L:[a], L':[s]`, -200, yPos + 165)
-  text(`R:[d], R':[f]`, -200, yPos + 220)
-  text(`F:[z], F':[x]`, -200, yPos + 275)
-  text(`B:[c], B':[v]`, -200, yPos + 330)
+  text(`controls:`, -160, yPos);
+  text(`U:[q] U':[w]`, -200, yPos + 55);
+  text(`D:[e] D':[r]`, -200, yPos + 110);
+  text(`L:[a], L':[s]`, -200, yPos + 165);
+  text(`R:[d], R':[f]`, -200, yPos + 220);
+  text(`F:[z], F':[x]`, -200, yPos + 275);
+  text(`B:[c], B':[v]`, -200, yPos + 330);
+  textFont(stellari, 30);
+  text(`ctrl: reset view.`, -160, -yPos + 35);
   pop();
 
   push();
@@ -356,11 +358,13 @@ function mousePressed() {
 
 function keyPressed() {
   resetDelay();
-  // handle show/hide controls condition:
+  // handle show/hide controls and reset camera conditions:
   if (keyCode === SHIFT && state === `controls`) {
     state = 'gameplay';
   } else if (keyCode === SHIFT && state === `gameplay`) {
     state = `controls`;
+  } else if (keyCode === CONTROL && (state === `gameplay` || state === `controls`)) {
+    state = `title`;
   }
 
   // handle instantaneous move-set execution (no delay):
