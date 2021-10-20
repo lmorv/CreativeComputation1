@@ -2,8 +2,7 @@
 Cube Simulator
 Leonardo Morales
 
-This is a template. You must fill in the title,
-author, and this description to match your project!
+his program simulates the real-life mechanics of a 2x2x2 Rubik's Cube using a color update approach on pre-defined faces with fixed dimensions and positions in 3D space forming `cubies`, which are then grouped into `layers` that are dynamically displayed and animated alongside simulated rotation behavior based on user input.
 */
 
 "use strict";
@@ -243,7 +242,7 @@ function setup() {
   stellari = loadFont(`assets/fonts/ep-stellari-display.ttf`); // works
 }
 /**
-draw() handles definitions of states' behaviour
+draw() handles definitions of states' behavior
 */
 function draw() {
   background(10, 70, 70);
