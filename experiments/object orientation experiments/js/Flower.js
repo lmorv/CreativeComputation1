@@ -65,5 +65,4 @@ class Flower {
       this.y = this.y - 5;
     }
   }
-
 }
