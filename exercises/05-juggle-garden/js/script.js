@@ -2,7 +2,13 @@
 Juggling Simulation
 Leonardo Morales
 
-this is a normal juggling simulator
+Plan:
+- press spacebar to add 3 paddles slighthly above the user controlled one. << disapearing period and cooldown on this avility.
+- create a ball cannon in the middle of the user paddle ( reaserch directional orientation and pushing to an array on mouse press).
+- make balls bounce off walls and ceiling.
+- add evil ball newtralization on contact with cannon-fired balls.
+- add fail and win conditions (Win: all balls neutralized, fail: more than 3 balls pass through)
+
 */
 
 "use strict";
