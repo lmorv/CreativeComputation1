@@ -1,6 +1,6 @@
 /**
 Juggling Simulation
-Leonardo morales
+Leonardo Morales
 
 this is a normal juggling simulator
 */
@@ -9,8 +9,8 @@ this is a normal juggling simulator
 
 let gravityForce = 0.0025;
 
-let paddle;
-
+let paddles[];
+let maxNumPaddles = 4;
 let balls = [];
 let numBalls = 10;
 
