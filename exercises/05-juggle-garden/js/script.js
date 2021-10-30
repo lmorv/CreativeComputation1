@@ -15,7 +15,7 @@ Plan:
 
 let gravityForce = 0.0025;
 
-let paddles[];
+let paddle;
 let maxNumPaddles = 4;
 let balls = [];
 let numBalls = 10;
@@ -30,7 +30,7 @@ function preload() {
 // Description of setup
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(950, windowHeight);
 
   paddle = new Paddle(300, 20);
 
