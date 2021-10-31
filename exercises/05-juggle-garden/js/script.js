@@ -78,6 +78,9 @@ function draw() {
   }
 }
 
+function mousePressed() {
+  // Shoot a ball from the center of the paddle
+}
 
 // Spawn shields on spacebar press
 function keyPressed() {

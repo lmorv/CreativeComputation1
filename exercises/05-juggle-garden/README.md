@@ -1,3 +1,3 @@
-# Template p5 project
+# Juggle Garden - Exercise
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+A modification of a class activity involving a user controlled paddle and a bunch of balls affected by gravity that bounce off the paddle on contact.
