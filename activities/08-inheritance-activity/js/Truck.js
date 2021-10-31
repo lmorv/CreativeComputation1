@@ -2,7 +2,7 @@ class Truck extends Vehicle {
   constructor(x, y) {
     super(x, y);
     this.width = 100;
-    this.heght = 20;
+    this.height = 20;
     this.speed = 2;
   }
 

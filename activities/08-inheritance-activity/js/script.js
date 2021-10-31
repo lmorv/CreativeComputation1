@@ -8,13 +8,13 @@ author, and this description to match your project!
 
 "use strict";
 
-let state = `title`;
+let state = `simulation`;
 
 let pedestrian;
 let vehicles = [];
-let numCars = 10;
-let numTrucks = 10;
-let numMotorcycles = 5;
+let numCars = 20;
+let numTrucks = 15;
+let numMotorcycles = 10;
 
 /**
 Description of preload
@@ -55,7 +55,7 @@ function setup() {
     vehicles.push(motorcycle);
   }
 
-  // set random directions
+  // Set random directions
   for (let i = 0; i < vehicles.length; i++) {
     let vehicle = vehicles[i];
     let r = random(0, 1);
@@ -101,6 +101,7 @@ function simulation() {
     vehicle.move();
     vehicle.wrap();
     vehicle.display();
+
   }
 }
 
