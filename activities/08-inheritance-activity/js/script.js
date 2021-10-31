@@ -10,6 +10,9 @@ author, and this description to match your project!
 
 let state = `title`;
 
+let pedestrian;
+
+
 /**
 Description of preload
 */
@@ -23,6 +26,10 @@ Description of setup
 */
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
+  let x = width / 2;
+  let y = height;
+  pedestrian = new Pedestrian(x, y);
 }
 
 
@@ -49,7 +56,9 @@ function title() {
 }
 
 function simulation() {
-
+  pedestrian.handleInput();
+  pedestrian.move();
+  pedestrian.display();
 }
 
 function success() {
