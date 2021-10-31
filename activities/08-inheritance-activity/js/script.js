@@ -57,8 +57,8 @@ function setup() {
 
   // set random directions
   for (let i = 0; i < vehicles.length; i++) {
-    let r = random(0, 1);
     let vehicle = vehicles[i];
+    let r = random(0, 1);
     if (r < 0.5) {
       vehicle.vx = -vehicle.speed;
     } else {
