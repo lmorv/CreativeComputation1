@@ -6,8 +6,13 @@ class Shield {
     this.y = height / 2;
   }
 
+  setX(x) {
+    this.x = x;
+  }
+
   display() {
     push();
+    console.log(`Spacebar!`);
     fill(255);
     noStroke();
     rectMode(CENTER);

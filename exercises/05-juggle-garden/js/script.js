@@ -44,15 +44,16 @@ function setup() {
     balls.push(ball);
   }
 
+  let spacing = 0;
   // Create the force shields
   for (let i = 0; i < numShields; i++) {
     let w = 100;
     let h = 20;
     let x = 200;
-    let spacing = 300;
-    let shield = new Shield(w, h, x);
+    let shield = new Shield(w, h, x + spacing);
     shields.push(shield);
-    x = x + spacing;
+    spacing += 200;
+    // shield.setX(x+spacing)
   }
 }
 
@@ -73,9 +74,12 @@ function draw() {
     }
   }
 
-  for (let i = 0; i < shields.length; i++) {
-    let shield = shields[i];
-    shield.display();
+  if (state === `shieldsOn`) {
+
+    for (let i = 0; i < shields.length; i++) {
+      let shield = shields[i];
+      shield.display();
+    }
   }
 }
 
@@ -87,8 +91,10 @@ function mousePressed() {
 function keyPressed() {
   if (keyCode === 32) {
     for (let i = 0; i < shields.length; i++) {
+      // console.log(`Spacebar!`);
       let shield = shields[i];
       shield.display();
+      state = 'shieldsOn'
     }
   }
 }
