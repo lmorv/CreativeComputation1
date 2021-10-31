@@ -13,6 +13,7 @@ Plan:
 
 "use strict";
 
+let state = `gameplay` // possible states are`title`, `gameplay`, `win`, `fail`
 let gravityForce = 0.0025;
 
 let paddle;
