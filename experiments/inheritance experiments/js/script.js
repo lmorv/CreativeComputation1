@@ -10,7 +10,7 @@ Following along with some experiments showcasing the concept of inheritance!
 let vehicles = [];
 let numCars = 10;
 let numMotorcycles = 10;
-
+let numSportsCars = 4;
 /**
 Description of preload
 */
@@ -38,6 +38,14 @@ function setup() {
     let y = random(0, height);
     let motorcycle = new Motorcycle(x, y);
     vehicles.push(motorcycle);
+  }
+
+  //create the sports cars
+  for (let i = 0; i < numSportsCars; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    let sportsCar = new SportsCar(x, y);
+    vehicles.push(sportsCar);
   }
 }
 
