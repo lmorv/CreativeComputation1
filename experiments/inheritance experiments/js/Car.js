@@ -1,22 +1,9 @@
-class Car {
+class Car extends Vehicle {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
+    super(x, y);
     this.width = 50;
     this.height = 20;
     this.vx = 5;
-    this.vy = 0;
-  }
-
-  move() {
-    this.x += this.vx;
-    this.y += this.vy;
-  }
-
-  wrap() {
-    if (this.x > width) {
-      this.x -= width;
-    }
   }
 
   display() {
