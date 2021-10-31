@@ -1,5 +1,5 @@
 class Ball {
-  constructor(x, y) {
+  constructor(x, y, ballColor) {
     this.x = x;
     this.y = y;
     this.vx = 0;
@@ -8,6 +8,9 @@ class Ball {
     this.ay = 0;
     this.maxSpeed = 10;
     this.size = 40;
+    // Color
+    this.ballColor = ballColor;
+    // Is the ball active (on screen)
     this.active = true;
   }
 
