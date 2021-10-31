@@ -42,16 +42,16 @@ function setup() {
     let ball = new Ball(x, y);
     balls.push(ball);
   }
+
   // Create the force shields
   for (let i = 0; i < numShields; i++) {
     let w = 100;
     let h = 20;
     let x = 200;
-    let spaceing = 300;
-
+    let spacing = 300;
     let shield = new Shield(w, h, x);
     shields.push(shield);
-    x = x + spaceing;
+    x = x + spacing;
   }
 }
 
@@ -76,8 +76,8 @@ function draw() {
     let shield = shields[i];
     shield.display();
   }
-
 }
+
 
 // Spawn shields on spacebar press
 function keyPressed() {
