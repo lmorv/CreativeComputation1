@@ -2,7 +2,7 @@
 Crab Simulator
 Leonardo Morales
 
-This is a crab simulator! It simulates crabs to the highest degree of sofistication.
+This is a crab simulator! It simulates crabs to the highest degree of sofistication. Specifically, coconut crabs.
 */
 
 "use strict";
