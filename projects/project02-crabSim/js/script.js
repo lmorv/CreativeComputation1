@@ -6,6 +6,10 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 */
 
 "use strict";
+let crabTemplates = [];
+let consumables = [];
+let walls = [];
+let qBits = [];
 
 
 /**
