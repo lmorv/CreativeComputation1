@@ -11,7 +11,7 @@ let consumables = [];
 let walls = [];
 let qBits = [];
 
-let state = `simulation` // possible states are 'crabTemplateSlect', `crabEditor`, `model view`, `instructions`, `endScreen`
+let state = `simulation` // possible states are 'crabTemplateSlect', `crabEditor`, `confirmSelection`, `simulation`,`model view`, `instructions`, `endScreen`, `simulationDestoyed`
 /**
 Description of preload
 */
