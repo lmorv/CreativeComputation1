@@ -12,8 +12,6 @@ class GameObject {
 
   }
 
-
-
   dispay() {
     // handled by subclasses
   }

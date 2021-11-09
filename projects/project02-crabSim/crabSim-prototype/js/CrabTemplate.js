@@ -7,11 +7,10 @@ class CrabTemplte {
   }
 
   handleInput() {
-    // handle UI interactions. Do I need a mouse pressed function in this class?
+    // handle UI interactions. Do I need a mouse pressed function in this class? 
   }
 
   display() {
     // handled ny subclasses.
   }
-
 }
