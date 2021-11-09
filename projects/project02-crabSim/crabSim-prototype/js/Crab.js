@@ -19,6 +19,9 @@ class Crab {
   }
 }
 
+handleInput() {
+  //movement controlls
+}
 
 move() {
   this.ax += this.acceleration;
@@ -27,7 +30,7 @@ move() {
   //constrain to max speed
 }
 
-// overlap method. Maybe I can create a global gameObjectOverlap function that handles all objects
+// overlap methods. Maybe I can create a global gameObjectOverlap function that handles all objects and state changes
 checkConsumableOverlap() {
   // check ovelap condition against evry consumable object
   // if onject is mush it should be considered a consumable item
@@ -35,5 +38,8 @@ checkConsumableOverlap() {
 
 checkEndPointOverlap() {
   // check for win condition
+}
 
+display() {
+  // display one or many boxes for now. OR crab part classes inheriting from this one could handle their own displaying
 }

@@ -78,7 +78,7 @@ function templateSlect() {
 }
 
 function crabEditor() {
-  // display the selected crab template, check mouse position, allow user to edit head, carapace, and abdomen.
+  // display the selected crab template, check mouse position,allow user to edit head, carapace, and abdomen.
 }
 
 function confirmSelection() {
