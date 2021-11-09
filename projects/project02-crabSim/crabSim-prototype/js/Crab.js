@@ -12,10 +12,12 @@ class Crab {
     // if grid-based acceleration will represent how fast the crab moves from tile to tile when an input remains pressed
     this.acceleration = 2;
     // properties to load 3d models into: not sure if these shpuld have their own class with a display function
-    headModel = undefined;
-    carapaceModel = undefined;
-    abdomenModel = undefined;
-    limbPackModel = undefined; // do I need a separate property for every limb?
+    this.headModel = undefined;
+    this.carapaceModel = undefined;
+    this.abdomenModel = undefined;
+    this.limbPack = undefined; // do I need a separate property for every limb?
+
+    this.pincersEngaged = false; // toggle for pincer control
   }
 
   handleInput() {
