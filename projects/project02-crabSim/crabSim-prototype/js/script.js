@@ -29,7 +29,7 @@ let state = `simulation` // possible states are 'crabTemplateSlect', `crabEditor
 
 
 /**
-Preload loads the assets into variables for later use
+preload() loads the game assets into variables for later use.
 */
 function preload() {
 
@@ -37,9 +37,10 @@ function preload() {
 
 
 /**
-Description of setup
+setup() creates all game object out of classes, and creates the all-important all-encompasing canvas
 */
 function setup() {
+  createCanvas(1920, 1080);
 
 }
 
@@ -48,5 +49,6 @@ function setup() {
 Description of draw()
 */
 function draw() {
+  background(0);
 
 }
