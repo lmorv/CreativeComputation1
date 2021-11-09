@@ -42,7 +42,7 @@ function preload() {
 setup() creates all game object out of classes, and creates the all-important all-encompasing canvas
 */
 function setup() {
-  createCanvas(1920, 1080);
+  createCanvas(1920, 1080, WEBGL);
 
 }
 

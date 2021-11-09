@@ -9,7 +9,6 @@ class GameObject {
     this.isWall: undefined;
     this.isMush: undefined;
     // size and specific properties handled by subclasses
-
   }
 
   dispay() {
