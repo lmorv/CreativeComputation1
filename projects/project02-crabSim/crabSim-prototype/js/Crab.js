@@ -17,29 +17,29 @@ class Crab {
     abdomenModel = undefined;
     limbPackModel = undefined; // do I need a separate property for every limb?
   }
-}
 
-handleInput() {
-  //movement controlls
-}
+  handleInput() {
+    //movement controlls
+  }
 
-move() {
-  this.ax += this.acceleration;
-  this.ay += this.acceleration;
+  move() {
+    this.ax += this.acceleration;
+    this.ay += this.acceleration;
 
-  //constrain to max speed
-}
+    //constrain to max speed
+  }
 
-// overlap methods. Maybe I can create a global gameObjectOverlap function that handles all objects and state changes
-checkConsumableOverlap() {
-  // check ovelap condition against evry consumable object
-  // if onject is mush it should be considered a consumable item
-}
+  // overlap methods. Maybe I can create a global gameObjectOverlap function that handles all objects and state changes
+  checkConsumableOverlap() {
+    // check ovelap condition against evry consumable object
+    // if onject is mush it should be considered a consumable item
+  }
 
-checkEndPointOverlap() {
-  // check for win condition
-}
+  checkEndPointOverlap() {
+    // check for win condition
+  }
 
-display() {
-  // display one or many boxes for now. OR crab part classes inheriting from this one could handle their own displaying
+  display() {
+    // display one or many boxes for now. OR crab part classes inheriting from this one could handle their own displaying
+  }
 }
