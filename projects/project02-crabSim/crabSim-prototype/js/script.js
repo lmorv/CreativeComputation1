@@ -10,10 +10,10 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 // the grid terrain:
 let grid = [];
 // number of rows and columns:
-let rows = 20;
+let rows = 40;
 let cols = 20;
 //size of the grid's squares
-let unit = 25;
+let unit = 30;
 
 
 
@@ -53,7 +53,7 @@ setup() creates all game object out of classes, and creates the all-important al
 */
 function setup() {
   createCanvas(1500, 844, WEBGL);
-
+  noStroke();
   // set up crab:
   let x = 0;
   let y = 0;
@@ -66,6 +66,7 @@ function setup() {
 Description of draw()
 */
 function draw() {
+  // orbitControl();
   background(0, 50, 60);
   angleMode(DEGREES);
 
@@ -102,10 +103,12 @@ function confirmSelection() {
 
 function simulation() {
   rotateX(20);
-  translate(-rows / 2 * unit, -cols / 2 * unit);
-  // call crab methods, and all relevant dispay, and behavioural/ conditional game object methods
 
   // display crab:
+  crab.display();
+
+  translate(-rows / 2 * unit, -cols / 2 * unit);
+  // call crab methods, and all relevant dispay, and behavioural/ conditional game object methods
 
 
   // diplay a grid:
