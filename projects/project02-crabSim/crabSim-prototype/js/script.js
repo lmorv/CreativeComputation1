@@ -97,6 +97,7 @@ function confirmSelection() {
 
 function simulation() {
   // call crab move() method, and all relevant dispay, and behavioural/ conditional game object methods
+
   // diplay the grid
   // Go through all the rows and columns
   for (let r = 0; r < rows; r++) {
@@ -108,7 +109,6 @@ function simulation() {
       rect(r * unit, c * unit, unit, unit);
       pop();
     }
-
   }
 }
 
