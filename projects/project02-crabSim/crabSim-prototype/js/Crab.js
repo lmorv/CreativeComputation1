@@ -43,5 +43,10 @@ class Crab {
 
   display() {
     // display one or many boxes for now. OR crab part classes inheriting from this one could handle their own displaying
+
+    push();
+    fill(0, 200, 180);
+    box(this.x, this.y, this.size); // a box representing our crab
+    pop();
   }
 }

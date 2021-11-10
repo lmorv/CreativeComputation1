@@ -1,11 +1,11 @@
 class Person extends GameObject {
   constructor(model) {
     super(x, y);
-    this.isConsumable: true;
-    this.isDestructible: true;
-    this.isMush: false;
+    this.isConsumable = true;
+    this.isDestructible = true;
+    this.isMush = false;
 
-    this.model: model;
+    this.model = model;
   }
 
   diaplay() {

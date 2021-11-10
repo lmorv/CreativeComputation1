@@ -2,7 +2,7 @@ class HeadTemplate extends CrabTemplte {
   constructor() {
     super(x, y);
 
-    this.image: undefined;
+    this.image = undefined;
 
   }
 

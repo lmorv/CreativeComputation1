@@ -5,17 +5,17 @@ class LimbPack01 extends Crab {
     // 3d model's pivot point should be at the origin(0,0,0) for possitioning to work as a subclass of Crab
     super(x, y);
     // define the right side limbs:
-    this.rBackLeg: undefined;
-    this.rMidLeg: undefined;
-    this.rFrontLeg: undefined;
-    this.rPincer: undefined;
+    this.rBackLeg = undefined;
+    this.rMidLeg = undefined;
+    this.rFrontLeg = undefined;
+    this.rPincer = undefined;
     // define the left side limbs:
-    this.lBackLeg: undefined;
-    this.lMidLeg: undefined;
-    this.lFrontLeg: undefined;
-    this.lPincer: undefined;
+    this.lBackLeg = undefined;
+    this.lMidLeg = undefined;
+    this.lFrontLeg = undefined;
+    this.lPincer = undefined;
 
-    this.angle: 0; // use an agle for rotation?
+    this.angle = 0; // use an agle for rotation?
   }
 
 

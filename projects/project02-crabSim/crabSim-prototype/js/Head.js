@@ -2,8 +2,8 @@ class Head extends Crab {
   constructor() {
     // 3d model's pivot point should be at the origin(0,0,0) for possitioning to work as a subclass of Crab
     super(x, y);
-    this.model: undefined;
-    this.angle: 0; // use an agle for rotation?
+    this.model = undefined;
+    this.angle = 0; // use an agle for rotation?
   }
 
   handleInput() {

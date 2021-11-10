@@ -7,20 +7,30 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 
 "use strict";
 
+// the grid terrain:
+let grid = [];
+// number of rows and columns:
+let rows = 20;
+let cols = 20;
+//size of the grid's squares
+let unit = 25;
+
+
+
 let state = `simulation` // possible states are 'templateSlect', `crabEditor`, `confirmSelection`, `simulation`,`modelView`, `instructions`, `endScreen`, `simulationDestoyed`
 
 let crab; // The player object
 
 let crabTemplates = []; // store the 3 starting crab templates to be displayed in the start screen of the crab construction flow
-let consumables = []; // store all the consumables in this array (persons, schools, cars, and cities)
+let consumables = [`pe`, `sh`, `ca`, `ci`]; // store all the consumables in this array (persons, schools, cars, and cities)
 // define the max number of each consumable item:
 let numPeople = 6; // probably too many of all of them lol
 let numSchools = 6;
 let numCars = 6;
 let numCities = 4;
 
-let walls = []; // store walls of all sizes (large, medium, small) in here.
-// define max number of each size of walls:
+let walls = [`S`, `M`, `L`]; // store walls of all sizes (large, medium, small) in here.
+// dSefine max number of each size of walls:
 let numSmallWall = 5;
 let numMedWall = 5;
 let numLargeWall = 5;
@@ -42,7 +52,7 @@ function preload() {
 setup() creates all game object out of classes, and creates the all-important all-encompasing canvas
 */
 function setup() {
-  createCanvas(1920, 1080, WEBGL);
+  createCanvas(1500, 844, WEBGL);
 
 }
 
@@ -51,7 +61,7 @@ function setup() {
 Description of draw()
 */
 function draw() {
-  background(0);
+  background(0, 50, 60);
 
   if (state === `templateSlect`) {
     templateSlect();
@@ -87,6 +97,19 @@ function confirmSelection() {
 
 function simulation() {
   // call crab move() method, and all relevant dispay, and behavioural/ conditional game object methods
+  // diplay the grid
+  // Go through all the rows and columns
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      // Draw a square so we can see the grid space
+      push();
+      stroke(255);
+      noFill();
+      rect(r * unit, c * unit, unit, unit);
+      pop();
+    }
+
+  }
 }
 
 function modelView() {
