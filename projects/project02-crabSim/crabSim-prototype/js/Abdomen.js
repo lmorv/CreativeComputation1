@@ -1,7 +1,8 @@
-class Abdomen extends Crab {
-  constructor() {
+class Abdomen {
+  constructor(x, y) {
     // 3d model's pivot point should be at the origin(0,0,0) for possitioning to work as a subclass of Crab
-    super(x, y);
+    this.x = x;
+    this.y = y;
     this.model = undefined;
     this.angle = 0; // use an agle for rotation?
   }
@@ -11,7 +12,7 @@ class Abdomen extends Crab {
   }
 
   dispay() {
-    super.dispay(); // call Crab's diplay function just in case there's something there
+
 
     // display the chosen abdomen model model or a box for now. maybe I need a bunch of if statements here?
   }

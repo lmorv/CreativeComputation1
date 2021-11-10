@@ -1,9 +1,10 @@
 // LimbPack01 - 03 classes contain pre defined configurations of limbs. The models of loaded into their corresponding positions
 
-class LimbPack03 extends Crab {
-  constructor() {
+class LimbPack03 {
+  constructor(x, y) {
     // 3d model's pivot point should be at the origin(0,0,0) for possitioning to work as a subclass of Crab
-    super(x, y);
+    this.x = x;
+    this.y = y;
     // define the right side limbs:
     this.rBackLeg = undefined;
     this.rMidLeg = undefined;
@@ -28,7 +29,7 @@ class LimbPack03 extends Crab {
   }
 
   dispay() {
-    super.dispay(); // call Crab's diplay function just in case there's something there
+
 
     // display the chosen limb pack or a box config for now. maybe I need a bunch of if statements here?
   }

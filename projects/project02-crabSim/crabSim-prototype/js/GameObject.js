@@ -1,13 +1,13 @@
 class GameObject {
-  constructor() {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
 
-    // true/false properties to be overriten or entirely placed within specific subclasses:
-    this.isConsumable = undefined;
-    this.isDestructible = undefined;
-    this.isWall = undefined;
-    this.isMush = undefined;
+    // true/false properties to be overriten within specific subclasses:
+    this.isConsumable = false;
+    this.isDestructible = false;
+    this.isWall = false;
+    this.isMush = false;
     // size and specific properties handled by subclasses
   }
 

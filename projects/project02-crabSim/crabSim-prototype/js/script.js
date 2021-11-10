@@ -22,14 +22,14 @@ let state = `simulation` // possible states are 'templateSlect', `crabEditor`, `
 let crab; // The player object
 
 let crabTemplates = []; // store the 3 starting crab templates to be displayed in the start screen of the crab construction flow
-let consumables = [`pe`, `sh`, `ca`, `ci`]; // store all the consumables in this array (persons, schools, cars, and cities)
+let consumables = []; // store all the consumables in this array (persons, schools, cars, and cities)
 // define the max number of each consumable item:
 let numPeople = 6; // probably too many of all of them lol
 let numSchools = 6;
 let numCars = 6;
 let numCities = 4;
 
-let walls = [`S`, `M`, `L`]; // store walls of all sizes (large, medium, small) in here.
+let walls = []; // store walls of all sizes (large, medium, small) in here.
 // dSefine max number of each size of walls:
 let numSmallWall = 5;
 let numMedWall = 5;
@@ -54,6 +54,11 @@ setup() creates all game object out of classes, and creates the all-important al
 function setup() {
   createCanvas(1500, 844, WEBGL);
 
+  // set up crab:
+  let x = 0;
+  let y = 0;
+  crab = new Crab(x, y);
+
 }
 
 
@@ -62,6 +67,7 @@ Description of draw()
 */
 function draw() {
   background(0, 50, 60);
+  angleMode(DEGREES);
 
   if (state === `templateSlect`) {
     templateSlect();
@@ -80,7 +86,6 @@ function draw() {
   } else if (`simulationDestoyed`) {
     simulationDestoyed();
   }
-
 }
 
 function templateSlect() {
@@ -96,9 +101,14 @@ function confirmSelection() {
 }
 
 function simulation() {
-  // call crab move() method, and all relevant dispay, and behavioural/ conditional game object methods
+  rotateX(20);
+  translate(-rows / 2 * unit, -cols / 2 * unit);
+  // call crab methods, and all relevant dispay, and behavioural/ conditional game object methods
 
-  // diplay the grid
+  // display crab:
+
+
+  // diplay a grid:
   // Go through all the rows and columns
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
