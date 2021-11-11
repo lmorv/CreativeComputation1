@@ -6,12 +6,14 @@ class Crab {
     this.turnAngle = 0;
     this.vx = 0;
     this.vy = 0;
+    this.speed = 0;
     this.maxSpeed = 5;
     // acceleration:
     this.ax = 0;
     this.ay = 0;
     // if grid-based acceleration will represent how fast the crab moves from tile to tile when an input remains pressed
     this.acceleration = 2;
+
     // properties to load 3d models into: not sure if these shpuld have their own class with a display function
     this.headModel = undefined;
     this.carapaceModel = undefined;
@@ -25,25 +27,26 @@ class Crab {
   handleInput() {
     // left/right movement:
     if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-      this.vx = -this.maxSpeed;
+      this.turnAngle -= 5;
     } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-      this.vx = this.maxSpeed;
+      this.turnAngle += 5;
     } else {
       this.vx = 0;
     }
     // Up/down movement:
     if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-      this.vy = -this.maxSpeed;
-    } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-      this.vy = this.maxSpeed
+      this.speed = 5;
     } else {
-      this.vy = 0;
+      this.speed = 0;
     }
   }
 
   move() {
-    this.x += this.vx;
-    this.y += this.vy;
+    let vx = this.speed * cos(this.turnAngle);
+    let vy = this.speed * sin(this.turnAngle);
+
+    this.x += vx;
+    this.y += vy;
 
     //constrain to max speed
   }
@@ -62,8 +65,14 @@ class Crab {
     // display one or many boxes for now. OR crab part classes inheriting from this one could handle their own displaying
     push();
     fill(0, 200, 180);
-    translate(this.x, this.y)
-    box(this.size, this.size + 20, this.size); // a box representing our crab
+    translate(this.x, this.y, this.size / 2);
+    rotateZ(this.turnAngle);
+    box(this.size + 30, this.size, this.size - 25); // a box representing our crab
+    fill(120, 10, 40);
+    translate(this.size, -25, 0);
+    box(20);
+    translate(0, 50, 0);
+    box(20);
     pop();
   }
 }
