@@ -36,6 +36,8 @@ class Crab {
     // Up/down movement:
     if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
       this.speed = 5;
+    } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+      this.speed = -5;
     } else {
       this.speed = 0;
     }
