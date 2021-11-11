@@ -27,9 +27,9 @@ class Crab {
   handleInput() {
     // left/right movement:
     if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-      this.turnAngle -= 5;
+      this.turnAngle -= 4;
     } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-      this.turnAngle += 5;
+      this.turnAngle += 4;
     } else {
       this.vx = 0;
     }
@@ -68,11 +68,20 @@ class Crab {
     translate(this.x, this.y, this.size / 2);
     rotateZ(this.turnAngle);
     box(this.size + 30, this.size, this.size - 25); // a box representing our crab
+    // the pincers:
     fill(120, 10, 40);
+    push();
     translate(this.size, -25, 0);
+    rotateZ(45);
     box(20);
-    translate(0, 50, 0);
+    pop();
+
+    push();
+    translate(this.size, 25, 0);
+    rotateZ(45);
     box(20);
+    pop();
+
     pop();
   }
 }
