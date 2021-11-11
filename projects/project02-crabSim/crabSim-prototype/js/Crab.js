@@ -3,6 +3,7 @@ class Crab {
     this.x = x;
     this.y = y;
     this.size = 60;
+    this.turnAngle = 0;
     this.vx = 0;
     this.vy = 0;
     this.maxSpeed = 5;
@@ -20,13 +21,29 @@ class Crab {
     this.pincersEngaged = false; // toggle for pincer control
   }
 
+  // handleInput() takes care of movement controlls:
   handleInput() {
-    //movement controlls
+    // left/right movement:
+    if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+      this.vx = -this.maxSpeed;
+    } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+      this.vx = this.maxSpeed;
+    } else {
+      this.vx = 0;
+    }
+    // Up/down movement:
+    if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+      this.vy = -this.maxSpeed;
+    } else if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
+      this.vy = this.maxSpeed
+    } else {
+      this.vy = 0;
+    }
   }
 
   move() {
-    this.ax += this.acceleration;
-    this.ay += this.acceleration;
+    this.x += this.vx;
+    this.y += this.vy;
 
     //constrain to max speed
   }
@@ -46,7 +63,7 @@ class Crab {
     push();
     fill(0, 200, 180);
     translate(this.x, this.y)
-    box(this.size); // a box representing our crab
+    box(this.size, this.size + 20, this.size); // a box representing our crab
     pop();
   }
 }

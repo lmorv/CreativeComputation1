@@ -66,7 +66,7 @@ function setup() {
 Description of draw()
 */
 function draw() {
-  // orbitControl();
+  // orbitControl(); // orbit control for debug pourpuses
   background(0, 50, 60);
   angleMode(DEGREES);
 
@@ -104,6 +104,9 @@ function confirmSelection() {
 function simulation() {
   rotateX(20);
 
+  // handle crab controls and move it:
+  crab.handleInput();
+  crab.move();
   // display crab:
   crab.display();
 
