@@ -155,7 +155,7 @@ function simulation() {
 
   // center the grid in 3d space
   translate(-cols / 2 * unit, -rows / 2 * unit);
-  // diplay a grid:
+  // diplay the grid:
   // Go through all the rows and columns
   for (let r = 0; r < cols; r++) {
     for (let c = 0; c < rows; c++) {
