@@ -159,7 +159,6 @@ function simulation() {
     for (let c = 0; c < rows; c++) {
 
       // Get the game object at this position
-      // let gameObject = grid[r][c];
 
       // Draw a square so we can see the grid space
       push();
@@ -172,6 +171,8 @@ function simulation() {
   }
   // display the game objects:
   for (let i = 0; i < allGameObjects.length; i++) {
+    // let gameObject = grid[r][c];
+    console.log(allGameObjects);
     let gameObject = allGameObjects[i];
     gameObject.display();
   }
