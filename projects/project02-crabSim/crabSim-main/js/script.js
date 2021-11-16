@@ -77,15 +77,13 @@ function setup() {
     let y = random(0, rows);
     let wall = new Wall(x, y);
     walls.push(wall);
+    allGameObjects.push(wall); // add wall to a overall game objects array as well
   }
   // set up empty spaces:
   for (let i = 0; i < numEmpty; i++) {
     empties.push(empty);
+    allGameObjects.push(empty); // add empty to a overall game objects array as well
   }
-
-  // push game objects into common array:
-  allGameObjects.push(walls);
-  allGameObjects.push(empties);
 
   // position game objects in the grid:
   // Go through the grid's rows
