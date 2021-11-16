@@ -1,4 +1,6 @@
-# CRAB SIMULATOR - Prototype
+# CRAB SIMULATOR - Main Branch
+
+[mostly broken at the moment]
 
 This prototype sketch features a primitive crab construct, made out of cubes, imbued with the ability of polar movement using the ASWD or arrow keys, and a grid of rectangles placed in 3d space which will serve to position the game objects in the complete simulation.
 
