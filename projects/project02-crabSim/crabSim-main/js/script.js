@@ -31,7 +31,7 @@ let numCities = 4;
 
 let walls = []; // store walls of all sizes (large, medium, small) in here.
 // dSefine max number of each size of walls:
-let numWalls = 50;
+let numWalls = 10;
 
 let empty = ``; // an empty space.
 let numEmpty = 400; // total number of empty spaces.
@@ -74,22 +74,22 @@ function setup() {
 
 
 
-  for (let i = 0; i < numWalls; i++) {
-    // define random grid-space x and y position of the walls
-    let r = floor(random(0, rows));
-    let c = floor(random(0, cols));
-    let x = c * unit;
-    let y = r * unit;
-    let wall = new Wall(x, y);
-    walls.push(wall);
-    allGameObjects.push(wall); // add wall to a overall game objects array as well
-  }
-  // set up empty spaces:
-  for (let i = 0; i < numEmpty; i++) {
-    let empty = new Empty();
-    empties.push(empty);
-    allGameObjects.push(empty); // add empty to a overall game objects array as well
-  }
+  // for (let i = 0; i < numWalls; i++) {
+  //   // define random grid-space x and y position of the walls
+  //   let r = floor(random(0, rows));
+  //   let c = floor(random(0, cols));
+  //   let x = c * unit;
+  //   let y = r * unit;
+  //   let wall = new Wall(x, y);
+  //   walls.push(wall);
+  //   allGameObjects.push(wall); // add wall to a overall game objects array as well
+  // }
+  // // set up empty spaces:
+  // for (let i = 0; i < numEmpty; i++) {
+  //   let empty = new Empty();
+  //   empties.push(empty);
+  //   allGameObjects.push(empty); // add empty to a overall game objects array as well
+  // }
 
   // position game objects in the grid:
   // Go through the grid's rows
@@ -100,13 +100,13 @@ function setup() {
     for (let c = 0; c < cols; c++) {
       let element = undefined;
       // Choose a random item to add at this position
-      if (random() < 0.5) {
+      if (random() < 0.3) {
         element = new Wall(c * unit, r * unit)
       } else {
-        element = new Empty();
+        element = new Empty(c * unit, r * unit);
       }
       // Add it to the row
-      grid.push(element);
+      grid[r].push(element);
     }
   }
 }
@@ -165,8 +165,8 @@ function simulation() {
   translate(-cols / 2 * unit, -rows / 2 * unit);
   // diplay the grid:
   // Go through all the rows and columns
-  for (let r = 0; r < cols; r++) {
-    for (let c = 0; c < rows; c++) {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
 
       // Get the game object at this position
 
@@ -174,18 +174,15 @@ function simulation() {
       push();
       stroke(255);
       noFill();
-      rect(r * unit, c * unit, unit, unit);
+      rect(c * unit, r * unit, unit, unit);
       pop();
 
+      // display the game objects:
+      let element = grid[r][c];
+      element.display();
     }
   }
-  // display the game objects:
-  for (let i = 0; i < grid.length; i++) {
-    // let gameObject = grid[r][c];
-    console.log(grid);
-    let element = grid[i];
-    element.display();
-  }
+
 
 }
 

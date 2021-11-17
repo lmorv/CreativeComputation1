@@ -3,7 +3,7 @@ class Crab {
     this.x = x;
     this.y = y;
     this.size = 60;
-    this.turnAngle = 0;
+    this.turnAngle = -90;
     this.vx = 0;
     this.vy = 0;
     this.speed = 0;
