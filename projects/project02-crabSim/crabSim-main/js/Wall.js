@@ -15,6 +15,7 @@ class Wall extends GameObject {
 
     // display a wall
     push();
+    stroke(150, 150, 150);
     fill(0, 0, 200);
     translate(this.x, this.y, this.size / 2);
     box(this.size);

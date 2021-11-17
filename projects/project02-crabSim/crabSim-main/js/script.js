@@ -172,6 +172,7 @@ function simulation() {
 
       // Draw a square so we can see the grid space
       push();
+      rectMode(CENTER, CENTER);
       stroke(255);
       noFill();
       rect(c * unit, r * unit, unit, unit);
