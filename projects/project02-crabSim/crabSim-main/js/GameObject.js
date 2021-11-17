@@ -11,7 +11,7 @@ class GameObject {
     // size and specific properties handled by subclasses
   }
 
-  dispay() {
+  display() {
     // handled by subclasses
   }
 }

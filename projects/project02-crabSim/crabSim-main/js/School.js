@@ -8,9 +8,15 @@ class School extends GameObject {
     this.model = model;
   }
 
-  diaplay() {
-    super.dispay();
+  display() {
+    super.display();
 
-    // diaplay a school
+    // display a school
+
+    push();
+    fill(10, 10, 180);
+    translate(x, y, this.size / 2);
+    box(this.size);
+    pop();
   }
 }

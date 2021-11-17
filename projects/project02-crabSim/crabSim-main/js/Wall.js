@@ -7,13 +7,13 @@ class Wall extends GameObject {
     this.isMush = false;
     this.isWall = true;
 
-    this.model = model;
+    this.model = undefined;
   }
 
   display() {
-    super.dispay();
+    super.display();
 
-    // diaplay a wall
+    // display a wall
     push();
     fill(0, 0, 200);
     translate(x, y, this.size / 2);

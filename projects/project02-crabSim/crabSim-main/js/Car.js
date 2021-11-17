@@ -4,13 +4,18 @@ class Car extends GameObject {
     this.isConsumable = true;
     this.isDestructible = true;
     this.isMush = false;
-
+    this.size = unit;
     this.model = model;
   }
 
-  diaplay() {
-    super.dispay();
+  display() {
+    super.display();
 
-    // diaplay a car
+    // display a car
+    push();
+    fill(200, 0, 0);
+    translate(x, y, this.size / 2);
+    box(this.size);
+    pop();
   }
 }

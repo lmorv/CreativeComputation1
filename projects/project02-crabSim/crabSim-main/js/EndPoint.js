@@ -9,9 +9,15 @@ class EndPoint extends GameObject {
     this.model = model;
   }
 
-  diaplay() {
-    super.dispay();
+  display() {
+    super.display();
 
-    // diaplay a wall
+    // display a wall
+    push();
+    fill(0, 200, 0);
+    translate(x, y, this.size / 2);
+    box(this.size);
+    pop();
+
   }
 }

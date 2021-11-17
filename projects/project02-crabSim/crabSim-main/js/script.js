@@ -71,16 +71,22 @@ function setup() {
   crab = new Crab(x, y);
 
   // set up walls:
+
+
+
   for (let i = 0; i < numWalls; i++) {
     // define random grid-space x and y position of the walls
-    let x = random(0, cols);
-    let y = random(0, rows);
+    let r = floor(random(0, rows));
+    let c = floor(random(0, cols));
+    let x = c * unit;
+    let y = r * unit;
     let wall = new Wall(x, y);
     walls.push(wall);
     allGameObjects.push(wall); // add wall to a overall game objects array as well
   }
   // set up empty spaces:
   for (let i = 0; i < numEmpty; i++) {
+    let empty = new Empty();
     empties.push(empty);
     allGameObjects.push(empty); // add empty to a overall game objects array as well
   }
@@ -92,11 +98,15 @@ function setup() {
     grid.push([]);
     // Go through all the columns in this row
     for (let c = 0; c < cols; c++) {
+      let element = undefined;
       // Choose a random item to add at this position
-      //
-      let gameObject = random(allGameObjects);
+      if (random() < 0.5) {
+        element = new Wall(c * unit, r * unit)
+      } else {
+        element = new Empty();
+      }
       // Add it to the row
-      grid[r].push(gameObject);
+      grid.push(element);
     }
   }
 }
@@ -170,11 +180,11 @@ function simulation() {
     }
   }
   // display the game objects:
-  for (let i = 0; i < allGameObjects.length; i++) {
+  for (let i = 0; i < grid.length; i++) {
     // let gameObject = grid[r][c];
-    console.log(allGameObjects);
-    let gameObject = allGameObjects[i];
-    gameObject.display();
+    console.log(grid);
+    let element = grid[i];
+    element.display();
   }
 
 }

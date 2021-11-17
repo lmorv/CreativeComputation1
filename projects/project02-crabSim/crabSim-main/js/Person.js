@@ -8,9 +8,15 @@ class Person extends GameObject {
     this.model = model;
   }
 
-  diaplay() {
-    super.dispay();
+  display() {
+    super.display();
 
-    // diaplay a person
+    // display a person
+    push();
+    fill(200, 10, 150);
+    translate(x, y, this.size / 2);
+    box(this.size);
+    pop();
+
   }
 }
