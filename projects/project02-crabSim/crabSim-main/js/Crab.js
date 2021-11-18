@@ -11,14 +11,14 @@ class Crab {
     // acceleration:
     this.ax = 0;
     this.ay = 0;
-    // if grid-based acceleration will represent how fast the crab moves from tile to tile when an input remains pressed
+
     this.acceleration = 2;
 
     // properties to load 3d models into: not sure if these shpuld have their own class with a display function
     this.headModel = undefined;
     this.carapaceModel = undefined;
     this.abdomenModel = undefined;
-    this.limbPack = undefined; // do I need a separate property for every limb?
+    this.limbPack = undefined; // do I need a separate property for every limb
 
     this.pincersEngaged = false; // toggle for pincer control
   }
@@ -53,10 +53,17 @@ class Crab {
     //constrain to max speed
   }
 
-  // overlap methods. Maybe I can create a global gameObjectOverlap function that handles all objects and state changes
-  checkConsumableOverlap() {
-    // check ovelap condition against evry consumable object
-    // if onject is mush it should be considered a consumable item
+  checkOverlap(object) {
+
+    // define crab's grid-space coordinates:
+    // let gridX =
+    // let gridY =
+    // check ovelap condition against a game object
+    let d = dist(this.x, this.y, object.x, object.y); // calculate distance to object
+
+    if (d < this.size / 2 + object.size / 2) {
+      object.isMush = true;
+    }
   }
 
   checkEndPointOverlap() {

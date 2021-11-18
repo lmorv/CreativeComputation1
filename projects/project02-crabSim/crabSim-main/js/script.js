@@ -66,32 +66,11 @@ function setup() {
   createCanvas(1500, 844, WEBGL);
   noStroke();
   // set up crab:
-  let x = 0;
-  let y = 0;
+  let x = cols / 2 * unit;
+  let y = rows / 2 * unit;
   crab = new Crab(x, y);
 
-  // set up walls:
-
-
-
-  // for (let i = 0; i < numWalls; i++) {
-  //   // define random grid-space x and y position of the walls
-  //   let r = floor(random(0, rows));
-  //   let c = floor(random(0, cols));
-  //   let x = c * unit;
-  //   let y = r * unit;
-  //   let wall = new Wall(x, y);
-  //   walls.push(wall);
-  //   allGameObjects.push(wall); // add wall to a overall game objects array as well
-  // }
-  // // set up empty spaces:
-  // for (let i = 0; i < numEmpty; i++) {
-  //   let empty = new Empty();
-  //   empties.push(empty);
-  //   allGameObjects.push(empty); // add empty to a overall game objects array as well
-  // }
-
-  // position game objects in the grid:
+  // position game objects on the grid:
   // Go through the grid's rows
   for (let r = 0; r < rows; r++) {
     // For each row add an empty array to represent the row
@@ -99,8 +78,8 @@ function setup() {
     // Go through all the columns in this row
     for (let c = 0; c < cols; c++) {
       let element = undefined;
-      let p = random();
-      // Choose a random item to add at this position
+      let p = random(); // generates a `probability value` to be checked against decimal number thresholds
+      // Choose a random item and add it to this grid position
       if (p < 0.25) {
         element = new Wall(c * unit, r * unit);
       } else if (p > 0.25 & p < 0.5) {
@@ -111,7 +90,6 @@ function setup() {
         element = new Empty(c * unit, r * unit);
       }
       // Add it to the row
-
       grid[r].push(element);
     }
   }
@@ -160,6 +138,8 @@ function confirmSelection() {
 function simulation() {
   rotateX(20);
   // call crab methods, and all relevant dispay, and behavioural/ conditional game object methods
+  // center the grid in 3d space
+  translate(-cols / 2 * unit, -rows / 2 * unit);
 
   // handle crab controls and move it:
   crab.handleInput();
@@ -167,14 +147,10 @@ function simulation() {
   // display crab:
   crab.display();
 
-  // center the grid in 3d space
-  translate(-cols / 2 * unit, -rows / 2 * unit);
   // diplay the grid:
   // Go through all the rows and columns
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-
-      // Get the game object at this position
 
       // Draw a square so we can see the grid space
       push();
@@ -184,9 +160,14 @@ function simulation() {
       rect(c * unit, r * unit, unit, unit);
       pop();
 
-      // display the game objects:
+      // display the game objects if they are not destroyed
       let element = grid[r][c];
-      element.display();
+      // console.log(`element.x:${element.x}`, `element.y:${element.y}`);
+
+      crab.checkOverlap(element);
+      if (!element.isMush) {
+        element.display();
+      }
     }
   }
 
