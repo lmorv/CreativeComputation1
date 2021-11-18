@@ -99,13 +99,19 @@ function setup() {
     // Go through all the columns in this row
     for (let c = 0; c < cols; c++) {
       let element = undefined;
+      let p = random();
       // Choose a random item to add at this position
-      if (random() < 0.3) {
-        element = new Wall(c * unit, r * unit)
+      if (p < 0.25) {
+        element = new Wall(c * unit, r * unit);
+      } else if (p > 0.25 & p < 0.5) {
+        element = new Car(c * unit, r * unit);
+      } else if (p > 0.5 & p < 0.75) {
+        element = new Person(c * unit, r * unit);
       } else {
         element = new Empty(c * unit, r * unit);
       }
       // Add it to the row
+
       grid[r].push(element);
     }
   }
