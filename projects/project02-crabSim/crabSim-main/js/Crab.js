@@ -54,10 +54,6 @@ class Crab {
   }
 
   checkOverlap(object) {
-
-    // define crab's grid-space coordinates:
-    // let gridX =
-    // let gridY =
     // check ovelap condition against a game object
     let d = dist(this.x, this.y, object.x, object.y); // calculate distance to object
 
