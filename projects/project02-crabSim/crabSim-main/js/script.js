@@ -8,7 +8,7 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 "use strict";
 
 // the grid terrain:
-let grid = [];
+let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
 let cols = 40;
 let rows = 22;
@@ -22,28 +22,15 @@ let state = `simulation` // possible states are 'templateSlect', `crabEditor`, `
 let crab; // The player object
 
 let crabTemplates = []; // store the 3 starting crab templates to be displayed in the start screen of the crab construction flow
-let consumables = []; // store all the consumables in this array (persons, schools, cars, and cities)
-// define the max number of each consumable item:
-let numPeople = 6; // probably too many of all of them lol
-let numSchools = 6;
-let numCars = 6;
-let numCities = 4;
 
-let walls = []; // store walls of all sizes (large, medium, small) in here.
-// dSefine max number of each size of walls:
+let walls = []; // store walls in here.
+// define max number of walls:
 let numWalls = 10;
 
-let empty = ``; // an empty space.
-let numEmpty = 400; // total number of empty spaces.
 
 let empties = []; // to store our empty spaces.
 
 let allGameObjects = []; //
-
-// difrent sized walls unused
-let numSmallWall = 5;
-let numMedWall = 5;
-let numLargeWall = 5;
 
 let numEndPoints = 1; // there's only one endpoint for now but it might be cool to add multiple.
 
@@ -69,6 +56,8 @@ function setup() {
   let x = cols / 2 * unit;
   let y = rows / 2 * unit;
   crab = new Crab(x, y);
+
+  // set up q-bits
 
   // position game objects on the grid:
   // Go through the grid's rows
