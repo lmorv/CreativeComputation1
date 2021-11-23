@@ -1,4 +1,4 @@
-class Wall extends GameObject {
+class Building extends GameObject {
   constructor(x, y) {
     super(x, y);
     this.size = unit; // use the size of a grid suare

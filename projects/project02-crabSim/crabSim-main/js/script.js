@@ -29,7 +29,7 @@ let addQBitInterval = 1 * 60; // one qBit per second
 // timer will count down to 0  in draw to dtermine when to add a new q bit to the qbits array
 let timer = addQBitInterval;
 
-let walls = []; // store walls in here (currently useless).
+let buildings = []; // store walls in here (currently useless).
 
 let empties = []; // to store our empty spaces(currently useless).
 
@@ -66,7 +66,7 @@ function setup() {
       let p = random(); // generates a `probability value` to be checked against decimal number thresholds
       // Choose a random item and add it to this grid position
       if (p < 0.25) {
-        element = new Wall(c * unit, r * unit);
+        element = new Building(c * unit, r * unit);
       } else if (p > 0.25 & p < 0.5) {
         element = new Car(c * unit, r * unit);
       } else if (p > 0.5 & p < 0.75) {
