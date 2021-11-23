@@ -1,9 +1,10 @@
 class QBit {
-  constructor(x, y) {
+  constructor(x, y, rotationSpeed) {
     this.x = x;
     this.y = y;
     this.size = 25;
     this.fill = 0;
+    this.rotationSpeed = rotationSpeed;
   }
 
   // spawnQBit() {
@@ -15,14 +16,14 @@ class QBit {
     // check for colission with crab to remove qbit from array.
   }
 
-  dispay() {
+  display() {
     // display a rotating black box.
     push();
-    fill(0);
-    stroke(10);
     translate(this.x, this.y);
-    rotateX(frameCount * 0.1);
-    rotateY(frameCount * 0.1);
+    rotateY(frameCount * this.rotationSpeed);
+    rotateX(frameCount * this.rotationSpeed);
+    fill(this.fill);
+    stroke(10);
     box(this.size);
     pop();
   }

@@ -15,28 +15,26 @@ let rows = 22;
 //size of the grid's squares
 let unit = 30;
 
-
-
 let state = `simulation` // possible states are 'templateSlect', `crabEditor`, `confirmSelection`, `simulation`,`modelView`, `instructions`, `endScreen`, `simulationDestoyed`
 
 let crab; // The player object
 
 let crabTemplates = []; // store the 3 starting crab templates to be displayed in the start screen of the crab construction flow
 
-let walls = []; // store walls in here.
-// define max number of walls:
-let numWalls = 10;
+let qBits = []; // starts off empty
+let critQBits = 164; // number of  corrupted q-bits that break the simulation
 
+// How often to add a new qBit (in frames)
+let addQBitInterval = 1 * 60; // one qBit per second
+// timer will count down to 0  in draw to dtermine when to add a new q bit to the qbits array
+let timer = addQBitInterval;
 
-let empties = []; // to store our empty spaces.
+let walls = []; // store walls in here (currently useless).
 
-let allGameObjects = []; //
+let empties = []; // to store our empty spaces(currently useless).
 
-let numEndPoints = 1; // there's only one endpoint for now but it might be cool to add multiple.
+let allGameObjects = []; //(currently useless)
 
-let qBits = [];
-// define the number of  corrupted q-bits that break the simulation
-let critQBits = 164;
 
 /**
 preload() loads the game assets into variables for later use.
@@ -47,7 +45,7 @@ function preload() {
 
 
 /**
-setup() creates all game object out of classes, and creates the all-important all-encompasing canvas
+setup() creates game objects out of classes, and creates the all-important all-encompasing canvas
 */
 function setup() {
   createCanvas(1500, 844, WEBGL);
@@ -56,8 +54,6 @@ function setup() {
   let x = cols / 2 * unit;
   let y = rows / 2 * unit;
   crab = new Crab(x, y);
-
-  // set up q-bits
 
   // position game objects on the grid:
   // Go through the grid's rows
@@ -136,11 +132,10 @@ function simulation() {
   // display crab:
   crab.display();
 
-  // diplay the grid:
+  // display the grid:
   // Go through all the rows and columns
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-
       // Draw a square so we can see the grid space
       push();
       rectMode(CENTER, CENTER);
@@ -148,11 +143,9 @@ function simulation() {
       noFill();
       rect(c * unit, r * unit, unit, unit);
       pop();
-
       // display the game objects if they are not destroyed
       let element = grid[r][c];
       // console.log(`element.x:${element.x}`, `element.y:${element.y}`);
-
       crab.checkOverlap(element);
       if (!element.isMush) {
         element.display();
@@ -160,6 +153,30 @@ function simulation() {
     }
   }
 
+  // add q-bits over time:
+  timer -= 1 // update timer by counting down one frame
+  // check if the timer reaches 0
+  console.log(`timer:${timer}`);
+  if (timer <= 0) {
+    // generate a random possition:
+    let x = random(-100, width - 200);
+    let y = random(-100, height - 200);
+    let rotationSpeed = random(6, 10);
+    // create a q-bit at that position
+    let qBit = new QBit(x, y, rotationSpeed);
+    // push the qBit into the qBits array
+    qBits.push(qBit);
+    //reset timer:
+    timer = addQBitInterval;
+    console.log(`qBits.lenght:${qBits.length}`);
+  }
+
+
+  // display the q-bits present in the q-bit array:
+  for (let i = 0; i < qBits.length; i++) {
+    let qBit = qBits[i];
+    qBit.display();
+  }
 
 }
 
