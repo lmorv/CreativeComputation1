@@ -161,7 +161,7 @@ function simulation() {
     // generate a random possition:
     let x = random(-100, width - 200);
     let y = random(-100, height - 200);
-    let rotationSpeed = random(6, 10);
+    let rotationSpeed = random(6, 12);
     // create a q-bit at that position
     let qBit = new QBit(x, y, rotationSpeed);
     // push the qBit into the qBits array
