@@ -203,7 +203,7 @@ function simulation() {
     console.log(`Everything is mush!`);
     spawnGameObjects(); // set up the game objects
 
-    // reset is mush propperty on all new game objects:
+    // reset isMush propperty on all new game objects:
     let mushed = grid.filter(element => element.isMush === true);
     for (let i = 0; i < mushed.length; i++) {
       let element = mushed[i];
@@ -211,12 +211,13 @@ function simulation() {
       console.log(`element.isMush:${element.isMush}`);
     }
   }
-
   // remove not mushed game objects that the cab overlaps and turns to mush: THIS IS NOT WORKING!
   for (let i = notMushed.length - 1; i >= 0; i--) {
-    let element = notMushed[i];
-    notMushed.splice(i, 1);
+    // let element = notMushed[i];
+    notMushed.pop();
   }
+
+
 
 }
 
