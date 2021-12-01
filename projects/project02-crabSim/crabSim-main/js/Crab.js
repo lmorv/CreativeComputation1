@@ -59,6 +59,7 @@ class Crab {
 
     if (d < this.size / 2 + object.size / 2) {
       object.isMush = true;
+
     }
   }
 

@@ -10,8 +10,8 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 // the grid terrain:
 let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
-let cols = 40;
-let rows = 22;
+let cols = 5; // max value is 40
+let rows = 5; // max value is 22
 //size of the grid's squares
 let unit = 30;
 
@@ -56,30 +56,11 @@ function setup() {
   let y = rows / 2 * unit;
   crab = new Crab(x, y);
 
-  // for (let i = 0; i < rows * cols; i++) {
-  //   let element = undefined;
-  //
-  //   let c = i % rows;
-  //   let r = (i - c) / cols;
-  //
-  //   let p = random(); // generates a `probability value` to be checked against decimal number thresholds
-  //   // Choose a random item and add it to this grid position
-  //   if (p < 0.25) {
-  //     element = new Building(c * unit, r * unit);
-  //     numMushables += 1;
-  //   } else if (p > 0.25 & p < 0.5) {
-  //     element = new Car(c * unit, r * unit);
-  //     numMushables += 1;
-  //   } else if (p > 0.5 & p < 0.75) {
-  //     element = new Person(c * unit, r * unit);
-  //     numMushables += 1;
-  //   } else {
-  //     element = new Empty(c * unit, r * unit);
-  //   }
-  //   grid.push(element);
-  // }
-
   // position game objects on the grid:
+  spawnGameObjects();
+}
+
+function spawnGameObjects() {
   // Go through the grid's rows
   for (let r = 0; r < rows; r++) {
     // // For each row add an empty array to represent the row
@@ -107,9 +88,8 @@ function setup() {
   }
 }
 
-
 /**
-Description of draw()
+draw()
 */
 function draw() {
   // orbitControl(); // orbit control for debug pourpuses
@@ -148,11 +128,10 @@ function confirmSelection() {
 }
 
 function simulation() {
-  rotateX(20);
-  // call crab methods, and all relevant dispay, and behavioural/ conditional game object methods
-  // center the grid in 3d space
-  translate(-cols / 2 * unit, -rows / 2 * unit);
+  rotateX(20); // Global world rotation to achive 3/4 top down view.
+  translate(-cols / 2 * unit, -rows / 2 * unit); // center the grid in 3d space
 
+  // call crab methods, and all relevant dispay, and behavioural/ conditional game object methods
   // handle crab controls and move it:
   crab.handleInput();
   crab.move();
@@ -173,6 +152,7 @@ function simulation() {
       // display the game objects if they are not destroyed
       let i = c + r * cols; // convert from grid coordinates to array index position
       let element = grid[i];
+
       crab.checkOverlap(element);
       if (!element.isMush) {
         element.display();
@@ -194,7 +174,7 @@ function simulation() {
     qBits.push(qBit);
     //reset timer:
     timer = addQBitInterval;
-    console.log(`qBits.lenght:${qBits.length}`);
+    // console.log(`qBits.lenght:${qBits.length}`);
   }
 
   // check q-bit and crab overlap:
@@ -216,9 +196,26 @@ function simulation() {
 
 
   // check if all game objects are mush:
-  let notMushed = grid.filter(element => element.isMush === false);
+  let notMushed = grid.filter(element => element.isMush === false); //
+  console.log(`notMushed.length:${notMushed.length}`);
+
   if (notMushed.length === 0) {
     console.log(`Everything is mush!`);
+    spawnGameObjects(); // set up the game objects
+
+    // reset is mush propperty on all new game objects:
+    let mushed = grid.filter(element => element.isMush === true);
+    for (let i = 0; i < mushed.length; i++) {
+      let element = mushed[i];
+      element.isMush = false;
+      console.log(`element.isMush:${element.isMush}`);
+    }
+  }
+
+  // remove not mushed game objects that the cab overlaps and turns to mush: THIS IS NOT WORKING!
+  for (let i = notMushed.length - 1; i >= 0; i--) {
+    let element = notMushed[i];
+    notMushed.splice(i, 1);
   }
 
 }
