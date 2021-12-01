@@ -30,6 +30,7 @@ let addQBitInterval = 1 * 60; // one qBit per second
 let timer = addQBitInterval;
 
 let buildings = []; // store walls in here (currently useless).
+let numMushables = 0;
 
 let empties = []; // to store our empty spaces(currently useless).
 
@@ -55,11 +56,34 @@ function setup() {
   let y = rows / 2 * unit;
   crab = new Crab(x, y);
 
+  // for (let i = 0; i < rows * cols; i++) {
+  //   let element = undefined;
+  //
+  //   let c = i % rows;
+  //   let r = (i - c) / cols;
+  //
+  //   let p = random(); // generates a `probability value` to be checked against decimal number thresholds
+  //   // Choose a random item and add it to this grid position
+  //   if (p < 0.25) {
+  //     element = new Building(c * unit, r * unit);
+  //     numMushables += 1;
+  //   } else if (p > 0.25 & p < 0.5) {
+  //     element = new Car(c * unit, r * unit);
+  //     numMushables += 1;
+  //   } else if (p > 0.5 & p < 0.75) {
+  //     element = new Person(c * unit, r * unit);
+  //     numMushables += 1;
+  //   } else {
+  //     element = new Empty(c * unit, r * unit);
+  //   }
+  //   grid.push(element);
+  // }
+
   // position game objects on the grid:
   // Go through the grid's rows
   for (let r = 0; r < rows; r++) {
-    // For each row add an empty array to represent the row
-    grid.push([]);
+    // // For each row add an empty array to represent the row
+    // grid.push([]);
     // Go through all the columns in this row
     for (let c = 0; c < cols; c++) {
       let element = undefined;
@@ -67,15 +91,18 @@ function setup() {
       // Choose a random item and add it to this grid position
       if (p < 0.25) {
         element = new Building(c * unit, r * unit);
+
       } else if (p > 0.25 & p < 0.5) {
         element = new Car(c * unit, r * unit);
+
       } else if (p > 0.5 & p < 0.75) {
         element = new Person(c * unit, r * unit);
+
       } else {
         element = new Empty(c * unit, r * unit);
       }
       // Add it to the row
-      grid[r].push(element);
+      grid.push(element);
     }
   }
 }
@@ -144,11 +171,10 @@ function simulation() {
       rect(c * unit, r * unit, unit, unit);
       pop();
       // display the game objects if they are not destroyed
-      let element = grid[r][c];
-      // console.log(`element.x:${element.x}`, `element.y:${element.y}`);
+      let i = c + r * cols; // convert from grid coordinates to array index position
+      let element = grid[i];
       crab.checkOverlap(element);
       if (!element.isMush) {
-
         element.display();
       }
     }
@@ -172,18 +198,27 @@ function simulation() {
   }
 
   // check q-bit and crab overlap:
-  for (let i = 0; i < qBits.lenghth; i++) {
+  for (let i = qBits.length - 1; i >= 0; i--) {
     let qBit = qBits[i];
     crab.checkOverlap(qBit);
     if (qBit.isMush) {
-      qBits.splice(qBit, 1); // remove that q-bit from the array
+      qBits.splice(i, 1); // remove that q-bit from the array
     }
   }
 
   // display the q-bits present in the q-bit array:
   for (let i = 0; i < qBits.length; i++) {
     let qBit = qBits[i];
-    qBit.display();
+    if (!qBit.isMush) {
+      qBit.display();
+    }
+  }
+
+
+  // check if all game objects are mush:
+  let notMushed = grid.filter(element => element.isMush === false);
+  if (notMushed.length === 0) {
+    console.log(`Everything is mush!`);
   }
 
 }
