@@ -5,6 +5,7 @@ class QBit {
     this.size = 25;
     this.fill = 0;
     this.rotationSpeed = rotationSpeed;
+    this.isMush = false;
   }
 
   // spawnQBit() {

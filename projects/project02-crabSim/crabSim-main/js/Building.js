@@ -14,7 +14,7 @@ class Building extends GameObject {
   display() {
     super.display();
 
-    // display a wall
+    // display a building
     push();
     stroke(150, 150, 150);
     fill(0, 0, 200);

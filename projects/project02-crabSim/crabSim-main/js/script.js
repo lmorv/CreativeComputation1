@@ -148,6 +148,7 @@ function simulation() {
       // console.log(`element.x:${element.x}`, `element.y:${element.y}`);
       crab.checkOverlap(element);
       if (!element.isMush) {
+
         element.display();
       }
     }
@@ -156,7 +157,6 @@ function simulation() {
   // add q-bits over time:
   timer -= 1 // update timer by counting down one frame
   // check if the timer reaches 0
-  console.log(`timer:${timer}`);
   if (timer <= 0) {
     // generate a random possition:
     let x = random(-100, width - 200);
@@ -171,6 +171,14 @@ function simulation() {
     console.log(`qBits.lenght:${qBits.length}`);
   }
 
+  // check q-bit and crab overlap:
+  for (let i = 0; i < qBits.lenghth; i++) {
+    let qBit = qBits[i];
+    crab.checkOverlap(qBit);
+    if (qBit.isMush) {
+      qBits.splice(qBit, 1); // remove that q-bit from the array
+    }
+  }
 
   // display the q-bits present in the q-bit array:
   for (let i = 0; i < qBits.length; i++) {
