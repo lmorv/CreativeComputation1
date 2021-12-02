@@ -10,8 +10,8 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 // the grid terrain:
 let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
-let cols = 5; // max value is 40
-let rows = 5; // max value is 22
+let cols = 10; // max value is 40
+let rows = 8; // max value is 22
 //size of the grid's squares
 let unit = 30;
 
@@ -29,26 +29,24 @@ let addQBitInterval = 1 * 60; // one qBit per second
 // timer will count down to 0  in draw to dtermine when to add a new q bit to the qbits array
 let timer = addQBitInterval;
 
-let buildings = []; // store walls in here (currently useless).
-let numMushables = 0;
-
-let empties = []; // to store our empty spaces(currently useless).
-
-let allGameObjects = []; //(currently useless)
-
+let fontBlackMatrix;
 
 /**
 preload() loads the game assets into variables for later use.
 */
 function preload() {
 
+  fontBlackMatrix = loadFont('assets/fonts/LLBlackMatrix.ttf');
+
 }
 
 
 /**
-setup() creates game objects out of classes, and creates the all-important all-encompasing canvas
+setup() creates game objects out of classes,creates the all-encompasing canvas, and sets up global settings
 */
 function setup() {
+  textFont(fontBlackMatrix, 40);
+
   createCanvas(1500, 844, WEBGL);
   noStroke();
   // set up crab:
@@ -82,7 +80,7 @@ function spawnGameObjects() {
       } else {
         element = new Empty(c * unit, r * unit);
       }
-      // Add it to the row
+      // Add the newly created element to the to the grid array
       grid.push(element);
     }
   }
@@ -196,30 +194,17 @@ function simulation() {
 
 
   // check if all game objects are mush:
-  let notMushed = grid.filter(element => element.isMush === false); //
+  let notMushed = grid.filter(element => element.isMush === false); // Returns an array with all the game objects whose isMush propperty is false.
   console.log(`notMushed.length:${notMushed.length}`);
 
   if (notMushed.length === 0) {
     console.log(`Everything is mush!`);
-    spawnGameObjects(); // set up the game objects
-
-    // reset isMush propperty on all new game objects:
-    let mushed = grid.filter(element => element.isMush === true);
-    for (let i = 0; i < mushed.length; i++) {
-      let element = mushed[i];
-      element.isMush = false;
-      console.log(`element.isMush:${element.isMush}`);
-    }
+    state = `endScreen`;
   }
-  // remove not mushed game objects that the cab overlaps and turns to mush: THIS IS NOT WORKING!
-  for (let i = notMushed.length - 1; i >= 0; i--) {
-    // let element = notMushed[i];
-    notMushed.pop();
-  }
-
-
 
 }
+
+
 
 function modelView() {
   // call display method for full screen model view
@@ -230,9 +215,41 @@ function instructions() {
 }
 
 function endScreen() {
-  // display `simulation successfull` message if crab overlaps the maze endPoint. Overlap is checked in simulation()
+  push();
+  textAlign(CENTER, CENTER);
+  fill(0, 200, 100);
+  textFont(fontBlackMatrix, 80);
+  text(`Everything is mush!`, 0, 0);
+  pop();
 }
 
 function simulationDestoyed() {
   // display `simulation destroyed` message if corrupted q-bits reach the breaking threshold. Condition checked during simulation()
+}
+
+
+// UI controlls
+function mousePressed() {
+  if (state === `endScreen`) {
+    state = `simulation`;
+    // Prepare for gamestate reset:
+    // remove q-bits and gameobjects from their arrays:
+    for (let i = grid.length - 1; i >= 0; i--) {
+      grid.splice(i, 1); // remove that game object from the array
+    }
+    for (let i = qBits.length - 1; i >= 0; i--) {
+      qBits.splice(i, 1); // remove that game object from the array
+    }
+    spawnGameObjects(); // set up the game objects
+  }
+
+  // else if (state === `templateSlect`) {
+  //   state = `crabEditor`;
+  // } else if (state === 'crabEditor') {
+  //   state = `confirmSelection`;
+  // } else if (state === `confirmSelection`) {
+  //   state = `simulation`;
+  // } else if (state === `simulationDestoyed`) {
+  //   state = `templateSlect`;
+  // }
 }
