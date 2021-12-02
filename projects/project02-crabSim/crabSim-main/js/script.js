@@ -46,11 +46,10 @@ function preload() {
 setup() creates game objects out of classes,creates the all-encompasing canvas, and sets up global settings
 */
 function setup() {
-  // Global settings
+  // Global settings:
   textFont(fontBlackMatrix, 40);
   createCanvas(1500, 844, WEBGL);
   noStroke();
-
   // set up crab:
   spawnCrab();
   // position game objects on the grid:
@@ -132,48 +131,21 @@ function simulation() {
   rotateX(20); // Global world rotation to achive 3/4 top down view.
   translate(-cols / 2 * unit, -rows / 2 * unit); // center the grid in 3d space
   // Call crab methods, and all relevant dispay, and behavioural/ conditional game object methods
-
   // handle crab controls and move it:
   crab.handleInput();
   crab.move();
-
-  // display crab:
+  // display the crab:
   crab.display();
-
   // display the grid:
   gridDisplay();
-
   // add q-bits over time:
   spawnQBits();
-
-
   // check q-bit and crab overlap:
-  for (let i = qBits.length - 1; i >= 0; i--) {
-    let qBit = qBits[i];
-    crab.checkOverlap(qBit);
-    if (qBit.isMush) {
-      qBits.splice(i, 1); // remove that q-bit from the array
-    }
-  }
-
+  destroyQBit();
   // display the q-bits present in the q-bit array:
-  for (let i = 0; i < qBits.length; i++) {
-    let qBit = qBits[i];
-    if (!qBit.isMush) {
-      qBit.display();
-    }
-  }
-
-
+  displayQBits();
   // check if all game objects are mush:
-  let notMushed = grid.filter(element => element.isMush === false); // Returns an array with all the game objects whose isMush propperty is false.
-  // console.log(`notMushed.length:${notMushed.length}`);
-
-  if (notMushed.length === 0) {
-    console.log(`Everything is mush!`);
-    state = `endScreen`;
-  }
-
+  checkCityDestroyed();
 }
 
 function gridDisplay() {
@@ -220,6 +192,33 @@ function spawnQBits() {
   }
 }
 
+function destroyQBit() {
+  for (let i = qBits.length - 1; i >= 0; i--) {
+    let qBit = qBits[i];
+    crab.checkOverlap(qBit);
+    if (qBit.isMush) {
+      qBits.splice(i, 1); // remove that q-bit from the array
+    }
+  }
+}
+
+function displayQBits() {
+  for (let i = 0; i < qBits.length; i++) {
+    let qBit = qBits[i];
+    if (!qBit.isMush) {
+      qBit.display();
+    }
+  }
+}
+
+function checkCityDestroyed() {
+  let notMushed = grid.filter(element => element.isMush === false); // Returns an array with all the game objects whose isMush propperty is false.
+  if (notMushed.length === 0) {
+    console.log(`Everything is mush!`);
+    state = `endScreen`;
+  }
+}
+
 function modelView() {
   // call display method for full screen model view
 }
@@ -233,7 +232,7 @@ function endScreen() {
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
-  text(`Everything is mush!`, 0, 0);
+  text(`Everything is mush!`, 0, 20);
   pop();
 }
 

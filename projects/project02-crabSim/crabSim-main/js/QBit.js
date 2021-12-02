@@ -8,10 +8,7 @@ class QBit {
     this.isMush = false;
   }
 
-  // check corruption level here or in the main script
-  checkCrabOverlap() {
-    // check for colission with crab to remove qbit from array.
-  }
+  // check corruption level in the main script
 
   display() {
     // display a rotating black box.
