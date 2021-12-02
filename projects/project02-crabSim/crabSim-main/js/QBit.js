@@ -3,7 +3,7 @@ class QBit {
     this.x = x;
     this.y = y;
     this.size = 25;
-    this.fill = 0;
+    this.fill = random(0, 30);
     this.rotationSpeed = rotationSpeed;
     this.isMush = false;
   }
@@ -17,7 +17,7 @@ class QBit {
     rotateY(frameCount * this.rotationSpeed);
     rotateX(frameCount * this.rotationSpeed);
     fill(this.fill);
-    stroke(10);
+    stroke(20);
     box(this.size);
     pop();
   }

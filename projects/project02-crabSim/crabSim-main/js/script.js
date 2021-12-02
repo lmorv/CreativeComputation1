@@ -10,8 +10,8 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 // the grid terrain:
 let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
-let cols = 38; // default value is 40
-let rows = 20; // default value is 22
+let cols = 10; // default value is 42, 38, 34, 30, 26, 22, 18, 14, 10 (increases by a factor of 4)
+let rows = 8; // default value is 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases by a factor of 2)
 //size of the grid's squares
 let unit = 30;
 
