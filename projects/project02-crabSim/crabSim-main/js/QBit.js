@@ -8,10 +8,6 @@ class QBit {
     this.isMush = false;
   }
 
-  // spawnQBit() {
-  //   // spawn QBits over time
-  // }
-
   // check corruption level here or in the main script
   checkCrabOverlap() {
     // check for colission with crab to remove qbit from array.
