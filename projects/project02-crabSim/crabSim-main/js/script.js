@@ -10,8 +10,8 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 // the grid terrain:
 let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
-let cols = 10; // max value is 40
-let rows = 8; // max value is 22
+let cols = 38; // default value is 40
+let rows = 20; // default value is 22
 //size of the grid's squares
 let unit = 30;
 
@@ -167,7 +167,7 @@ function simulation() {
 
   // check if all game objects are mush:
   let notMushed = grid.filter(element => element.isMush === false); // Returns an array with all the game objects whose isMush propperty is false.
-  console.log(`notMushed.length:${notMushed.length}`);
+  // console.log(`notMushed.length:${notMushed.length}`);
 
   if (notMushed.length === 0) {
     console.log(`Everything is mush!`);
@@ -200,12 +200,15 @@ function gridDisplay() {
 }
 
 function spawnQBits() {
+  let confineWidth = (unit * cols);
+  let confineHeight = (unit * rows);
+
   timer -= 1 // update timer by counting down one frame
   // check if the timer reaches 0
   if (timer <= 0) {
     // generate a random possition:
-    let x = random(-100, width - 200);
-    let y = random(-100, height - 200);
+    let x = random(-confineWidth / 8, confineWidth + confineWidth / 8);
+    let y = random(-confineHeight / 8, confineHeight + confineHeight / 8);
     let rotationSpeed = random(6, 12);
     // create a q-bit at that position
     let qBit = new QBit(x, y, rotationSpeed);
