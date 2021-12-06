@@ -22,7 +22,7 @@ let crab; // The player object
 let crabTemplates = []; // store the 3 starting crab templates to be displayed in the start screen of the crab construction flow
 
 let qBits = []; // starts off empty
-let critQBits = 164; // number of  corrupted q-bits that break the simulation
+let critQBits = 60; // number of  corrupted q-bits that break the simulation
 
 // How often to add a new qBit (in frames)
 let addQBitInterval = 1 * 60; // one qBit per second
@@ -117,14 +117,53 @@ function draw() {
 
 function templateSlect() {
   //call the diplay method for the template select screen
+  menuSelection();
+
 }
 
 function crabEditor() {
   // display the selected crab template, check mouse position,allow user to edit head, carapace, and abdomen.
+  menuSelection();
+}
+
+function menuSelection() {
+  let rectHeight = 75;
+  let rectX = width / 2;
+  let rectY = height / 2;
+
+  rectMode(CENTER);
+  rect(rectX, rectY, width, rectHeight);
+  if (mouseY < rectY - 0.5 * rectHeight || mouseY > rectY + 0.5 * rectHeight) {
+    fill(255, 255, 255);
+  } else {
+    fill(200, 200, 130);
+  };
 }
 
 function confirmSelection() {
   // display `confirm crab selection` message, check for mouse pess to transition to gameplay
+  textAlign(CENTER, CENTER);
+  fill(0, 200, 100);
+  textFont(fontBlackMatrix, 80);
+  text(`Confirm Crab Selection`, 0, height / 3);
+  textSize(40);
+  text(`Continue`, 0, height / 2);
+
+  confirmationUI();
+}
+
+function confirmationUI() {
+  let rectHeight = 75;
+  let rectX = width / 2;
+  let rectY = height / 2;
+
+  rectMode(CENTER);
+  rect(rectX, rectY, width, rectHeight);
+  if (mouseY < rectY - 0.5 * rectHeight || mouseY > rectY + 0.5 * rectHeight) {
+    fill(255, 255, 255);
+  } else {
+    fill(200, 200, 130);
+  };
 }
 
 function simulation() {
@@ -146,6 +185,13 @@ function simulation() {
   displayQBits();
   // check if all game objects are mush:
   checkCityDestroyed();
+
+  // check if corrupted q-bit levels are above the allowed threshold
+  if (qBits.length >= critQBits) {
+    state = `simulationDestoyed`
+  }
+
+
 }
 
 function gridDisplay() {
@@ -232,12 +278,26 @@ function endScreen() {
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
-  text(`Everything is mush!`, 0, 20);
+  text(`Everything is mush!`, 0, height / 4);
+  textSize(40);
+  text(`Continue`, 0, height / 3);
+  text(`Crab slection`, 0, height / 2);
   pop();
+
 }
 
 function simulationDestroyed() {
   // display `simulation destroyed` message if corrupted q-bits reach the breaking threshold. Condition checked during simulation()
+
+  push();
+  textAlign(CENTER, CENTER);
+  fill(0, 200, 100);
+  textFont(fontBlackMatrix, 80);
+  text(`Simulation destroyed!`, 0, height / 4);
+  textSize(40);
+  text(`corrupted q-bit levels have reached critical levels`, 0, height / 3);
+  text(`Create another crab`, 0, height / 2);
+  pop();
 }
 
 
@@ -254,15 +314,14 @@ function mousePressed() {
       qBits.splice(i, 1); // remove that game object from the array
     }
     spawnGameObjects(); // set up the game objects
-  }
 
-  // else if (state === `templateSlect`) {
-  //   state = `crabEditor`;
-  // } else if (state === 'crabEditor') {
-  //   state = `confirmSelection`;
-  // } else if (state === `confirmSelection`) {
-  //   state = `simulation`;
-  // } else if (state === `simulationDestoyed`) {
-  //   state = `templateSlect`;
-  // }
+  } else if (state === `templateSlect`) {
+    state = `crabEditor`;
+  } else if (state === 'crabEditor') {
+    state = `confirmSelection`;
+  } else if (state === `confirmSelection`) {
+    state = `simulation`;
+  } else if (state === `simulationDestoyed`) {
+    state = `templateSlect`;
+  }
 }
