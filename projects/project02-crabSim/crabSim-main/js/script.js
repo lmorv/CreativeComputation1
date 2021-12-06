@@ -15,7 +15,7 @@ let rows = 8; // default value is 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases b
 //size of the grid's squares
 let unit = 30;
 
-let state = `simulation` // possible states are 'templateSlect', `crabEditor`, `confirmSelection`, `simulation`,`modelView`, `instructions`, `endScreen`, `simulationDestoyed`
+let state = `templateSelect` // possible states are 'templateSelect', `crabEditor`, `confirmSelection`, `simulation`,`modelView`, `instructions`, `endScreen`, `simulationDestoyed`
 
 let crab; // The player object
 
@@ -99,8 +99,8 @@ function draw() {
   background(0, 50, 60);
   angleMode(DEGREES);
 
-  if (state === `templateSlect`) {
-    templateSlect();
+  if (state === `templateSelect`) {
+    templateSelect();
   } else if (state === `crabEditor`) {
     crabEditor();
   } else if (state === `confirmSelection`) {
@@ -118,14 +118,34 @@ function draw() {
   }
 }
 
-function templateSlect() {
+function templateSelect() {
   //call the diplay method for the template select screen
+
+  let titleY = -height / 4;
+  let titleX = -width / 4;
+  push();
+  textAlign(CENTER, CENTER);
+  fill(0, 200, 100);
+  textFont(fontBlackMatrix, 50);
+  text(`Select crab template`, titleX, titleY);
+  pop();
+
+  // UI behaviour:
   menuSelectionUI();
 
 }
 
 function crabEditor() {
   // display the selected crab template, check mouse position,allow user to edit head, carapace, and abdomen.
+  let titleY = -height / 4;
+  let titleX = -width / 4;
+  push();
+  textAlign(CENTER, CENTER);
+  fill(0, 200, 100);
+  textFont(fontBlackMatrix, 50);
+  text(`Edit crab parts`, titleX, titleY);
+  pop();
+  // UI behaviour:
   menuSelectionUI();
 }
 
@@ -148,13 +168,14 @@ function confirmSelection() {
   let titleY = -height / 4;
   let titleX = -width / 4;
 
+  push();
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
   text(`Confirm Crab Selection`, 0, titleY);
   textSize(40);
   text(`Continue`, 0, titleY + 150);
-
+  pop();
   // UI behaviour:
   confirmationUI();
 }
@@ -327,7 +348,7 @@ function mousePressed() {
     }
     spawnGameObjects(); // set up the game objects
 
-  } else if (state === `templateSlect`) {
+  } else if (state === `templateSelect`) {
     state = `crabEditor`;
   } else if (state === 'crabEditor') {
     state = `confirmSelection`;
@@ -338,6 +359,6 @@ function mousePressed() {
     for (let i = qBits.length - 1; i >= 0; i--) {
       qBits.splice(i, 1); // remove that game object from the array
     }
-    state = `templateSlect`;
+    state = `templateSelect`;
   }
 }
