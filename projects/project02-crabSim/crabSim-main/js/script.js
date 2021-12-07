@@ -47,7 +47,6 @@ let timer = addQBitInterval;
 let fontBlackMatrix;
 
 
-
 /**
 preload() loads the game assets into variables for later use.
 */
@@ -56,7 +55,6 @@ function preload() {
   fontBlackMatrix = loadFont('assets/fonts/LLBlackMatrix.ttf');
 
 }
-
 
 /**
 setup() creates game objects out of classes,creates the all-encompasing canvas, and sets up global settings
@@ -75,7 +73,6 @@ function setup() {
   createTemplate01();
   createTemplate02();
   createTemplate03();
-
 }
 
 function createCrab() {
@@ -155,7 +152,6 @@ function draw() {
 function templateSelect() {
   menuSelectionUI(); // UI behaviour:
 
-
   let titleY = -height / 4;
   let titleX = -width / 4;
   push();
@@ -164,25 +160,17 @@ function templateSelect() {
   textFont(fontBlackMatrix, 50);
   text(`Select crab template`, titleX, titleY);
   pop();
-
-
 }
 
 function menuSelectionUI() {
-
+  // Display the crab templates
   template03.display();
   template02.display();
   template01.display();
-
+  // check overlap for UI behavior
   template01.checkOverlap();
   template02.checkOverlap();
   template03.checkOverlap();
-
-  //Debug:
-  // console.log(`mouseX3D:${mouseX3D}`);
-  // console.log(`mouseX:${mouseX}`);
-  // console.log(`mouseY:${mouseY}`);
-  // console.log(`screenThird:${screenThird}`);
 }
 
 function confirmSelection() {
@@ -191,7 +179,7 @@ function confirmSelection() {
   let titleX = -width / 4;
   // UI behaviour:
   confirmationUI();
-
+  // Display confirmation text
   push();
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
@@ -206,19 +194,18 @@ function confirmationUI() {
   let rectHeight = 75;
   let rectX = 0;
   let rectY = 0;
-
   // Tranform mouse coordinates to 3D space:
   let mouseY3D = mouseY - height / 2;
   let mouseX3D = mouseX - width / 2;
-
+  // display UI rectangle
   rectMode(CENTER);
   rect(rectX, rectY, width, rectHeight);
+  // UI behavior
   if (mouseY3D < rectY - rectHeight || mouseY3D > rectY + rectHeight) {
     fill(0, 35, 45);
   } else {
     fill(150, 200, 130);
   };
-
   // console.log(`mouseY:${mouseY}`);
 }
 
@@ -348,23 +335,25 @@ function endScreen() {
 
 function simulationDestroyed() {
   // display `simulation destroyed` message if corrupted q-bits reach the breaking threshold. Condition checked during simulation()
-  // Menu Element possitioning variables
-  let titleY = -height / 4;
+  // UI rectangle display:
+  confirmationUI();
+  let titleY = -height / 4; // Menu Element possitioning variable
+  //Display simulation destroyed text
   push();
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
   text(`Simulation destroyed!`, 0, titleY);
   textSize(40);
-  text(`corrupted q-bit presece has reached critical levels`, 0, titleY + 150);
-  text(`Create another crab`, 0, titleY + 250);
+  text(`corrupted q-bit presece has reached critical levels`, 0, titleY + 100);
+  textSize(50);
+  text(`Create another crab`, 0, -10);
   pop();
 }
 
-
 // Flow controlls
 function mousePressed() {
-
+  //
   if (state === `templateSelect`) {
     state = `confirmSelection`;
   } else if (state === `confirmSelection`) {
