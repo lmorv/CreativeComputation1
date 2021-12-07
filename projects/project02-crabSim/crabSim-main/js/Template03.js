@@ -18,7 +18,6 @@ class Template03 extends CrabTemplte {
   }
 
   checkOverlap() {
-    // let mouseX3D = mouseX - width / 2;
     if (mouseX > 1000) {
       this.fill = this.higlight;
 
