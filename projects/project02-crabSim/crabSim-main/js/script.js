@@ -19,6 +19,11 @@ let state = `templateSelect` // possible states are 'templateSelect', `confirmSe
 
 let crab; // The player object
 
+// The crab templates for the crab selection screen:
+let template01;
+let template02;
+let template03;
+
 let crabTemplates = []; // store the 3 starting crab templates to be displayed in the start screen of the crab construction flow
 
 let qBits = []; // starts off empty
@@ -53,13 +58,18 @@ function setup() {
   createCanvas(1500, 844, WEBGL);
   noStroke();
   // set up crab:
-  spawnCrab();
+  createCrab();
   // position game objects on the grid:
   spawnGameObjects();
 
+  // create crab templates:
+  createTemplate01();
+  createTemplate02();
+  createTemplate03();
+
 }
 
-function spawnCrab() {
+function createCrab() {
   let x = cols / 2 * unit;
   let y = rows / 2 * unit;
   crab = new Crab(x, y);
@@ -91,6 +101,23 @@ function spawnGameObjects() {
   }
 }
 
+function createTemplate01() {
+  let x = -500;
+  let y = 0;
+  template01 = new Template01(x, y);
+}
+
+function createTemplate02() {
+  let x = 0;
+  let y = 0;
+  template02 = new Template02(x, y);
+}
+
+function createTemplate03() {
+  let x = 500;
+  let y = 0;
+  template03 = new Template03(x, y);
+}
 /**
 draw()
 */
@@ -117,7 +144,8 @@ function draw() {
 }
 
 function templateSelect() {
-  menuSelectionUI();
+  menuSelectionUI(); // UI behaviour:
+
 
   let titleY = -height / 4;
   let titleX = -width / 4;
@@ -128,44 +156,24 @@ function templateSelect() {
   text(`Select crab template`, titleX, titleY);
   pop();
 
-  // UI behaviour:
 
 }
 
 function menuSelectionUI() {
-  let screenThird = width / 3;
 
-  let rectHeight = height;
+  template01.display();
+  template02.display();
+  template03.display();
 
-  let rect02X = 0;
-  let rect02Y = 0;
-
-  let rect01X = rect02X - screenThird;
-  let rect01Y = rect02Y;
-
-  let rect03X = rect02X + screenThird;
-  let rect03Y = rect02Y;
-
-  // // calculate mouse x and y in 3d coordinates:
-  // let mouseY3D = mouseY - height / 2;
-  // let mouseX3D = mouseX - height / 2;
-
-  rectMode(CENTER);
-  fill(0, 50, 60);
-  rect(rect02X, rect02Y, screenThird, rectHeight);
-  fill(0, 60, 70);
-  rect(rect01X, rect01Y, screenThird, rectHeight);
-  fill(0, 70, 80);
-  rect(rect03X, rect03Y, screenThird, rectHeight);
-
-  if (mouseX > 0 && mouseX < screenThird) {
-    fill(200, 200, 130);
-  } else if (mouseX > 500 && mouseX < screenThird * 2) {
-    fill(55);
-  } else if (mouseX > screenThird * 2 && mouseX < width) {
-    fill(10);
-  };
-
+  // if (mouseX > 0 && mouseX < screenThird) {
+  //   for (let i = 0; i <= 200; i++) {
+  //     rect01X += 1;
+  //   }
+  // } else if (mouseX > 500 && mouseX < screenThird * 2) {
+  //   fill(55);
+  // } else if (mouseX > screenThird * 2 && mouseX < width) {
+  //   fill(10);
+  // };
 
   // console.log(`mouseX3D:${mouseX3D}`);
   console.log(`mouseX:${mouseX}`);
@@ -177,17 +185,17 @@ function confirmSelection() {
   // display `confirm crab selection` message, check for mouse pess to transition to gameplay
   let titleY = -height / 4;
   let titleX = -width / 4;
+  // UI behaviour:
+  confirmationUI();
 
   push();
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
   text(`Confirm Crab Selection`, 0, titleY);
-  textSize(40);
-  text(`Continue`, 0, titleY + 150);
+  textSize(60);
+  text(`Continue`, 0, -10);
   pop();
-  // UI behaviour:
-  confirmationUI();
 }
 
 function confirmationUI() {
@@ -195,13 +203,19 @@ function confirmationUI() {
   let rectX = 0;
   let rectY = 0;
 
+  // Tranform mouse coordinates to 3D space:
+  let mouseY3D = mouseY - height / 2;
+  let mouseX3D = mouseX - height / 2;
+
   rectMode(CENTER);
   rect(rectX, rectY, width, rectHeight);
-  if (mouseY < rectY - 0.5 * rectHeight || mouseY > rectY + 0.5 * rectHeight) {
-    fill(255, 255, 255);
+  if (mouseY3D < rectY - rectHeight || mouseY3D > rectY + rectHeight) {
+    fill(0, 35, 45);
   } else {
-    fill(200, 200, 130);
+    fill(150, 200, 130);
   };
+
+  console.log(`mouseY:${mouseY}`);
 }
 
 function simulation() {

@@ -3,7 +3,7 @@ class Template03 extends CrabTemplte {
     super(x, y);
     this.image = undefined;
     this.fill = color(0, 70, 80);
-    this.higlight = color(0, 35, 45);
+    this.higlight = color(0, 90, 100);
   }
 
   display() {
