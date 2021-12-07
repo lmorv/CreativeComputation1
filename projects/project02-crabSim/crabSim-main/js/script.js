@@ -15,7 +15,7 @@ let rows = 8; // default value is 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases b
 //size of the grid's squares
 let unit = 30;
 
-let state = `templateSelect` // possible states are 'templateSelect', `crabEditor`, `confirmSelection`, `simulation`,`modelView`, `instructions`, `endScreen`, `simulationDestoyed`
+let state = `templateSelect` // possible states are 'templateSelect', `confirmSelection`, `simulation`,`modelView`, `instructions`, `endScreen`, `simulationDestoyed`
 
 let crab; // The player object
 
@@ -101,8 +101,6 @@ function draw() {
 
   if (state === `templateSelect`) {
     templateSelect();
-  } else if (state === `crabEditor`) {
-    crabEditor();
   } else if (state === `confirmSelection`) {
     confirmSelection();
   } else if (state === `simulation`) {
@@ -119,7 +117,7 @@ function draw() {
 }
 
 function templateSelect() {
-  //call the diplay method for the template select screen
+  menuSelectionUI();
 
   let titleY = -height / 4;
   let titleX = -width / 4;
@@ -131,36 +129,36 @@ function templateSelect() {
   pop();
 
   // UI behaviour:
-  menuSelectionUI();
 
-}
-
-function crabEditor() {
-  // display the selected crab template, check mouse position,allow user to edit head, carapace, and abdomen.
-  let titleY = -height / 4;
-  let titleX = -width / 4;
-  push();
-  textAlign(CENTER, CENTER);
-  fill(0, 200, 100);
-  textFont(fontBlackMatrix, 50);
-  text(`Edit crab parts`, titleX, titleY);
-  pop();
-  // UI behaviour:
-  menuSelectionUI();
 }
 
 function menuSelectionUI() {
-  let rectHeight = 75;
+  let rectHeight = height;
   let rectX = 0;
   let rectY = 0;
+  let screenThird = width / 3;
+
+  // // calculate mouse x and y in 3d coordinates:
+  // let mouseY3D = mouseY - height / 2;
+  // let mouseX3D = mouseX - height / 2;
 
   rectMode(CENTER);
-  rect(rectX, rectY, width, rectHeight);
-  if (mouseY < rectY - 0.5 * rectHeight || mouseY > rectY + 0.5 * rectHeight) {
-    fill(255, 255, 255);
-  } else {
+  rect(rectX, rectY, screenThird, rectHeight);
+  if (mouseX > 0 && mouseX < screenThird) {
     fill(200, 200, 130);
+  } else if (mouseX > 500 && mouseX < screenThird * 2) {
+    fill(55);
+  } else if (mouseX > screenThird * 2 && mouseX < width) {
+    fill(10);
   };
+
+  rect(rectX - screenThird, rectY, screenThird, rectHeight);
+  rect(rectX + screenThird, rectY, screenThird, rectHeight);
+
+  // console.log(`mouseX3D:${mouseX3D}`);
+  console.log(`mouseX:${mouseX}`);
+  // console.log(`mouseY:${mouseY}`);
+  // console.log(`screenThird:${screenThird}`);
 }
 
 function confirmSelection() {
@@ -340,25 +338,31 @@ function mousePressed() {
     state = `simulation`;
     // Prepare for gamestate reset:
     // remove q-bits and gameobjects from their arrays:
-    for (let i = grid.length - 1; i >= 0; i--) {
-      grid.splice(i, 1); // remove that game object from the array
-    }
-    for (let i = qBits.length - 1; i >= 0; i--) {
-      qBits.splice(i, 1); // remove that game object from the array
-    }
+    spliceGridElements();
+    spliceQBits();
     spawnGameObjects(); // set up the game objects
 
   } else if (state === `templateSelect`) {
-    state = `crabEditor`;
-  } else if (state === 'crabEditor') {
     state = `confirmSelection`;
   } else if (state === `confirmSelection`) {
     state = `simulation`;
   } else if (state === `simulationDestoyed`) {
-    // reset q-bits array:
-    for (let i = qBits.length - 1; i >= 0; i--) {
-      qBits.splice(i, 1); // remove that game object from the array
-    }
+    // remove q-bits and gameobjects from their arrays:
+    spliceGridElements();
+    spliceQBits();
+    spawnGameObjects();
     state = `templateSelect`;
+  }
+}
+
+function spliceGridElements() {
+  for (let i = grid.length - 1; i >= 0; i--) {
+    grid.splice(i, 1); // remove that game object from the array
+  }
+}
+
+function spliceQBits() {
+  for (let i = qBits.length - 1; i >= 0; i--) {
+    qBits.splice(i, 1); // remove that game object from the array
   }
 }
