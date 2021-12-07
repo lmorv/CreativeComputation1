@@ -339,8 +339,8 @@ function endScreen() {
   textFont(fontBlackMatrix, 80);
   text(`Everything is mush!`, 0, titleY);
   textSize(40);
-  text(`Continue: [ENTER]`, 0, titleY + 150);
-  text(`Crab slection: [ESC]`, 0, titleY + 200);
+  text(`Press [ENTER] to continue testing current crab.`, 0, titleY + 150);
+  text(`Press [ESC] to select a diferent crab.`, 0, titleY + 220);
   pop();
 
 }
@@ -355,7 +355,7 @@ function simulationDestroyed() {
   textFont(fontBlackMatrix, 80);
   text(`Simulation destroyed!`, 0, titleY);
   textSize(40);
-  text(`corrupted q-bit levels have reached critical levels`, 0, titleY + 150);
+  text(`corrupted q-bit presece has reached critical levels`, 0, titleY + 150);
   text(`Create another crab`, 0, titleY + 250);
   pop();
 }
