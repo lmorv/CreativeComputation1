@@ -14,10 +14,10 @@ let grid = []; // grid also ends up containing game objects to define their poss
 let cols = 10; // default value is 42, 38, 34, 30, 26, 22, 18, 14, 10 (increases by a factor of 4)
 let rows = 8; // default value is 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases by a factor of 2)
 
-// starting dimetions of the grid:
+// starting dimesions of the grid:
 let colsStart = 10;
 let rowsStart = 8;
-// Maximum dimetions of the grid:
+// Maximum dimesions of the grid:
 let colsMax = 42;
 let rowsMax = 24;
 
