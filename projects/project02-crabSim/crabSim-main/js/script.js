@@ -339,8 +339,8 @@ function endScreen() {
   textFont(fontBlackMatrix, 80);
   text(`Everything is mush!`, 0, titleY);
   textSize(40);
-  text(`Continue`, 0, titleY + 150);
-  text(`Crab slection`, 0, titleY + 200);
+  text(`Continue: [ENTER]`, 0, titleY + 150);
+  text(`Crab slection: [ESC]`, 0, titleY + 200);
   pop();
 
 }
@@ -363,15 +363,8 @@ function simulationDestroyed() {
 
 // Flow controlls
 function mousePressed() {
-  if (state === `endScreen`) {
-    state = `simulation`;
-    // Prepare for gamestate reset:
-    // remove q-bits and gameobjects from their arrays:
-    spliceGridElements();
-    spliceQBits();
-    spawnGameObjects(); // set up the game objects
 
-  } else if (state === `templateSelect`) {
+  if (state === `templateSelect`) {
     state = `confirmSelection`;
   } else if (state === `confirmSelection`) {
     state = `simulation`;
@@ -385,19 +378,23 @@ function mousePressed() {
 }
 
 function keyPressed() {
+
   if (keyCode === ESCAPE && state === `confirmSelection`) {
     state = `templateSelect`;
   } else if (keyCode === ENTER && state === `endScreen`) {
+
     cols += 4;
     rows += 2;
+    // remove q-bits and gameobjects from their arrays:
     spliceGridElements();
     spliceQBits();
     spawnGameObjects(); // set up the game objects
     state = `simulation`;
   } else if (keyCode === ESCAPE && state === `endScreen`) {
-
+    // Prepare for gamestate reset:
     cols = colsStart;
     rows = rowsStart;
+    // remove q-bits and gameobjects from their arrays:
     spliceGridElements();
     spliceQBits();
     spawnGameObjects(); // set up the game objects
