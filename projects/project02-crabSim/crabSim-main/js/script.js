@@ -161,9 +161,9 @@ function templateSelect() {
 
 function menuSelectionUI() {
 
-  template01.display();
-  template02.display();
   template03.display();
+  template02.display();
+  template01.display();
 
   template01.checkOverlap();
   template02.checkOverlap();

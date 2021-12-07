@@ -21,8 +21,15 @@ class Template01 extends CrabTemplte {
     // let mouseX3D = mouseX - width / 2;
     if (mouseX < 500) {
       this.fill = this.higlight;
+
+      for (let i = 0; i <= 10; i++) {
+        this.x += 1;
+      }
     } else {
       this.fill = color(0, 50, 60);
+      for (let i = 0; i <= 10; i++) {
+        this.x -= 1;
+      }
     }
   }
 }
