@@ -16,4 +16,13 @@ class Template01 extends CrabTemplte {
     // this.image = image;
     // Display the template image
   }
+
+  checkOverlap() {
+    // let mouseX3D = mouseX - width / 2;
+    if (mouseX < 500) {
+      this.fill = this.higlight;
+    } else {
+      this.fill = color(0, 50, 60);
+    }
+  }
 }

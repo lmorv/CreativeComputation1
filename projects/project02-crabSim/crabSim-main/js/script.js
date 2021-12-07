@@ -165,16 +165,9 @@ function menuSelectionUI() {
   template02.display();
   template03.display();
 
-  // if (mouseX > 0 && mouseX < screenThird) {
-  //   for (let i = 0; i <= 200; i++) {
-  //     rect01X += 1;
-  //   }
-  // } else if (mouseX > 500 && mouseX < screenThird * 2) {
-  //   fill(55);
-  // } else if (mouseX > screenThird * 2 && mouseX < width) {
-  //   fill(10);
-  // };
-
+  template01.checkOverlap();
+  template02.checkOverlap();
+  template03.checkOverlap();
   // console.log(`mouseX3D:${mouseX3D}`);
   console.log(`mouseX:${mouseX}`);
   // console.log(`mouseY:${mouseY}`);
@@ -205,7 +198,7 @@ function confirmationUI() {
 
   // Tranform mouse coordinates to 3D space:
   let mouseY3D = mouseY - height / 2;
-  let mouseX3D = mouseX - height / 2;
+  let mouseX3D = mouseX - width / 2;
 
   rectMode(CENTER);
   rect(rectX, rectY, width, rectHeight);
@@ -215,7 +208,7 @@ function confirmationUI() {
     fill(150, 200, 130);
   };
 
-  console.log(`mouseY:${mouseY}`);
+  // console.log(`mouseY:${mouseY}`);
 }
 
 function simulation() {
