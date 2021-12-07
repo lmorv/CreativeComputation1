@@ -10,8 +10,16 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 // the grid terrain:
 let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
+
 let cols = 10; // default value is 42, 38, 34, 30, 26, 22, 18, 14, 10 (increases by a factor of 4)
 let rows = 8; // default value is 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases by a factor of 2)
+
+let colsStart = 10;
+let rowsStart = 8;
+
+let colsMax = 42;
+let rowsMax = 24;
+
 //size of the grid's squares
 let unit = 30;
 
@@ -168,8 +176,10 @@ function menuSelectionUI() {
   template01.checkOverlap();
   template02.checkOverlap();
   template03.checkOverlap();
+
+  //Debug:
   // console.log(`mouseX3D:${mouseX3D}`);
-  console.log(`mouseX:${mouseX}`);
+  // console.log(`mouseX:${mouseX}`);
   // console.log(`mouseY:${mouseY}`);
   // console.log(`screenThird:${screenThird}`);
 }
@@ -371,6 +381,27 @@ function mousePressed() {
     spliceQBits();
     spawnGameObjects();
     state = `templateSelect`;
+  }
+}
+
+function keyPressed() {
+  if (keyCode === ESCAPE && state === `confirmSelection`) {
+    state = `templateSelect`;
+  } else if (keyCode === ENTER && state === `endScreen`) {
+    cols += 4;
+    rows += 2;
+    spliceGridElements();
+    spliceQBits();
+    spawnGameObjects(); // set up the game objects
+    state = `simulation`;
+  } else if (keyCode === ESCAPE && state === `endScreen`) {
+
+    cols = colsStart;
+    rows = rowsStart;
+    spliceGridElements();
+    spliceQBits();
+    spawnGameObjects(); // set up the game objects
+    state = 'templateSelect'
   }
 }
 
