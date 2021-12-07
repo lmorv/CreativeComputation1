@@ -14,9 +14,10 @@ let grid = []; // grid also ends up containing game objects to define their poss
 let cols = 10; // default value is 42, 38, 34, 30, 26, 22, 18, 14, 10 (increases by a factor of 4)
 let rows = 8; // default value is 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases by a factor of 2)
 
+// starting dimetions of the grid:
 let colsStart = 10;
 let rowsStart = 8;
-
+// Maximum dimetions of the grid:
 let colsMax = 42;
 let rowsMax = 24;
 
@@ -369,6 +370,8 @@ function mousePressed() {
   } else if (state === `confirmSelection`) {
     state = `simulation`;
   } else if (state === `simulationDestoyed`) {
+    // Prepare for gamestate reset:
+    resetGridDimensions();
     // remove q-bits and gameobjects from their arrays and reset the simulation:
     spliceGridElements();
     spliceQBits();
@@ -382,7 +385,7 @@ function keyPressed() {
   if (keyCode === ESCAPE && state === `confirmSelection`) {
     state = `templateSelect`;
   } else if (keyCode === ENTER && state === `endScreen`) {
-
+    // Increase Grid dimetions:
     cols += 4;
     rows += 2;
     // remove q-bits and gameobjects from their arrays:
@@ -392,8 +395,7 @@ function keyPressed() {
     state = `simulation`;
   } else if (keyCode === ESCAPE && state === `endScreen`) {
     // Prepare for gamestate reset:
-    cols = colsStart;
-    rows = rowsStart;
+    resetGridDimensions();
     // remove q-bits and gameobjects from their arrays:
     spliceGridElements();
     spliceQBits();
@@ -412,4 +414,9 @@ function spliceQBits() {
   for (let i = qBits.length - 1; i >= 0; i--) {
     qBits.splice(i, 1); // remove that game object from the array
   }
+}
+
+function resetGridDimensions() {
+  cols = colsStart;
+  rows = rowsStart;
 }
