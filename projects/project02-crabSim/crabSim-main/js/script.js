@@ -133,17 +133,31 @@ function templateSelect() {
 }
 
 function menuSelectionUI() {
-  let rectHeight = height;
-  let rectX = 0;
-  let rectY = 0;
   let screenThird = width / 3;
+
+  let rectHeight = height;
+
+  let rect02X = 0;
+  let rect02Y = 0;
+
+  let rect01X = rect02X - screenThird;
+  let rect01Y = rect02Y;
+
+  let rect03X = rect02X + screenThird;
+  let rect03Y = rect02Y;
 
   // // calculate mouse x and y in 3d coordinates:
   // let mouseY3D = mouseY - height / 2;
   // let mouseX3D = mouseX - height / 2;
 
   rectMode(CENTER);
-  rect(rectX, rectY, screenThird, rectHeight);
+  fill(0, 50, 60);
+  rect(rect02X, rect02Y, screenThird, rectHeight);
+  fill(0, 60, 70);
+  rect(rect01X, rect01Y, screenThird, rectHeight);
+  fill(0, 70, 80);
+  rect(rect03X, rect03Y, screenThird, rectHeight);
+
   if (mouseX > 0 && mouseX < screenThird) {
     fill(200, 200, 130);
   } else if (mouseX > 500 && mouseX < screenThird * 2) {
@@ -152,8 +166,6 @@ function menuSelectionUI() {
     fill(10);
   };
 
-  rect(rectX - screenThird, rectY, screenThird, rectHeight);
-  rect(rectX + screenThird, rectY, screenThird, rectHeight);
 
   // console.log(`mouseX3D:${mouseX3D}`);
   console.log(`mouseX:${mouseX}`);
@@ -347,7 +359,7 @@ function mousePressed() {
   } else if (state === `confirmSelection`) {
     state = `simulation`;
   } else if (state === `simulationDestoyed`) {
-    // remove q-bits and gameobjects from their arrays:
+    // remove q-bits and gameobjects from their arrays and reset the simulation:
     spliceGridElements();
     spliceQBits();
     spawnGameObjects();
