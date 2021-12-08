@@ -75,7 +75,7 @@ setup() creates game objects out of classes,creates the all-encompasing canvas, 
 function setup() {
   // Global settings:
   textFont(fontBlackMatrix, 40);
-  createCanvas(1500, 844, WEBGL);
+  createCanvas(1500, 800, WEBGL);
   noStroke();
   // set up crab:
   createCrab();
@@ -347,7 +347,7 @@ function endScreen() {
   text(`Everything is mush!`, 0, titleY);
   textSize(40);
   text(`Press [ENTER] to continue testing current crab.`, 0, titleY + 150);
-  text(`Press [ESC] to select a diferent crab.`, 0, titleY + 220);
+  text(`Press [ESC] to select a different crab.`, 0, titleY + 220);
   pop();
 
 }
