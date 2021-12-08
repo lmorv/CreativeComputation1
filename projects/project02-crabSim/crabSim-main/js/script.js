@@ -20,11 +20,10 @@ let rowsStart = 8;
 // Maximum dimesions of the grid:
 let colsMax = 42;
 let rowsMax = 24;
-
 //size of the grid's squares
 let unit = 30;
 
-let state = `templateSelect` // possible states are 'templateSelect', `confirmSelection`, `simulation`,`modelView`, `instructions`, `endScreen`, `simulationDestoyed`
+let state = `templateSelect` // possible states are 'templateSelect', `confirmSelection`, `simulation`, `endScreen`, `simulationDestoyed`
 
 let crab; // The player object
 
@@ -204,9 +203,17 @@ function confirmSelection() {
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
-  text(`Confirm Crab Construct selection`, 0, titleY);
+  text(`Confirm Crab Construct selection`, 0, titleY - 100);
   textSize(60);
   text(`Continue`, 0, -10);
+  pop();
+
+  push();
+  textAlign(CENTER, CENTER);
+  textFont(fontBlackMatrix, 40);
+  fill(245, 99, 66);
+  text(`WARNING: Quantum corruption detected.`, 0, titleY);
+  text(`Consume corrupted q-bits to avoid simulation failure.`, 0, titleY + 45)
   pop();
 }
 
@@ -372,7 +379,6 @@ function simulationDestroyed() {
 
 // Flow controlls
 function mousePressed() {
-  //
   if (state === `templateSelect`) {
     state = `confirmSelection`;
   } else if (state === `confirmSelection`) {
@@ -384,6 +390,7 @@ function mousePressed() {
     spliceGridElements();
     spliceQBits();
     spawnGameObjects();
+    createCrab();
     state = `templateSelect`;
   }
 }
@@ -400,6 +407,7 @@ function keyPressed() {
     spliceGridElements();
     spliceQBits();
     spawnGameObjects(); // set up the game objects
+    createCrab();
     state = `simulation`;
   } else if (keyCode === ESCAPE && state === `endScreen`) {
     // Prepare for gamestate reset:
@@ -408,6 +416,7 @@ function keyPressed() {
     spliceGridElements();
     spliceQBits();
     spawnGameObjects(); // set up the game objects
+    createCrab();
     state = 'templateSelect'
   }
 }
