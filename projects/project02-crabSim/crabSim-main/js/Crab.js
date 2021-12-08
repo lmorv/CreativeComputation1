@@ -52,7 +52,7 @@ class Crab {
   }
 
   display() {
-    // display one or many boxes for now. OR crab part classes inheriting from this one could handle their own displaying
+    // display one or many boxes for now.
     push();
     fill(0, 200, 180);
     translate(this.x, this.y, this.size / 2);
