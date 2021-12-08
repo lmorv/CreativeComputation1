@@ -7,20 +7,11 @@ class Crab {
     this.vx = 0;
     this.vy = 0;
     this.speed = 0;
-    this.maxSpeed = 5;
-    // acceleration:
-    this.ax = 0;
-    this.ay = 0;
-
-    this.acceleration = 2;
-
-    // properties to load 3d models into: not sure if these shpuld have their own class with a display function
+    //Unused propeties to load 3d models for crab parts
     this.headModel = undefined;
     this.carapaceModel = undefined;
     this.abdomenModel = undefined;
     this.limbPack = undefined; // do I need a separate property for every limb
-
-    this.pincersEngaged = false; // toggle for pincer control
   }
 
   // handleInput() takes care of movement controlls:
@@ -58,10 +49,6 @@ class Crab {
     if (d < this.size / 2 + object.size / 2) {
       object.isMush = true;
     }
-  }
-
-  checkEndPointOverlap() {
-    // check for win condition
   }
 
   display() {
