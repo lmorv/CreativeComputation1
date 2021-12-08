@@ -1,11 +1,6 @@
 class Template03 extends CrabTemplte {
   constructor(x, y, defaultImage, highlightImage) {
-    super(x, y);
-    this.image = defaultImage;
-    this.defaultImage = defaultImage;
-    this.highlightImage = highlightImage;
-    this.fill = color(0, 70, 80);
-    this.higlight = color(0, 90, 100);
+    super(x, y, defaultImage, highlightImage);
   }
 
   display() {

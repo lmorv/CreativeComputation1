@@ -170,14 +170,14 @@ function templateSelect() {
   push();
   rectMode(CENTER);
   fill(0, 255, 255, 100);
-  rect(titleX - 50, titleY - 140, 650, 45);
+  rect(titleX - 80, titleY - 140, 600, 45);
   pop();
 
   push();
   textAlign(CENTER, CENTER);
   fill(0, 40, 20);
-  textFont(fontBlackMatrix, 50);
-  text(`// Select Crab Construct`, titleX - 50, titleY - 150);
+  textFont(fontBlackMatrix, 40);
+  text(`// Select Crab Construct`, titleX - 80, titleY - 145);
   pop();
 }
 
