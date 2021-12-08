@@ -11,8 +11,8 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
 
-let cols = 10; // possible values are 42, 38, 34, 30, 26, 22, 18, 14, 10 (increases by a factor of 4)
-let rows = 8; // possible values are 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases by a factor of 2)
+let cols = 10; // possible values are  10, 14,18,22,26,30,34,38,42,... (increases by a factor of 4)
+let rows = 8; // possible values are 8, 10, 12,14,16,18,20,22,24 (increases by a factor of 2)
 
 // starting dimesions of the grid:
 let colsStart = 10;
