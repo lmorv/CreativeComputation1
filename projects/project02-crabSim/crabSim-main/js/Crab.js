@@ -49,8 +49,6 @@ class Crab {
 
     this.x += vx;
     this.y += vy;
-
-    //constrain to max speed
   }
 
   checkOverlap(object) {
@@ -59,7 +57,6 @@ class Crab {
 
     if (d < this.size / 2 + object.size / 2) {
       object.isMush = true;
-
     }
   }
 

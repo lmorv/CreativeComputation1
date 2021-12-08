@@ -35,7 +35,7 @@ let template03;
 let crabTemplates = []; // store the 3 starting crab templates to be displayed in the start screen of the crab construction flow
 
 let qBits = []; // starts off empty
-let critQBits = 15; // number of  corrupted q-bits that break the simulation
+let critQBits = 25; // number of  corrupted q-bits that break the simulation
 
 // How often to add a new qBit (in frames)
 let addQBitInterval = 1 * 60; // one qBit per second
@@ -212,8 +212,19 @@ function confirmSelection() {
   textAlign(CENTER, CENTER);
   textFont(fontBlackMatrix, 40);
   fill(245, 99, 66);
-  text(`WARNING: Quantum corruption detected.`, 0, titleY);
-  text(`Consume corrupted q-bits to avoid simulation failure.`, 0, titleY + 45)
+  text(`WARNING: Quantum corruption detected.`, 0, titleY + 20);
+  text(`Consume corrupted q-bits to avoid simulation failure.`, 0, titleY + 65)
+  pop();
+
+  push();
+  textAlign(CENTER);
+  textFont(fontBlackMatrix, 40);
+  fill(173, 217, 204);
+  text(`Simulation controls:`, titleX - 150, -titleY - 70);
+  textAlign(LEFT);
+  text(`Use [UP] & [DOWN] arrow keys or [W] & [S] to move forward and back.`, titleX - 200, -titleY);
+  text(`Use [LEFT] & [RIGHT] arrow keys or [A] & [D] to steer.`, titleX - 200, -titleY + 80);
+  text(`Turn civilization into mush.`, titleX - 200, -titleY + 160);
   pop();
 }
 
@@ -334,14 +345,6 @@ function checkCorruption() {
   if (qBits.length >= critQBits) {
     state = `simulationDestoyed`
   }
-}
-
-function modelView() {
-  // call display method for full screen model view
-}
-
-function instructions() {
-  // display instructions and controlls screen
 }
 
 function endScreen() {
