@@ -1,9 +1,11 @@
 class Template01 extends CrabTemplte {
-  constructor(x, y) {
+  constructor(x, y, defaultImage, highlightImage) {
     super(x, y);
-    this.image = undefined;
+    this.image = defaultImage;
+    this.defaultImage = defaultImage;
+    this.highlightImage = highlightImage;
     this.fill = color(0, 50, 60);
-    this.higlight = color(0, 90, 100);
+    this.highlight = color(0, 90, 100);
   }
 
   display() {
@@ -11,17 +13,19 @@ class Template01 extends CrabTemplte {
 
     rectMode(CENTER);
     fill(this.fill);
-    rect(this.x, this.y, this.width, this.height);
-
-    // this.image = image;
+    rect(this.x - 500, this.y, this.width, this.height);
     // Display the template image
+    imageMode(CENTER);
+    image(this.image, this.x, this.y, width, height);
   }
 
   checkOverlap() {
     if (mouseX < 500) {
-      this.fill = this.higlight;
+      this.fill = this.highlight;
+      this.image = this.highlightImage;
     } else {
       this.fill = color(0, 50, 60);
+      this.image = this.defaultImage;
     }
   }
 }

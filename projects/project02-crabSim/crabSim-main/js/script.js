@@ -11,8 +11,8 @@ This is a crab simulator! It simulates crabs to the highest degree of sofisticat
 let grid = []; // grid also ends up containing game objects to define their possition and display them.
 // number of rows and columns:
 
-let cols = 10; // default value is 42, 38, 34, 30, 26, 22, 18, 14, 10 (increases by a factor of 4)
-let rows = 8; // default value is 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases by a factor of 2)
+let cols = 10; // possible values are 42, 38, 34, 30, 26, 22, 18, 14, 10 (increases by a factor of 4)
+let rows = 8; // possible values are 24, 22, 20, 18, 16, 14, 12, 10, 8 (increases by a factor of 2)
 
 // starting dimesions of the grid:
 let colsStart = 10;
@@ -43,16 +43,29 @@ let addQBitInterval = 1 * 60; // one qBit per second
 // timer will count down to 0  in draw to dtermine when to add a new q bit to the qbits array
 let timer = addQBitInterval;
 
-// Font variables:
+// Font variable declaration:
 let fontBlackMatrix;
-
+// Image variable declaration
+let template01Img;
+let template01ImgHighlight;
+let template02Img;
+let template02ImgHighlight;
+let template03Img;
+let template03ImgHighlight;
 
 /**
 preload() loads the game assets into variables for later use.
 */
 function preload() {
-
+  // fonts:
   fontBlackMatrix = loadFont('assets/fonts/LLBlackMatrix.ttf');
+  // Images:
+  template01Img = loadImage(`assets/images/crabTemplate01.png`);
+  template01ImgHighlight = loadImage(`assets/images/crabTemplate01-highlight.png`);
+  template02Img = loadImage(`assets/images/crabTemplate02.png`);
+  template02ImgHighlight = loadImage(`assets/images/crabTemplate02-highlight.png`);
+  template03Img = loadImage(`assets/images/crabTemplate03.png`);
+  template03ImgHighlight = loadImage(`assets/images/crabTemplate03-highlight.png`);
 
 }
 
@@ -108,21 +121,21 @@ function spawnGameObjects() {
 }
 
 function createTemplate01() {
-  let x = -500;
+  let x = 0;
   let y = 0;
-  template01 = new Template01(x, y);
+  template01 = new Template01(x, y, template01Img, template01ImgHighlight);
 }
 
 function createTemplate02() {
   let x = 0;
   let y = 0;
-  template02 = new Template02(x, y);
+  template02 = new Template02(x, y, template02Img, template02ImgHighlight);
 }
 
 function createTemplate03() {
-  let x = 500;
+  let x = 0;
   let y = 0;
-  template03 = new Template03(x, y);
+  template03 = new Template03(x, y, template03Img, template03ImgHighlight);
 }
 /**
 draw()
@@ -154,18 +167,25 @@ function templateSelect() {
 
   let titleY = -height / 4;
   let titleX = -width / 4;
+
+  push();
+  rectMode(CENTER);
+  fill(0, 255, 255, 100);
+  rect(titleX - 50, titleY - 140, 650, 45);
+  pop();
+
   push();
   textAlign(CENTER, CENTER);
-  fill(0, 200, 100);
+  fill(0, 40, 20);
   textFont(fontBlackMatrix, 50);
-  text(`Select crab template`, titleX, titleY);
+  text(`// Select Crab Construct`, titleX - 50, titleY - 150);
   pop();
 }
 
 function menuSelectionUI() {
   // Display the crab templates
-  template03.display();
   template02.display();
+  template03.display();
   template01.display();
   // check overlap for UI behavior
   template01.checkOverlap();
@@ -184,7 +204,7 @@ function confirmSelection() {
   textAlign(CENTER, CENTER);
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
-  text(`Confirm Crab Selection`, 0, titleY);
+  text(`Confirm Crab Construct selection`, 0, titleY);
   textSize(60);
   text(`Continue`, 0, -10);
   pop();
@@ -299,7 +319,6 @@ function displayQBits() {
 function checkCityDestroyed() {
   let notMushed = grid.filter(element => element.isMush === false); // Returns an array with all the game objects whose isMush propperty is false.
   if (notMushed.length === 0) {
-    console.log(`Everything is mush!`);
     state = `endScreen`;
   }
 }
