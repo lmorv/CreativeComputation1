@@ -355,6 +355,8 @@ function endScreen() {
   fill(0, 200, 100);
   textFont(fontBlackMatrix, 80);
   text(`Everything is mush!`, 0, titleY);
+  textSize(35);
+  text(`Civilization obliterated.`, 0, titleY - 100)
   textSize(40);
   text(`Press [ENTER] to continue testing current crab.`, 0, titleY + 150);
   text(`Press [ESC] to select a different crab.`, 0, titleY + 220);
